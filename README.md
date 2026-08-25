@@ -230,6 +230,45 @@ submit button while a request is in flight.
 
 ## 8. Deploying
 
+### Azure Static Web Apps — **currently live here**
+
+| | |
+|---|---|
+| **URL** | https://polite-water-07a742710.7.azurestaticapps.net |
+| Resource group | `signia-triage-rg` (centralus) |
+| App name | `signia-triage` |
+| SKU | Free |
+
+Azure ignores `_redirects` and `.htaccess`, so all routing, headers and 404
+handling for this host live in **`staticwebapp.config.json`**. Edit that file if
+you change either of the other two.
+
+Deploy from the repo root:
+
+```bash
+python tools/build.py
+TOKEN=$(az staticwebapp secrets list --name signia-triage \
+          --resource-group signia-triage-rg --query "properties.apiKey" -o tsv)
+npx @azure/static-web-apps-cli deploy . --env production --deployment-token "$TOKEN"
+```
+
+**Two Azure-specific traps, both hit during setup and both now documented in the
+config file itself:**
+
+1. `trailingSlash: "always"` appends a slash to *every* path, files included — so
+   `/robots.txt` 301s to `/robots.txt/` and every CSS/JS/image request costs an
+   extra round trip. Leave `trailingSlash` unset.
+2. `navigationFallback` is an SPA feature: it rewrites unmatched routes and
+   returns **HTTP 200**, turning every bad URL into a soft 404. Use
+   `responseOverrides` instead so a missing page returns a real 404.
+
+Also note Azure normalises `/who` and `/who/` to the same rule, so declaring both
+fails the deployment outright. Declare the trailing-slash form only; it matches both.
+
+To wire up push-to-deploy, add the deployment token to the repo as a secret named
+`AZURE_STATIC_WEB_APPS_API_TOKEN` and add a workflow using
+`Azure/static-web-apps-deploy@v1`.
+
 ### Netlify / Cloudflare Pages
 Connect the repository. Build command: *(none)*. Publish directory: `/`.
 `_redirects` and `_headers` are picked up automatically.

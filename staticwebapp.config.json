@@ -7,12 +7,22 @@
     "have to be restated here. Keep this file in sync with those two if you edit them."
   ],
 
-  "trailingSlash": "always",
+  "_trailingSlash_comment": [
+    "Deliberately left at Azure's default ('auto'). Setting it to 'always' appends",
+    "a slash to EVERY path including files, so /robots.txt 301s to /robots.txt/ and",
+    "every css/js/image request costs an extra round trip. Canonical <link> tags",
+    "already declare the trailing-slash form, which is what search engines index."
+  ],
+
+  "_duplicate_route_comment": [
+    "Azure normalises /who and /who/ to the SAME rule no matter what trailingSlash",
+    "is set to, and declaring both fails the whole deployment with 'a rule was",
+    "already processed with a duplicate route'. Declare the trailing-slash form",
+    "only — it matches both. Verified live against /who and /who/."
+  ],
 
   "routes": [
-    { "route": "/who", "redirect": "/who-we-are/", "statusCode": 301 },
     { "route": "/who/", "redirect": "/who-we-are/", "statusCode": 301 },
-    { "route": "/triage", "redirect": "/nurse-triage/", "statusCode": 301 },
     { "route": "/triage/", "redirect": "/nurse-triage/", "statusCode": 301 },
     { "route": "/v42-home/", "redirect": "/", "statusCode": 301 },
 
@@ -34,13 +44,15 @@
     }
   ],
 
-  "navigationFallback": {
-    "rewrite": "/404.html",
-    "exclude": ["/assets/*", "/*.{png,jpg,jpeg,webp,svg,ico,css,js,xml,txt,webmanifest}"]
-  },
+  "_navigationFallback_comment": [
+    "Intentionally absent. navigationFallback is an SPA feature: it REWRITES any",
+    "unmatched route to a page and returns HTTP 200, which turns every bad URL into",
+    "a soft 404 that Google indexes as thin duplicate content. This is a multi-page",
+    "static site, so unmatched routes must return a real 404 status instead."
+  ],
 
   "responseOverrides": {
-    "404": { "rewrite": "/404.html", "statusCode": 404 }
+    "404": { "rewrite": "/404.html" }
   },
 
   "globalHeaders": {
