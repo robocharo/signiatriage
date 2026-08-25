@@ -1,0 +1,15 @@
+# Signia Solutions — https://signiasolutions.com/
+#
+# Note for whoever maintains this: the previous WordPress site shipped
+# <meta name="robots" content="noindex, nofollow"> on every page, which told
+# every search engine to ignore the entire site. This file — and the
+# index,follow robots meta on each page — is the fix. Do not reintroduce a
+# blanket Disallow or a noindex tag.
+
+User-agent: *
+Allow: /
+
+# Nothing here is private, but there is no reason to crawl build inputs.
+Disallow: /tools/
+
+Sitemap: https://signiasolutions.com/sitemap.xml

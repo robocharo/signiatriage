@@ -1,0 +1,210 @@
+<main id="main">
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><span aria-current="page">Careers</span></li>
+        </ol>
+      </nav>
+      <p class="eyebrow">Careers</p>
+      <h1>Start your journey today</h1>
+      <p class="lede">
+        Join our team of experienced and compassionate nurses. We are committed to providing our
+        employees with a supportive and rewarding work environment, competitive compensation
+        packages, and opportunities for professional growth and development.
+      </p>
+      <div class="btn-row mt-md">
+        <a class="btn btn--primary btn--lg" href="#apply">Apply today</a>
+        <a class="btn btn--outline-light btn--lg" href="/contact/">Contact us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY WORK HERE ============ -->
+  <section class="section" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-intro">
+        <p class="eyebrow eyebrow--center">Why Signia</p>
+        <h2 id="why-title">Nursing work that uses your judgement</h2>
+        <p class="lede">
+          Triage is clinical decision-making, not call handling. You bring the assessment skills;
+          we give you the structure, the pathways and the support to use them.
+        </p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-stethoscope"></use></svg></div>
+          <h3>Practice at the top of your license</h3>
+          <p>Every call is a real assessment with a real decision attached. No scripts, no message-taking.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-users"></use></svg></div>
+          <h3>A team that has your back</h3>
+          <p>Experienced senior living nurses, structured guidance, and colleagues who understand the work.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-shield"></use></svg></div>
+          <h3>Competitive compensation</h3>
+          <p>Pay built on Minnesota RN wage economics, plus a schedule designed around real life.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-chart"></use></svg></div>
+          <h3>Room to grow</h3>
+          <p>Ongoing clinical development and opportunities to shape how our triage program evolves.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-moon"></use></svg></div>
+          <h3>Work that matters after dark</h3>
+          <p>The hours when residents are most vulnerable are the hours where your expertise counts most.</p>
+        </article>
+        <article class="card reveal">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg></div>
+          <h3>Minnesota-based</h3>
+          <p>You'll be supporting communities and caregivers in the state you know.</p>
+        </article>
+      </div>
+
+      <div class="center mt-lg">
+        <div class="badge-award badge-award--inline">
+          <img src="/assets/img/best-places-to-work-mn-2026.webp" width="300" height="149"
+               alt="Best Places to Work Minnesota 2026 award badge" loading="lazy" decoding="async">
+          <p><strong>Best Places to Work</strong> Minnesota, 2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APPLICATION ============ -->
+  <section class="section section--tint" id="apply" aria-labelledby="apply-title">
+    <div class="container">
+      <div class="split split--wide-right">
+        <div>
+          <p class="eyebrow">Apply</p>
+          <h2 id="apply-title">Join our team today</h2>
+          <p>
+            Tell us a little about yourself and attach your resume. A member of our team will be in
+            touch — most applicants hear back within one business day.
+          </p>
+          <ul class="checklist mt-sm">
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Current, unencumbered RN licensure</li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Senior living, home health or acute care experience</li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Strong assessment and communication skills</li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Comfortable working independently after hours</li>
+          </ul>
+          <p class="form-note mt-sm">
+            Questions before you apply? Call <a href="tel:+17633083282">(763)&nbsp;308-3282</a> or
+            email <a href="mailto:hi@signiasolutions.com">hi@signiasolutions.com</a>.
+          </p>
+        </div>
+
+        <div>
+          <div class="form-card">
+            <!--
+              CONFIGURE ME: point `action` at your form endpoint before launch.
+              See README.md → "Wiring up the forms". Never collect resident or
+              patient information through this form.
+            -->
+            <form class="career-form"
+                  method="POST"
+                  action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"
+                  data-ajax="true"
+                  data-netlify="true"
+                  name="careers"
+                  enctype="multipart/form-data"
+                  data-success="Thank you — your application is in. We'll be in touch shortly."
+                  novalidate>
+
+              <input type="hidden" name="form-name" value="careers">
+              <p class="honeypot" aria-hidden="true">
+                <label>Do not fill this in <input name="company-website" tabindex="-1" autocomplete="off"></label>
+              </p>
+
+              <div class="form-status" tabindex="-1"></div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="c-first">First name <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="text" id="c-first" name="first_name" autocomplete="given-name" required>
+                </div>
+                <div class="field">
+                  <label for="c-last">Last name <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="text" id="c-last" name="last_name" autocomplete="family-name" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="c-email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="email" id="c-email" name="email" autocomplete="email" inputmode="email" required>
+                </div>
+                <div class="field">
+                  <label for="c-phone">Phone</label>
+                  <input class="input" type="tel" id="c-phone" name="phone" autocomplete="tel" inputmode="tel">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="c-city">City &amp; state</label>
+                <input class="input" type="text" id="c-city" name="city_state" autocomplete="address-level2" placeholder="Plymouth, MN">
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="c-license">RN license state</label>
+                  <input class="input" type="text" id="c-license" name="license_state" placeholder="MN">
+                </div>
+                <div class="field">
+                  <label for="c-start">Available to start</label>
+                  <input class="input" type="date" id="c-start" name="available_start">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="c-resume">Resume
+                  <span class="hint">PDF, DOC or DOCX — 5&nbsp;MB max</span>
+                </label>
+                <input class="input" type="file" id="c-resume" name="resume" accept=".pdf,.doc,.docx,application/pdf">
+              </div>
+
+              <div class="field">
+                <label for="c-note">Anything you'd like us to know</label>
+                <textarea class="textarea" id="c-note" name="message" rows="4"
+                          placeholder="Tell us about your experience and what you're looking for."></textarea>
+              </div>
+
+              <button class="btn btn--primary btn--block btn--lg" type="submit">Submit application</button>
+
+              <p class="form-note">
+                By submitting you agree we may contact you about this role. We never sell your
+                information. See our <a href="/privacy/">privacy policy</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight cta-band" aria-labelledby="cta-title">
+    <div class="container cta-band__inner">
+      <div>
+        <h2 id="cta-title" class="h-band">Not ready to apply yet?</h2>
+        <p class="cta-band__sub">
+          Reach out anyway. We're happy to talk through what triage nursing is actually like before
+          you commit to anything.
+        </p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--primary btn--lg" href="/contact/">Contact us</a>
+        <a class="btn btn--outline-light btn--lg" href="tel:+17633083282">
+          <svg aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg> (763) 308-3282
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>

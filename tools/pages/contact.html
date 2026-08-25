@@ -1,0 +1,192 @@
+<main id="main">
+
+  <section class="page-hero">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Home</a></li>
+          <li><span aria-current="page">Contact</span></li>
+        </ol>
+      </nav>
+      <p class="eyebrow">Contact</p>
+      <h1>We're here when your community needs us</h1>
+      <p class="lede">
+        Signia Solutions provides dependable, clinically sound after-hours nurse triage for senior
+        living communities.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT METHODS ============ -->
+  <section class="section section--tight" aria-labelledby="reach-title">
+    <div class="container">
+      <h2 id="reach-title" class="visually-hidden">Ways to reach Signia Solutions</h2>
+      <div class="contact-methods">
+        <div class="contact-method">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg></div>
+          <h3>Call us</h3>
+          <a href="tel:+17633083282">(763)&nbsp;308-3282</a>
+          <p class="sub">Fax: (612)&nbsp;395-5381</p>
+        </div>
+
+        <div class="contact-method">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-mail"></use></svg></div>
+          <h3>Email us</h3>
+          <a href="mailto:hi@signiasolutions.com">hi@signiasolutions.com</a>
+          <p class="sub">Most inquiries answered within one business day</p>
+        </div>
+
+        <div class="contact-method">
+          <div class="card__icon"><svg aria-hidden="true" focusable="false"><use href="#i-pin"></use></svg></div>
+          <h3>Visit us</h3>
+          <address>
+            10405 6th Ave N<br>
+            Plymouth, MN 55441
+          </address>
+          <p class="sub">
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=10405+6th+Ave+N+Plymouth+MN+55441"
+               rel="noopener" target="_blank" class="link-inline">
+              Open in Google Maps<span class="visually-hidden"> (opens in a new tab)</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FORM ============ -->
+  <section class="section" aria-labelledby="form-title">
+    <div class="container">
+      <div class="split split--wide-right">
+        <div>
+          <p class="eyebrow">Get in touch</p>
+          <h2 id="form-title">Tell us about your community</h2>
+          <p>
+            Fill out the form and our team will respond promptly. Most inquiries receive a reply
+            within one business day.
+          </p>
+
+          <h3 class="h-sub">What to expect after you reach out</h3>
+          <ul class="checklist">
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> A brief follow-up to understand your community's needs</li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Clear next steps for partnership or service onboarding</li>
+            <li><svg aria-hidden="true" focusable="false"><use href="#i-check"></use></svg> Direct access to our clinical and operations teams</li>
+          </ul>
+
+          <div class="card card--flat card--note mt-lg">
+            <h3>This form is not for clinical emergencies</h3>
+            <p>
+              If a resident needs immediate medical attention, call 911. Partner communities should
+              use your dedicated triage line — not this form — for after-hours clinical questions.
+              Please don't include resident health information here.
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <div class="form-card">
+            <!--
+              CONFIGURE ME: point `action` at your form endpoint before launch.
+              See README.md → "Wiring up the forms". This form must never be used
+              to transmit protected health information.
+            -->
+            <form class="contact-form"
+                  method="POST"
+                  action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"
+                  data-ajax="true"
+                  data-netlify="true"
+                  name="contact"
+                  data-success="Thank you — your message is on its way. We reply to most inquiries within one business day."
+                  novalidate>
+
+              <input type="hidden" name="form-name" value="contact">
+              <p class="honeypot" aria-hidden="true">
+                <label>Do not fill this in <input name="company-website" tabindex="-1" autocomplete="off"></label>
+              </p>
+
+              <div class="form-status" tabindex="-1"></div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-first">First name <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="text" id="f-first" name="first_name" autocomplete="given-name" required>
+                </div>
+                <div class="field">
+                  <label for="f-last">Last name <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="text" id="f-last" name="last_name" autocomplete="family-name" required>
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-email">Email <span class="req" aria-hidden="true">*</span></label>
+                  <input class="input" type="email" id="f-email" name="email" autocomplete="email" inputmode="email" required>
+                </div>
+                <div class="field">
+                  <label for="f-phone">Phone</label>
+                  <input class="input" type="tel" id="f-phone" name="phone" autocomplete="tel" inputmode="tel">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="f-org">Community or organization</label>
+                <input class="input" type="text" id="f-org" name="organization" autocomplete="organization">
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="f-type">Care setting</label>
+                  <select class="select" id="f-type" name="care_setting">
+                    <option value="">Select one…</option>
+                    <option>Assisted Living</option>
+                    <option>Memory Care</option>
+                    <option>Independent Living with clinical oversight</option>
+                    <option>Multi-building campus</option>
+                    <option>Regional or enterprise operator</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label for="f-census">Approximate census</label>
+                  <input class="input" type="text" id="f-census" name="census" inputmode="numeric" placeholder="e.g. 85">
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="f-message">Comment or message</label>
+                <textarea class="textarea" id="f-message" name="message" rows="5"
+                          placeholder="Tell us about your current after-hours setup and what you'd like to change."></textarea>
+              </div>
+
+              <button class="btn btn--primary btn--block btn--lg" type="submit">Send message</button>
+
+              <p class="form-note">
+                We'll only use your details to respond to this inquiry. See our
+                <a href="/privacy/">privacy policy</a>.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="section section--tight cta-band" aria-labelledby="cta-title">
+    <div class="container cta-band__inner">
+      <div>
+        <h2 id="cta-title" class="h-band">Prefer to just talk it through?</h2>
+        <p class="cta-band__sub">
+          Call us directly. You'll reach a person who understands senior living operations.
+        </p>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn--primary btn--lg" href="tel:+17633083282">
+          <svg aria-hidden="true" focusable="false"><use href="#i-phone"></use></svg> (763) 308-3282
+        </a>
+        <a class="btn btn--outline-light btn--lg" href="/nurse-triage/">How triage works</a>
+      </div>
+    </div>
+  </section>
+
+</main>

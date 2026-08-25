@@ -1,0 +1,25 @@
+# Netlify / Cloudflare Pages response headers.
+#
+# Security headers are an indirect SEO factor: HTTPS + a clean security posture
+# is a documented Google signal, and a CSP violation that blocks your own CSS is
+# a very fast way to tank Core Web Vitals. The policy below is deliberately
+# tight because this site loads nothing from third parties.
+
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  Content-Security-Policy: default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' https:; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests
+
+# Fingerprint-free asset names, so cache conservatively but not forever.
+/assets/*
+  Cache-Control: public, max-age=604800, must-revalidate
+
+/assets/img/*
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+# HTML must revalidate so content edits go live immediately.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,0 +1,26 @@
+# Netlify / Cloudflare Pages redirect rules.
+#
+# The old WordPress slugs must 301 to the new URLs, otherwise every existing
+# bookmark, email signature, business card QR code and directory listing that
+# points at the old site lands on a 404. 301 (permanent) is deliberate — it is
+# what passes link signals to the new URL.
+#
+# Apache equivalent lives in .htaccess. IIS/nginx users: see README.md.
+
+/who              /who-we-are/     301!
+/who/             /who-we-are/     301!
+/triage           /nurse-triage/   301!
+/triage/          /nurse-triage/   301!
+/careers          /careers/        301
+/contact          /contact/        301
+
+# WordPress leftovers — no reason to serve or crawl these on a static site.
+/wp-admin/*       /                301
+/wp-login.php     /                301
+/xmlrpc.php       /                301
+/feed             /                301
+/feed/            /                301
+/comments/feed/   /                301
+
+# Everything unmatched renders the styled 404 page.
+/*                /404.html        404

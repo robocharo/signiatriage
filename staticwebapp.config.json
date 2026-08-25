@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json.schemastore.org/staticwebapp.config.json",
+
+  "_comment": [
+    "Azure Static Web Apps configuration. Azure ignores _redirects (Netlify) and",
+    ".htaccess (Apache), so the redirects, security headers and 404 handling all",
+    "have to be restated here. Keep this file in sync with those two if you edit them."
+  ],
+
+  "trailingSlash": "always",
+
+  "routes": [
+    { "route": "/who", "redirect": "/who-we-are/", "statusCode": 301 },
+    { "route": "/who/", "redirect": "/who-we-are/", "statusCode": 301 },
+    { "route": "/triage", "redirect": "/nurse-triage/", "statusCode": 301 },
+    { "route": "/triage/", "redirect": "/nurse-triage/", "statusCode": 301 },
+    { "route": "/v42-home/", "redirect": "/", "statusCode": 301 },
+
+    { "route": "/wp-admin/*", "redirect": "/", "statusCode": 301 },
+    { "route": "/wp-login.php", "redirect": "/", "statusCode": 301 },
+    { "route": "/xmlrpc.php", "redirect": "/", "statusCode": 301 },
+    { "route": "/feed/", "redirect": "/", "statusCode": 301 },
+    { "route": "/comments/feed/", "redirect": "/", "statusCode": 301 },
+
+    { "route": "/tools/*", "statusCode": 404 },
+
+    {
+      "route": "/assets/img/*",
+      "headers": { "Cache-Control": "public, max-age=2592000, must-revalidate" }
+    },
+    {
+      "route": "/assets/*",
+      "headers": { "Cache-Control": "public, max-age=604800, must-revalidate" }
+    }
+  ],
+
+  "navigationFallback": {
+    "rewrite": "/404.html",
+    "exclude": ["/assets/*", "/*.{png,jpg,jpeg,webp,svg,ico,css,js,xml,txt,webmanifest}"]
+  },
+
+  "responseOverrides": {
+    "404": { "rewrite": "/404.html", "statusCode": 404 }
+  },
+
+  "globalHeaders": {
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Permissions-Policy": "geolocation=(), microphone=(), camera=()",
+    "Content-Security-Policy": "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; font-src 'self'; form-action 'self' https:; frame-ancestors 'self'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests",
+    "Cache-Control": "public, max-age=0, must-revalidate"
+  },
+
+  "mimeTypes": {
+    ".webmanifest": "application/manifest+json",
+    ".webp": "image/webp",
+    ".svg": "image/svg+xml",
+    ".xml": "application/xml",
+    ".json": "application/json"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "Signia Solutions — After-Hours RN Triage",
+  "short_name": "Signia",
+  "description": "Calm, clinically sound after-hours RN triage for senior living communities.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#18212F",
+  "icons": [
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/img/signia-mark.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
