@@ -140,7 +140,7 @@ HEAD_TEMPLATE = """<!doctype html>
 <meta name="description" content="{description}">
 <link rel="canonical" href="{canonical}">
 <meta name="robots" content="{robots}">
-<meta name="theme-color" content="#18212F">
+<meta name="theme-color" content="#FFFFFF">
 <meta name="author" content="Signia Solutions">
 
 <!-- Open Graph / Twitter -->

@@ -27,10 +27,14 @@
   --muted:    #5C6979;
   --line:     #E2E8F0;       /* decorative dividers / card edges */
   --line-2:   #EDF1F6;
-  --line-ui:  #8C94A2;       /* form-control borders — WCAG 2.2 SC 1.4.11 needs >=3:1 */
-  --line-btn: #858C9A;       /* ghost-button edge — clears 3:1 on white, tint AND brandtint */
+  --line-ui:  #828A98;       /* form-control + ghost-button edge. WCAG 2.2 SC 1.4.11 wants
+                                >=3:1 against the surface BEHIND it, and the pale-blue bands
+                                are darker than white, so this is set for the worst case. */
+  --line-btn: #828A98;
   --surface:  #FFFFFF;
-  --surface-2:#F7FAFC;
+  --surface-2:#F2F8FD;       /* blue-tinted, not grey — grey reads as dim next to a blue brand */
+  --sky:      #EAF5FF;       /* soft daylight band, replaces most of the old navy sections */
+  --sky-2:    #F6FBFF;
 
   /* Support */
   --amber:    #B45309;
@@ -139,6 +143,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .section--tight { padding-block: clamp(2.5rem, 5vw, 4rem); }
 .section--tint { background: var(--surface-2); }
 .section--brandtint { background: linear-gradient(180deg, var(--brand-tint) 0%, #fff 100%); }
+
+/* Soft daylight band. Carries the sections that used to be navy. */
+.section--sky {
+  background: linear-gradient(180deg, var(--sky) 0%, var(--sky-2) 100%);
+  border-top: 1px solid #DCEBFA; border-bottom: 1px solid #DCEBFA;
+}
 
 .section--dark {
   background:
@@ -269,7 +279,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   letter-spacing: .02em;
   padding: .6rem .75rem; border-radius: var(--radius-btn);
 }
-.nav__phone svg { width: 1.05em; height: 1.05em; color: var(--brand); }
+.nav__phone svg { width: 1.05em; height: 1.05em; color: var(--brand-ink); }
 .nav__phone:hover { color: var(--brand-ink); background: var(--brand-tint); }
 
 .nav__toggle {
@@ -307,61 +317,68 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    6. Hero
    -------------------------------------------------------------------------- */
+/* Daylight hero. Dark type on a light ground is what actually reads as "bright" —
+   lightening the text instead would just look washed out. */
 .hero {
   position: relative; overflow: hidden;
   background:
-    radial-gradient(1200px 600px at 78% -18%, rgba(0,148,239,.30), transparent 58%),
-    radial-gradient(820px 460px at -6% 108%, rgba(0,148,239,.16), transparent 60%),
-    var(--ink);
-  color: #C7D2E1;
-  padding-block: clamp(3.5rem, 8vw, 7rem);
+    radial-gradient(1150px 560px at 80% -20%, rgba(0,148,239,.20), transparent 62%),
+    radial-gradient(760px 420px at -6% 105%, rgba(0,148,239,.12), transparent 60%),
+    linear-gradient(180deg, #F1F8FF 0%, #FFFFFF 78%);
+  color: var(--body);
+  padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  border-bottom: 1px solid #DCEBFA;
 }
 .hero::after {
   /* watermark of the brand mark — decorative only */
   content: ""; position: absolute; right: -6%; bottom: -18%;
   width: min(46vw, 520px); aspect-ratio: 1;
-  background: currentColor;
+  background: var(--brand);
   -webkit-mask: url("../img/signia-mark.svg") no-repeat center / contain;
   mask: url("../img/signia-mark.svg") no-repeat center / contain;
-  opacity: .05; pointer-events: none;
+  opacity: .07; pointer-events: none;
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }
 
-.hero h1 { color: #fff; }
-.hero__lede { font-size: var(--step-1); color: #C2D0E2; max-width: 56ch; }
-.hero .eyebrow { color: #7EC8FF; }
+.hero h1 { color: var(--ink); }
+.hero__lede { font-size: var(--step-1); color: var(--body); max-width: 56ch; }
+.hero .eyebrow { color: var(--brand-ink); }
 
 .hero__badge {
   display: inline-flex; align-items: center; gap: .55rem;
-  background: rgba(0,148,239,.16); border: 1px solid rgba(0,148,239,.4);
-  color: #9FD8FF; border-radius: 999px; padding: .4rem .95rem;
+  background: #fff; border: 1px solid var(--brand-tint-2);
+  color: var(--brand-ink); border-radius: 999px; padding: .45rem 1rem;
+  box-shadow: var(--shadow-sm);
   font-size: var(--step--1); font-weight: 650; margin-bottom: 1.4rem;
 }
 .hero__badge .dot {
-  width: 8px; height: 8px; border-radius: 50%; background: #34D399; flex: none;
-  box-shadow: 0 0 0 4px rgba(52,211,153,.18);
+  width: 8px; height: 8px; border-radius: 50%; background: #0F9D63; flex: none;
+  box-shadow: 0 0 0 4px rgba(15,157,99,.16);
 }
 
 .hero__card {
-  background: rgba(255,255,255,.06);
-  border: 1px solid rgba(255,255,255,.14);
+  background: #fff;
+  border: 1px solid #DCEBFA;
   border-radius: var(--radius-lg);
   padding: clamp(1.35rem, 3vw, 2rem);
-  backdrop-filter: blur(6px);
+  box-shadow: var(--shadow-lg);
 }
-.hero__card h2 { font-size: var(--step-2); color: #fff; margin-bottom: 1rem; }
+.hero__card h2 { font-size: var(--step-2); color: var(--ink); margin-bottom: 1rem; }
 .hero__card ul { list-style: none; padding: 0; margin: 0; }
 .hero__card li {
   display: flex; gap: .75rem; align-items: flex-start;
-  padding: .7rem 0; border-bottom: 1px solid rgba(255,255,255,.1);
-  color: #CBD8E8; font-size: .98rem;
+  padding: .7rem 0; border-bottom: 1px solid var(--line-2);
+  color: var(--body); font-size: .98rem;
 }
 .hero__card li:last-child { border-bottom: 0; padding-bottom: 0; }
-.hero__card li svg { width: 20px; height: 20px; flex: none; color: #57C1FF; margin-top: .15rem; }
+.hero__card li svg { width: 20px; height: 20px; flex: none; color: var(--brand-ink); margin-top: .15rem; }
 
 /* Trust strip beneath the hero */
-.trustbar { background: var(--ink-2); color: #B6C4D6; border-top: 1px solid rgba(255,255,255,.08); }
+.trustbar {
+  background: var(--sky); color: var(--ink);
+  border-top: 1px solid #D2E7FF; border-bottom: 1px solid #D2E7FF;
+}
 .trustbar__list {
   display: flex; flex-wrap: wrap; gap: clamp(1rem, 4vw, 3rem);
   list-style: none; margin: 0; padding: 1.15rem 0;
@@ -369,7 +386,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   font-size: var(--step--1); font-weight: 600; letter-spacing: .04em;
 }
 .trustbar__list li { display: inline-flex; align-items: center; gap: .5rem; margin: 0; }
-.trustbar__list svg { width: 17px; height: 17px; color: var(--brand); flex: none; }
+.trustbar__list svg { width: 17px; height: 17px; color: var(--brand-ink); flex: none; }
 
 /* --------------------------------------------------------------------------
    7. Cards
@@ -417,7 +434,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* Checklist */
 .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; }
 .checklist li { display: flex; gap: .7rem; align-items: flex-start; margin: 0; }
-.checklist svg { width: 21px; height: 21px; color: var(--brand); flex: none; margin-top: .2rem; }
+.checklist svg { width: 21px; height: 21px; color: var(--brand-ink); flex: none; margin-top: .2rem; }
 .section--dark .checklist svg { color: #57C1FF; }
 
 /* Pull quote */
@@ -533,13 +550,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    12. CTA band
    -------------------------------------------------------------------------- */
 .cta-band {
-  background:
-    radial-gradient(900px 420px at 80% 0%, rgba(0,148,239,.28), transparent 60%),
-    var(--ink);
-  color: #C2D0E2;
-  border-radius: 0;
+  background: linear-gradient(135deg, #E8F4FE 0%, #F5FAFF 62%, #FFFFFF 100%);
+  color: var(--body);
+  border-top: 1px solid #CBE3F8; border-bottom: 1px solid #CBE3F8;
 }
-.cta-band h2 { color: #fff; }
+.cta-band h2 { color: var(--ink); }
 .cta-band__inner { display: grid; gap: 2rem; align-items: center; }
 @media (min-width: 860px) { .cta-band__inner { grid-template-columns: 1.35fr .65fr; } }
 .cta-band .btn-row { justify-content: flex-start; }
@@ -639,21 +654,22 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    -------------------------------------------------------------------------- */
 .page-hero {
   background:
-    radial-gradient(900px 420px at 85% -30%, rgba(0,148,239,.26), transparent 60%),
-    var(--ink);
-  color: #B6C4D6;
-  padding-block: clamp(3rem, 6vw, 5rem) clamp(2.5rem, 5vw, 4rem);
+    radial-gradient(900px 420px at 85% -30%, rgba(0,148,239,.18), transparent 60%),
+    linear-gradient(180deg, #F1F8FF 0%, #FFFFFF 100%);
+  color: var(--body);
+  border-bottom: 1px solid #DCEBFA;
+  padding-block: clamp(3rem, 6vw, 4.5rem) clamp(2.5rem, 5vw, 3.5rem);
 }
-.page-hero h1 { color: #fff; max-width: 20ch; }
-.page-hero .lede { color: #C2D0E2; max-width: 62ch; }
+.page-hero h1 { color: var(--ink); max-width: 20ch; }
+.page-hero .lede { color: var(--body); max-width: 62ch; }
 
 .breadcrumb { margin-bottom: 1.25rem; font-size: var(--step--1); }
 .breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; padding: 0; margin: 0; }
-.breadcrumb li { margin: 0; display: inline-flex; align-items: center; gap: .45rem; color: #8FA3BC; }
-.breadcrumb li + li::before { content: "/"; color: #5B6E88; }
-.breadcrumb a { color: #A9C6E4; text-decoration: none; }
-.breadcrumb a:hover { color: #fff; text-decoration: underline; }
-.breadcrumb [aria-current="page"] { color: #fff; font-weight: 600; }
+.breadcrumb li { margin: 0; display: inline-flex; align-items: center; gap: .45rem; color: var(--muted); }
+.breadcrumb li + li::before { content: "/"; color: #7C8A9C; }
+.breadcrumb a { color: var(--brand-ink); text-decoration: none; }
+.breadcrumb a:hover { color: var(--brand-deep); text-decoration: underline; }
+.breadcrumb [aria-current="page"] { color: var(--ink); font-weight: 600; }
 
 /* --------------------------------------------------------------------------
    17. Utilities & motion
@@ -700,7 +716,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .card--note h3 { font-size: var(--step-0); margin-bottom: .35rem; }
 .card--note p { margin: 0; font-size: var(--step--1); }
 
-.cta-band__sub { margin: 0; color: #B6C4D6; }
+.cta-band__sub { margin: 0; color: var(--body); }
 .standard-line { color: #fff; font-weight: 700; font-size: var(--step-2); margin-top: 1.5rem; }
 .brand--footer { margin-right: 0; }
 .badge-award--inline { display: inline-flex; }
