@@ -38,6 +38,8 @@
 
   /* Support */
   --amber:    #B45309;
+  --amber-tint: #FDF2E6;     /* icon-chip wash behind an amber glyph */
+  --amber-line: #EFD5B4;     /* hairline that reads as amber without shouting */
   --green:    #0F7B54;
 
   /* Type scale (fluid) */
@@ -420,16 +422,40 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .section--dark .card:hover { border-color: rgba(0,148,239,.5); background: rgba(255,255,255,.08); }
 .section--dark .card__icon { background: rgba(0,148,239,.18); color: #7EC8FF; }
 
-/* Problem list (the after-hours gap) */
-.problem-list { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: .7rem; }
-.problem-list li {
-  display: flex; gap: .8rem; align-items: flex-start; margin: 0;
-  background: #fff; border: 1px solid var(--line);
-  border-left: 3px solid var(--amber);
-  border-radius: 10px; padding: .85rem 1.1rem;
-  font-weight: 600; color: var(--ink);
+/* Problem list (the after-hours gap).
+   Each item gets its own icon rather than four identical warning triangles —
+   repeating one glyph reads as decoration, distinct glyphs carry meaning.
+   auto-fit lets it sit 2-up in the wide left column and stack on a phone. */
+.problem-list {
+  list-style: none; padding: 0; margin: 0 0 1.75rem;
+  display: grid; gap: .8rem;
+  /* auto-fit rather than a viewport media query: this list sits in the left
+     column of .split, which itself narrows when .split goes two-up at 900px.
+     Container width is therefore not a function of viewport width, and a
+     breakpoint guesses wrong at exactly that size. 265px is the track width
+     below which the labels start breaking mid-phrase. */
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr));
 }
-.problem-list svg { width: 20px; height: 20px; color: var(--amber); flex: none; margin-top: .12rem; }
+.problem-list li {
+  display: flex; flex-direction: column; align-items: flex-start; margin: 0;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 1.15rem 1.2rem 1.2rem;
+  font-weight: 650; color: var(--ink); line-height: 1.35;
+  box-shadow: var(--shadow-sm);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.problem-list li:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  border-color: var(--amber-line);
+}
+.problem-list__icon {
+  width: 46px; height: 46px; border-radius: 12px; margin-bottom: .85rem;
+  display: grid; place-items: center;
+  background: var(--amber-tint); color: var(--amber);
+  box-shadow: inset 0 0 0 1px var(--amber-line);
+}
+.problem-list__icon svg { width: 24px; height: 24px; }
 
 /* Checklist */
 .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; }
