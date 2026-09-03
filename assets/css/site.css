@@ -319,44 +319,48 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    6. Hero
    -------------------------------------------------------------------------- */
-/* Daylight hero. Dark type on a light ground is what actually reads as "bright" —
-   lightening the text instead would just look washed out. */
+/* Night hero. The product is the hours when everyone else is asleep, so the page
+   opens after dark and the white call card reads as the one light still on.
+   This is an accent, not a return to the eight dark bands the palette pass
+   removed — the hero and the closing commitment band are dark, and everything
+   between them stays bright. */
 .hero {
   position: relative; overflow: hidden;
   background:
-    radial-gradient(1150px 560px at 80% -20%, rgba(0,148,239,.20), transparent 62%),
-    radial-gradient(760px 420px at -6% 105%, rgba(0,148,239,.12), transparent 60%),
-    linear-gradient(180deg, #F1F8FF 0%, #FFFFFF 78%);
-  color: var(--body);
+    radial-gradient(1150px 560px at 78% -18%, rgba(0,148,239,.30), transparent 62%),
+    radial-gradient(820px 460px at -8% 108%, rgba(0,148,239,.16), transparent 62%),
+    linear-gradient(180deg, #0E1622 0%, var(--ink) 62%, #1B2536 100%);
+  color: #C7D2E1;
   padding-block: clamp(3.5rem, 8vw, 6.5rem);
-  border-bottom: 1px solid #DCEBFA;
+  border-bottom: 1px solid rgba(255,255,255,.10);
 }
 .hero::after {
   /* watermark of the brand mark — decorative only */
   content: ""; position: absolute; right: -6%; bottom: -18%;
   width: min(46vw, 520px); aspect-ratio: 1;
-  background: var(--brand);
+  background: #7EC8FF;
   -webkit-mask: url("../img/signia-mark.svg") no-repeat center / contain;
   mask: url("../img/signia-mark.svg") no-repeat center / contain;
-  opacity: .07; pointer-events: none;
+  opacity: .06; pointer-events: none;
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }
 
-.hero h1 { color: var(--ink); }
-.hero__lede { font-size: var(--step-1); color: var(--body); max-width: 56ch; }
-.hero .eyebrow { color: var(--brand-ink); }
+.hero h1 { color: #fff; }
+.hero__lede { font-size: var(--step-1); color: #B9C7DA; max-width: 56ch; }
+.hero .eyebrow { color: #7EC8FF; }
 
 .hero__badge {
   display: inline-flex; align-items: center; gap: .55rem;
-  background: #fff; border: 1px solid var(--brand-tint-2);
-  color: var(--brand-ink); border-radius: 999px; padding: .45rem 1rem;
-  box-shadow: var(--shadow-sm);
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.17);
+  color: #DCE7F5; border-radius: 999px; padding: .45rem 1rem;
   font-size: var(--step--1); font-weight: 650; margin-bottom: 1.4rem;
 }
 .hero__badge .dot {
-  width: 8px; height: 8px; border-radius: 50%; background: #0F9D63; flex: none;
-  box-shadow: 0 0 0 4px rgba(15,157,99,.16);
+  /* brightened off the body green — .16 alpha of the light-mode dot disappears
+     against the night ground */
+  width: 8px; height: 8px; border-radius: 50%; background: #29CE90; flex: none;
+  box-shadow: 0 0 0 4px rgba(41,206,144,.22);
 }
 
 .hero__card {
@@ -364,7 +368,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   border: 1px solid #DCEBFA;
   border-radius: var(--radius-lg);
   padding: clamp(1.35rem, 3vw, 2rem);
-  box-shadow: var(--shadow-lg);
+  /* --shadow-lg is tuned for a light ground and vanishes on the night hero;
+     this lifts the card off the dark instead of sinking into it */
+  box-shadow: 0 26px 64px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.05);
 }
 .hero__card h2 { font-size: var(--step-2); color: var(--ink); margin-bottom: 1rem; }
 .hero__card ul { list-style: none; padding: 0; margin: 0; }
@@ -539,10 +545,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .media-frame img { width: 100%; }
 
-.badge-award { display: inline-flex; align-items: center; gap: 1rem; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem 1.35rem; box-shadow: var(--shadow-sm); }
-.badge-award img { width: 108px; height: auto; flex: none; }
-.badge-award p { margin: 0; font-size: var(--step--1); color: var(--muted); }
-.badge-award strong { display: block; color: var(--ink); font-size: var(--step-0); }
 
 /* --------------------------------------------------------------------------
    11. FAQ
@@ -745,7 +747,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .cta-band__sub { margin: 0; color: var(--body); }
 .standard-line { color: #fff; font-weight: 700; font-size: var(--step-2); margin-top: 1.5rem; }
 .brand--footer { margin-right: 0; }
-.badge-award--inline { display: inline-flex; }
 .link-inline { font-size: inherit; font-weight: 600; display: inline; }
 .sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
 
