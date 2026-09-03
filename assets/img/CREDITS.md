@@ -29,12 +29,15 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 
 | File | Source | Photographer | Used on |
 |---|---|---|---|
-| `rn-triage-call.webp` | [Pexels 7195317](https://www.pexels.com/photo/7195317/) | Karola G | Home — "The after-hours gap is real" |
+| `rn-triage-call.webp` | [Pexels 7195317](https://www.pexels.com/photo/7195317/) | Karola G | *(unused — superseded by `night-triage-rn.webp`)* |
+| `night-triage-rn.webp` | Inherited from signiasolutions.com (`2026/03/Night-shift-triage-nurse-at-work.png`) | **AI-generated — see note** | Home — "The after-hours gap is real" |
+| `rn-headset-portrait.webp` | Inherited from signiasolutions.com (`2026/03/A-professional-regis.png`) | **AI-generated — see note** | *(available, not yet placed)* |
+| `care-bedside.webp` | Inherited from signiasolutions.com (`2024/03/PHOTO-51001274-WEB.jpg`) | unknown — commercial stock, **rights unconfirmed** | *(available, not yet placed)* |
 | `rn-triage-workstation.webp` | [Pexels 7195308](https://www.pexels.com/photo/7195308/) | Karola G | Nurse Triage — "Our RNs support your team by" |
 | `senior-living-residents.webp` | [Pexels 39191570](https://www.pexels.com/photo/39191570/) | SilverKBlack | Home — "Who we serve" |
 | `nurse-careers.webp` | [Pexels 4930705](https://www.pexels.com/photo/4930705/) | mix-and-match-studio | Careers — "Why Signia" |
 | `care-team.webp` | Inherited from the previous signiasolutions.com WordPress site (`2024/03/health-head-2.jpg`) | unknown — **see note** | Home, Who We Are |
-| `best-places-to-work-mn-2026.webp` | Inherited from the previous site (`2026/01/2026_BPLogoMinnesota.png`) | Best Places to Work Minnesota | Home, Who We Are, Careers |
+| `leadingage-mn-2026-business-partner.webp` | Inherited from the previous site (`2026/01/2026_BPLogoMinnesota.png`) | LeadingAge Minnesota | Home, Who We Are, Careers |
 | `signia-mark.svg`, `favicon-*.png`, `icon-*.png`, `apple-touch-icon.png` | Traced from the official logo `Signia.png` | Signia Solutions | Site-wide |
 | `og-default.png` | Generated for this site from the brand assets | — | Social share card |
 
@@ -46,8 +49,26 @@ to `care-team.webp`** before treating it as cleared — it looks like commercial
 stock. If the licence cannot be produced, replace it; a same-shaped substitute
 is a ten-minute job.
 
-The award badge should also be checked against the Best Places to Work Minnesota
-usage terms, and against whether the 2026 award is still current.
+**The badge was previously mislabelled here and on three pages as "Best Places to
+Work Minnesota, 2026".** The artwork is in fact the **LeadingAge Minnesota 2026
+Business Partner** mark — a trade-association partner designation, not an
+employer award. Corrected 2026-09-03. Check it against LeadingAge Minnesota's
+mark-usage terms and confirm the partnership is current for 2026.
+
+### Note on the AI-generated images
+
+`night-triage-rn.webp` and `rn-headset-portrait.webp` were generated, not
+photographed — the originals on the WordPress site carry the tell-tale artefacts.
+Both were cropped here to remove visible defects: the first had a clipboard
+reading "Triage Assessmen?" in broken lettering, the second had the Signia
+wordmark baked into the bottom of the raster. Residual small artefacts remain in
+the first (scrambled micro-text on the ID badge lanyard) — legible only when
+zoomed, but they are there.
+
+Two things follow. There is **no model release**, because there is no model, so
+these cannot be captioned as Signia staff. And on a healthcare site, synthetic
+clinical imagery is a credibility risk if a visitor spots it. Prefer real
+photography of the actual team as soon as it exists.
 
 ## Processing
 
