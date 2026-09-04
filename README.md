@@ -92,8 +92,8 @@ Everything is derived from the real logo, not eyeballed.
 
 | Token | Value | Where it's used |
 |---|---|---|
-| `--brand` | `#0094EF` | The exact colour of the official logo file. Marks, icons, borders, focus ring, large display numerals. |
-| `--brand-action` | `#0076BF` | Button fills. **Not** the logo blue — white text on `#0094EF` is only 3.24:1 and fails WCAG AA. |
+| `--brand` | `#38a6e9` | Brand blue. Marks, icons, borders, decorative rules, the glows in dark bands. **Not** the focus ring or display numerals: at 2.69:1 on white it misses the 3:1 those require. |
+| `--brand-action` | `#0076BF` | Button fills, focus indicators, control edges, display numerals — anything that must clear 3:1 on white (it is 4.84:1). |
 | `--brand-ink` | `#0069AE` | Body-size links and eyebrow labels (5.78:1 on white). |
 | `--ink` | `#18212F` | Headlines and dark sections — taken from the live site's own CSS. |
 | `--brand-tint` | `#EAF4FE` | Section washes, icon chips. |

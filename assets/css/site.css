@@ -1,7 +1,6 @@
 /* ==========================================================================
    Signia Solutions — site stylesheet
-   Brand: #0094EF (traced from the official logo mark). Ink navy #18212F is text;
-   dark surfaces use the brighter --night #0B4C8C.
+   Brand: #38a6e9. Ink navy #18212F is text; dark surfaces use --night #0B4C8C.
    No frameworks, no external requests: every byte here ships from our origin,
    which is what keeps LCP/CLS clean on Core Web Vitals.
    ========================================================================== */
@@ -11,9 +10,15 @@
    -------------------------------------------------------------------------- */
 :root {
   /* Brand */
-  --brand:        #0094EF;   /* official logo blue — marks, icons, borders, large type.
-                                White text on it is only 3.24:1, so it is NEVER a fill
-                                behind body-size text. Use --brand-action for that. */
+  --brand:        #38a6e9;   /* brand blue — marks, icons, borders, decorative rules.
+                                Only 2.69:1 on white, so it is NEVER a fill behind text
+                                and never carries a focus ring, a control edge or a
+                                display numeral on a light ground — all of those want
+                                >=3:1 and use --brand-action instead. Decoration and the
+                                logo mark, which WCAG exempts, are what is left. */
+  --brand-logo:   #0094EF;   /* the colour traced from the official logo file. The mark
+                                keeps it even as --brand moves, because the logo is the
+                                one thing on the page that is not ours to restyle. */
   --brand-action: #0076BF;   /* button fill — white label passes 4.83:1 */
   --brand-action-hover: #00609B; /* 7.43:1 */
   --brand-ink:    #0069AE;   /* darkened for body-size links (>=4.5:1 on white) */
@@ -72,7 +77,7 @@
   --shadow-sm: 0 1px 2px rgba(24,33,47,.06), 0 1px 3px rgba(24,33,47,.05);
   --shadow:    0 4px 12px rgba(24,33,47,.07), 0 12px 32px rgba(24,33,47,.06);
   --shadow-lg: 0 10px 24px rgba(24,33,47,.09), 0 28px 60px rgba(24,33,47,.10);
-  --ring: 0 0 0 3px rgba(0,148,239,.38);
+  --ring: 0 0 0 3px rgba(56,166,233,.38);
 }
 
 /* --------------------------------------------------------------------------
@@ -123,7 +128,9 @@ strong { color: var(--ink); font-weight: 650; }
 hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
 :focus-visible {
-  outline: 2px solid var(--brand);
+  /* --brand-action, not --brand: a focus indicator has to clear 3:1 against the
+     surface behind it (WCAG 2.2 SC 1.4.11) and --brand is 2.69:1 on white. */
+  outline: 2px solid var(--brand-action);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -163,8 +170,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
 .section--dark {
   background:
-    radial-gradient(1100px 520px at 85% -10%, rgba(0,148,239,.22), transparent 60%),
-    radial-gradient(760px 420px at 0% 110%, rgba(0,148,239,.13), transparent 62%),
+    radial-gradient(1100px 520px at 85% -10%, rgba(56,166,233,.22), transparent 60%),
+    radial-gradient(760px 420px at 0% 110%, rgba(56,166,233,.13), transparent 62%),
     var(--night);
   color: #C7D2E1;
 }
@@ -265,7 +272,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 
 .brand { display: inline-flex; align-items: center; gap: .7rem; text-decoration: none; margin-right: auto; }
-.brand__mark { width: 34px; height: 34px; color: var(--brand); flex: none; }
+.brand__mark { width: 34px; height: 34px; color: var(--brand-logo); flex: none; }
 .brand__text { display: flex; flex-direction: column; line-height: 1.05; }
 .brand__name {
   font-size: 1.02rem; font-weight: 800; color: var(--ink);
@@ -336,8 +343,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .hero {
   position: relative; overflow: hidden;
   background:
-    radial-gradient(1150px 560px at 78% -18%, rgba(0,148,239,.30), transparent 62%),
-    radial-gradient(820px 460px at -8% 108%, rgba(0,148,239,.16), transparent 62%),
+    radial-gradient(1150px 560px at 78% -18%, rgba(56,166,233,.30), transparent 62%),
+    radial-gradient(820px 460px at -8% 108%, rgba(56,166,233,.16), transparent 62%),
     linear-gradient(180deg, var(--night-deep) 0%, var(--night) 62%, var(--night-lift) 100%);
   color: #C7D2E1;
   padding-block: clamp(3.5rem, 8vw, 6.5rem);
@@ -356,6 +363,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
      is 2.86:1, so at 150% the travel was wide enough to pan the nurse clean out
      of frame and leave an abstract gradient. */
   background-size: auto 120%;
+  /* The keyframes carry no fill-mode, so when reduced-motion collapses the
+     animation this base position is what remains on screen. Without it the
+     fallback is 0% 0% — the empty blurred corner, with the nurse cropped off
+     the right edge. It sits mid-way between the two keyframe stops. */
+  background-position: 87% 51%;
   animation: hero-pan 22s ease-in-out infinite alternate;
   pointer-events: none;
 }
@@ -367,7 +379,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .hero__aurora {
   position: absolute; inset: -20%; z-index: 0; pointer-events: none;
   background:
-    radial-gradient(38% 46% at 22% 30%, rgba(0,148,239,.50), transparent 70%),
+    radial-gradient(38% 46% at 22% 30%, rgba(56,166,233,.50), transparent 70%),
     radial-gradient(32% 40% at 74% 68%, rgba(64,196,255,.38), transparent 72%),
     radial-gradient(30% 34% at 52% 12%, rgba(0,110,190,.34), transparent 70%);
   filter: blur(6px);
@@ -500,8 +512,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   border-color: rgba(255,255,255,.12);
   box-shadow: none; color: #C2D0E2;
 }
-.section--dark .card:hover { border-color: rgba(0,148,239,.5); background: rgba(255,255,255,.08); }
-.section--dark .card__icon { background: rgba(0,148,239,.18); color: #7EC8FF; }
+.section--dark .card:hover { border-color: rgba(56,166,233,.5); background: rgba(255,255,255,.08); }
+.section--dark .card__icon { background: rgba(56,166,233,.18); color: #7EC8FF; }
 
 /* Problem list (the after-hours gap).
    Each item gets its own icon rather than four identical warning triangles —
@@ -582,8 +594,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .steps h3 { font-size: var(--step-1); margin-bottom: .35rem; }
 .steps p { margin-bottom: 0; }
 
-.section--dark .steps > li::before { box-shadow: 0 0 0 5px rgba(0,148,239,.18); }
-.section--dark .steps > li::after { background: linear-gradient(180deg, rgba(0,148,239,.45), rgba(255,255,255,.08)); }
+.section--dark .steps > li::before { box-shadow: 0 0 0 5px rgba(56,166,233,.18); }
+.section--dark .steps > li::after { background: linear-gradient(180deg, rgba(56,166,233,.45), rgba(255,255,255,.08)); }
 
 /* Numbered reason cards (roman numerals in source copy) */
 .reasons { display: grid; gap: clamp(1rem, 2.2vw, 1.6rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); counter-reset: reason; }
@@ -598,7 +610,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    -------------------------------------------------------------------------- */
 .stats { display: grid; gap: clamp(1rem, 2.5vw, 2rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 .stat { text-align: center; padding: 1.25rem .75rem; }
-.stat__value { display: block; font-size: var(--step-4); font-weight: 800; color: var(--brand); line-height: 1; letter-spacing: -0.03em; }
+/* Large bold text still needs 3:1; --brand does not reach it on white. */
+.stat__value { display: block; font-size: var(--step-4); font-weight: 800; color: var(--brand-action); line-height: 1; letter-spacing: -0.03em; }
 .stat__label { display: block; margin-top: .6rem; font-size: var(--step--1); color: var(--muted); font-weight: 600; }
 .section--dark .stat__value { color: #57C1FF; }
 .section--dark .stat__label { color: #A9B8CC; }
@@ -641,7 +654,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .faq summary::after {
   content: ""; position: absolute; right: 1.3rem; top: 50%;
   width: 11px; height: 11px; margin-top: -6px;
-  border-right: 2px solid var(--brand); border-bottom: 2px solid var(--brand);
+  border-right: 2px solid var(--brand-action); border-bottom: 2px solid var(--brand-action);
   transform: rotate(45deg); transition: transform .2s ease;
 }
 .faq details[open] summary::after { transform: rotate(-135deg); margin-top: -2px; }
@@ -695,7 +708,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   padding-right: 2.5rem;
 }
 .input:focus, .select:focus, .textarea:focus {
-  outline: none; border-color: var(--brand); box-shadow: var(--ring);
+  outline: none; border-color: var(--brand-action); box-shadow: var(--ring);
 }
 .input::placeholder, .textarea::placeholder { color: #6E7784; }
 
@@ -782,7 +795,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    -------------------------------------------------------------------------- */
 .page-hero {
   background:
-    radial-gradient(900px 420px at 85% -30%, rgba(0,148,239,.18), transparent 60%),
+    radial-gradient(900px 420px at 85% -30%, rgba(56,166,233,.18), transparent 60%),
     linear-gradient(180deg, #F1F8FF 0%, #FFFFFF 100%);
   color: var(--body);
   border-bottom: 1px solid #DCEBFA;
