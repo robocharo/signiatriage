@@ -832,7 +832,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    rather than a stripe behind the heading. */
 .page-hero--media {
   position: relative; overflow: hidden;
-  background: var(--night-deep);
+  background: #0E1218;   /* neutral, so nothing blue shows if the photo fails to load */
   border-bottom: 0;
   padding-block: clamp(4rem, 9vw, 7rem) clamp(3.5rem, 8vw, 6rem);
 }
@@ -850,13 +850,18 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .page-hero--media::after {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  /* Neutral, not azure. A coloured scrim repaints the photograph — the warm lamp
+     and the scrubs all came out one flat blue. This only darkens, so the image
+     keeps its own colour, and it darkens hardest at the left where the copy sits
+     (white lands ~15:1 there) while thinning to .38 on the right so the picture
+     is actually visible. */
   background:
-    linear-gradient(180deg, rgba(10,87,172,.45) 0%, rgba(10,87,172,0) 24%),
+    linear-gradient(180deg, rgba(8,11,16,.42) 0%, rgba(8,11,16,0) 24%),
     linear-gradient(100deg,
-      rgba(10,87,172,.95) 0%,
-      rgba(11,102,201,.90) 38%,
-      rgba(20,120,224,.78) 66%,
-      rgba(30,134,236,.66) 100%);
+      rgba(8,11,16,.88) 0%,
+      rgba(8,11,16,.80) 38%,
+      rgba(10,14,20,.55) 66%,
+      rgba(12,16,22,.38) 100%);
 }
 /* Both stops keep her face inside the window; the travel is ~200px. */
 @keyframes triage-pan {
