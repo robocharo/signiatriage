@@ -46,9 +46,9 @@ PAGES_MANIFEST = [
         "url": "/",
         "nav": "",
         "title": "After-Hours RN Triage for Senior Living | Signia Solutions",
-        "description": "Minnesota-based RNs answer your community's after-hours calls — assessing urgency, guiding staff and documenting every call. Flat-fee, census-aligned pricing.",
+        "description": "Experienced RNs answer your community's after-hours calls — assessing urgency, guiding staff and documenting every call. Flat-fee, census-aligned pricing.",
         "og_title": "After-Hours RN Triage for Senior Living | Signia Solutions",
-        "og_description": "Calm, clinically sound after-hours RN triage for senior living communities. Minnesota-based nurses, every call documented, flat-fee pricing.",
+        "og_description": "Calm, clinically sound after-hours RN triage for senior living communities. Experienced RNs, every call documented, flat-fee pricing.",
         "priority": "1.0",
         "changefreq": "monthly",
     },
@@ -60,7 +60,7 @@ PAGES_MANIFEST = [
         "title": "Nurse Triage for Assisted Living & Memory Care | Signia",
         "description": "How after-hours RN triage works: six reasons it matters, our five-step workflow, and the impact on resident safety, ER transfers and staff confidence.",
         "og_title": "After-Hours Nurse Triage for Senior Living Communities",
-        "og_description": "Not a call center — clinical partnership. See the five-step workflow our Minnesota RNs follow on every after-hours call.",
+        "og_description": "Not a call center — clinical partnership. See the five-step workflow our RNs follow on every after-hours call.",
         "priority": "0.9",
         "changefreq": "monthly",
     },
@@ -72,7 +72,7 @@ PAGES_MANIFEST = [
         "title": "Who We Are | Signia Solutions After-Hours RN Triage",
         "description": "Signia Solutions was built to close the after-hours gap in senior living. Meet our values, the communities we serve and how we partner with your team.",
         "og_title": "Who We Are | Signia Solutions",
-        "og_description": "Minnesota-based RNs closing the after-hours gap for senior living communities. Every call. Every shift. Every night.",
+        "og_description": "Experienced RNs closing the after-hours gap for senior living communities. Every call. Every shift. Every night.",
         "priority": "0.8",
         "changefreq": "yearly",
     },
@@ -82,7 +82,7 @@ PAGES_MANIFEST = [
         "url": "/careers/",
         "nav": "/careers/",
         "title": "Nursing Careers — Remote RN Triage Jobs | Signia Solutions",
-        "description": "Join a Minnesota team of experienced triage nurses. Supportive culture, competitive compensation and real professional growth. Apply today.",
+        "description": "Join a team of experienced triage nurses. Supportive culture, competitive compensation and real professional growth. Apply today.",
         "og_title": "Start Your Journey — Nursing Careers at Signia Solutions",
         "og_description": "Experienced, compassionate nurses wanted. Supportive environment, competitive compensation, room to grow.",
         "priority": "0.7",
@@ -93,7 +93,7 @@ PAGES_MANIFEST = [
         "out": "contact/index.html",
         "url": "/contact/",
         "nav": "/contact/",
-        "title": "Contact Signia Solutions | After-Hours RN Triage, MN",
+        "title": "Contact Signia Solutions | After-Hours RN Triage",
         "description": "Talk to our clinical and operations team about after-hours triage for your community. Call (763) 308-3282 — most inquiries answered within one business day.",
         "og_title": "Contact Signia Solutions",
         "og_description": "We're here when your community needs us. Call (763) 308-3282 or send us a message.",
@@ -206,7 +206,7 @@ ORGANIZATION = {
     "faxNumber": "+1-612-395-5381",
     "email": "hi@signiasolutions.com",
     "address": ADDRESS,
-    "areaServed": {"@type": "State", "name": "Minnesota"},
+    "areaServed": {"@type": "Country", "name": "United States"},
     "knowsAbout": [
         "After-hours nurse triage",
         "Assisted living clinical support",
@@ -256,7 +256,7 @@ SERVICE = {
     "name": "After-Hours RN Nurse Triage for Senior Living Communities",
     "serviceType": "After-hours registered nurse telephone triage",
     "provider": {"@id": f"{SITE_URL}/#organization"},
-    "areaServed": {"@type": "State", "name": "Minnesota"},
+    "areaServed": {"@type": "Country", "name": "United States"},
     "audience": {
         "@type": "Audience",
         "audienceType": "Assisted living, memory care and independent living operators",
@@ -317,7 +317,7 @@ FAQ_ITEMS = [
     ),
     (
         "How does Signia Solutions pricing work?",
-        "Pricing is a flat monthly fee aligned to your census, built from Minnesota RN wage "
+        "Pricing is a flat monthly fee aligned to your census, built from RN wage "
         "economics. That gives you a predictable monthly cost rather than per-call billing that "
         "spikes in a hard month.",
     ),
@@ -336,8 +336,8 @@ FAQ_ITEMS = [
     ),
     (
         "Where is Signia Solutions located?",
-        "Signia Solutions is based at 10405 6th Ave N, Plymouth, Minnesota 55441, and our triage "
-        "nurses are Minnesota-based. You can reach us at (763) 308-3282.",
+        "Signia Solutions is based at 10405 6th Ave N, Plymouth, Minnesota 55441. "
+        "You can reach us at (763) 308-3282.",
     ),
 ]
 

@@ -143,8 +143,8 @@ dependency and a render-blocking round trip.
 |---|---|---|
 | Home | after-hours RN triage for senior living | after hours nurse senior living, on-call RN assisted living |
 | Nurse Triage | after-hours nurse triage assisted living / memory care | reduce unnecessary ER transfers assisted living, outsourced on-call nursing, senior living triage workflow |
-| Who We Are | Minnesota nurse triage company | RN triage senior living Minnesota |
-| Careers | remote RN triage jobs Minnesota | triage nurse jobs senior living |
+| Who We Are | after-hours nurse triage company | RN triage for senior living |
+| Careers | remote RN triage jobs | triage nurse jobs senior living |
 | Contact | nurse triage Plymouth MN | after hours nursing Twin Cities |
 
 **Answer-engine (AEO) readiness.** The eight FAQ answers are written to stand alone
