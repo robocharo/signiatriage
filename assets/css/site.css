@@ -137,6 +137,16 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   border-radius: 4px;
 }
 
+/* Accented word in a headline — the one typographic device the live site has
+   that this rebuild lacked; it sets "AFTER-HOURS" apart from the rest of the
+   line. --brand-action, not --brand, because on white --brand is 2.69:1 and
+   even display type needs 3:1. On a photographic hero the ground is dark, so a
+   light tint carries it there instead. */
+.hl { color: var(--brand-action); }
+.hero .hl,
+.page-hero--media .hl,
+.section--dark .hl { color: #8FD3FF; }
+
 ::selection { background: var(--brand-tint-2); color: var(--ink); }
 
 /* Skip link — first tab stop, WCAG 2.4.1 */
