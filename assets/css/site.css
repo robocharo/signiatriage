@@ -879,17 +879,35 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   background: #0E1218;   /* neutral, so nothing blue shows if the photo fails to load */
   border-bottom: 0;
   padding-block: clamp(4rem, 9vw, 7rem) clamp(3.5rem, 8vw, 6rem);
+  /* The picture is a variable so a second page can reuse this whole treatment
+     — scrim, contrast rules, motion — by overriding three values. */
+  --hero-img: url("../img/triage-hero-bg.webp");
+  --hero-size: auto 165%;
+  --hero-pos: 60% 50%;
+}
+
+/* Who We Are: a wider photo (2.68:1 against the triage shot's 1.78:1), so it
+   needs less oversize to leave the same room to travel. */
+.page-hero--who {
+  --hero-img: url("../img/who-hero-bg.webp");
+  --hero-size: auto 128%;
+  --hero-pos: 68% 44%;
+}
+.page-hero--who::before { animation: who-pan 22s ease-in-out infinite alternate; }
+@keyframes who-pan {
+  from { background-position: 80% 42%; }
+  to   { background-position: 52% 56%; }
 }
 .page-hero--media > .container { position: relative; z-index: 1; }
 .page-hero--media::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image: url("../img/triage-hero-bg.webp");
+  background-image: var(--hero-img);
   background-repeat: no-repeat;
   /* 150%, not 122%: this photo is 1.78:1 where the home hero's is 2.86:1, so at
      the same oversize it had only ~56px of travel and measured 1.8% movement —
      technically animating, visibly still. */
-  background-size: auto 165%;
-  background-position: 60% 50%;   /* the still frame when motion is reduced */
+  background-size: var(--hero-size);
+  background-position: var(--hero-pos);   /* the still frame when motion is reduced */
   animation: triage-pan 20s ease-in-out infinite alternate;
 }
 .page-hero--media::after {

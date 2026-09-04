@@ -43,6 +43,8 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `care-team-band.webp` | Inherited from signiasolutions.com (`2024/03/hero-bg6.png`) | unknown — commercial stock, **rights unconfirmed** | Home — "The impact on your community" |
 | `signia-mark.svg`, `favicon-*.png`, `icon-*.png`, `apple-touch-icon.png` | Traced from the official logo `Signia.png` | Signia Solutions | Site-wide |
 | `og-default.png` | Generated for this site from the brand assets | — | Social share card |
+| `who-hero-bg.webp` | Same original as `care-team.webp` (`2024/03/health-head-2.jpg`) | unknown — **see note** | Who We Are — page hero background |
+| `who-story.webp` | Inherited from signiasolutions.com (`2026/02/cw25_image_modern-workplace-de_02.jpg`) | unknown — commercial stock, **rights unconfirmed** | Who We Are — "Who We Are" |
 
 ### Note on inherited images
 
