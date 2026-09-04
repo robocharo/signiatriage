@@ -1,6 +1,6 @@
 /* ==========================================================================
    Signia Solutions — site stylesheet
-   Brand: #38a6e9. Ink navy #18212F is text; dark surfaces use --night #0B4C8C.
+   Brand: #38a6e9. Ink navy #18212F is text; dark surfaces use azure --night #0B66C9.
    No frameworks, no external requests: every byte here ships from our origin,
    which is what keeps LCP/CLS clean on Core Web Vitals.
    ========================================================================== */
@@ -30,9 +30,11 @@
      near-black for headline text on white, but the dark *bands* wanted to be
      brighter and unmistakably blue. Changing one token for both would have
      dragged every headline toward mid-blue and cost contrast on white. */
-  --night:      #0B4C8C;     /* hero, dark sections, footer */
-  --night-deep: #08325C;
-  --night-lift: #0F5AA3;
+  --night:      #0B66C9;     /* azure — hero, dark sections, footer. Pushed as bright as
+                                the text allows: at #007FFF white is only 3.83:1, so body
+                                copy on it would fail. Here white is 5.59:1. */
+  --night-deep: #0A57AC;
+  --night-lift: #1478E0;
 
   /* Neutrals */
   --ink:      #18212F;       /* headline navy — text only */
@@ -173,10 +175,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
     radial-gradient(1100px 520px at 85% -10%, rgba(56,166,233,.22), transparent 60%),
     radial-gradient(760px 420px at 0% 110%, rgba(56,166,233,.13), transparent 62%),
     var(--night);
-  color: #C7D2E1;
+  color: #E6F0FA;
 }
 .section--dark h2, .section--dark h3, .section--dark h4 { color: #fff; }
-.section--dark a { color: #8FD0FF; }
+.section--dark a { color: #FFFFFF; }
 
 .stack > * + * { margin-top: 1rem; }
 .center { text-align: center; }
@@ -199,11 +201,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   background: var(--brand); flex: none;
 }
 .eyebrow--center { justify-content: center; }
-.section--dark .eyebrow { color: #7EC8FF; }
+.section--dark .eyebrow { color: #E0F0FF; }
 
 .lede { font-size: var(--step-1); color: var(--muted); line-height: 1.6; }
 .lede--body { color: var(--body); }
-.section--dark .lede { color: #CBD9E9; }
+.section--dark .lede { color: #E6F0FA; }
 
 /* --------------------------------------------------------------------------
    4. Buttons
@@ -275,7 +277,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .brand__mark { width: 34px; height: 34px; color: var(--brand-logo); flex: none; }
 .brand__text { display: flex; flex-direction: column; line-height: 1.05; }
 .brand__name {
-  font-size: 1.02rem; font-weight: 800; color: var(--ink);
+  /* The wordmark reads in the logo blue, matching the mark beside it. As part of
+     a logotype it is exempt from SC 1.4.3, which it needs to be: #0094EF is
+     3.24:1 on white, under the 4.5:1 body text would otherwise require. */
+  font-size: 1.02rem; font-weight: 800; color: var(--brand-logo);
   letter-spacing: .01em; text-transform: uppercase;
 }
 .brand__tag { font-size: .68rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--brand-ink); }
@@ -346,7 +351,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
     radial-gradient(1150px 560px at 78% -18%, rgba(56,166,233,.30), transparent 62%),
     radial-gradient(820px 460px at -8% 108%, rgba(56,166,233,.16), transparent 62%),
     linear-gradient(180deg, var(--night-deep) 0%, var(--night) 62%, var(--night-lift) 100%);
-  color: #C7D2E1;
+  color: #E6F0FA;
   padding-block: clamp(3.5rem, 8vw, 6.5rem);
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
@@ -397,12 +402,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
      one keeps the headline over a near-opaque left end while the photograph
      stays legible past the middle. */
   background:
-    linear-gradient(180deg, rgba(6,38,70,.55) 0%, rgba(6,38,70,0) 26%),
+    linear-gradient(180deg, rgba(10,87,172,.50) 0%, rgba(10,87,172,0) 26%),
     linear-gradient(100deg,
-      rgba(6,38,70,.96) 0%,
-      rgba(7,44,80,.93) 34%,
-      rgba(8,50,92,.84) 58%,
-      rgba(10,58,104,.72) 100%);
+      rgba(10,87,172,.96) 0%,
+      rgba(11,102,201,.92) 34%,
+      rgba(20,120,224,.82) 58%,
+      rgba(30,134,236,.70) 100%);
   pointer-events: none;
 }
 /* Deliberately background-position rather than transform. A transform animation
@@ -421,7 +426,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
 .hero h1 { color: #fff; }
 .hero__lede { font-size: var(--step-1); color: #B9C7DA; max-width: 56ch; }
-.hero .eyebrow { color: #7EC8FF; }
+.hero .eyebrow { color: #E0F0FF; }
+
+/* The solid button was --brand-action on a navy ground, which read clearly. On
+   azure that fill is about 1.5:1 against the background — the button's own edge
+   is its only boundary, so at that ratio it dissolves into the section (SC
+   1.4.11 wants 3:1). Inverted to white, it is 5.59:1 both ways. */
+.hero .btn--primary,
+.section--dark .btn--primary {
+  background: #fff; color: var(--night); border-color: #fff;
+}
+.hero .btn--primary:hover,
+.section--dark .btn--primary:hover {
+  background: #E0F0FF; color: var(--night-deep); border-color: #E0F0FF;
+}
 
 .hero__badge {
   display: inline-flex; align-items: center; gap: .55rem;
@@ -513,7 +531,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   box-shadow: none; color: #C2D0E2;
 }
 .section--dark .card:hover { border-color: rgba(56,166,233,.5); background: rgba(255,255,255,.08); }
-.section--dark .card__icon { background: rgba(56,166,233,.18); color: #7EC8FF; }
+.section--dark .card__icon { background: rgba(255,255,255,.16); color: #D8ECFF; }
 
 /* Problem list (the after-hours gap).
    Each item gets its own icon rather than four identical warning triangles —
@@ -554,7 +572,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .checklist { list-style: none; padding: 0; margin: 0; display: grid; gap: .65rem; }
 .checklist li { display: flex; gap: .7rem; align-items: flex-start; margin: 0; }
 .checklist svg { width: 21px; height: 21px; color: var(--brand-ink); flex: none; margin-top: .2rem; }
-.section--dark .checklist svg { color: #57C1FF; }
+.section--dark .checklist svg { color: #BFE3FF; }
 
 /* Pull quote */
 .pullquote {
@@ -613,7 +631,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* Large bold text still needs 3:1; --brand does not reach it on white. */
 .stat__value { display: block; font-size: var(--step-4); font-weight: 800; color: var(--brand-action); line-height: 1; letter-spacing: -0.03em; }
 .stat__label { display: block; margin-top: .6rem; font-size: var(--step--1); color: var(--muted); font-weight: 600; }
-.section--dark .stat__value { color: #57C1FF; }
+.section--dark .stat__value { color: #BFE3FF; }
 .section--dark .stat__label { color: #A9B8CC; }
 
 /* --------------------------------------------------------------------------
@@ -743,25 +761,25 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    15. Footer
    -------------------------------------------------------------------------- */
-.site-footer { background: var(--night); color: #C2D3E6; padding-block: clamp(3rem, 6vw, 4.5rem) 0; font-size: var(--step--1); }
+.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(3rem, 6vw, 4.5rem) 0; font-size: var(--step--1); }
 .site-footer h2, .site-footer h3 { color: #fff; }
 /* Three columns, not four: "Contact" and "Visit" were split across two columns
    for one phone number, one address and a fax line nobody uses. */
 .footer__grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .footer__col address { margin-top: 1rem; }
 .footer__brand .brand__name { color: #fff; }
-.footer__brand .brand__tag { color: #7EC8FF; }
+.footer__brand .brand__tag { color: #E0F0FF; }
 /* The header mark is the logo blue on white, as it should be. Here the ground
    is itself blue, and --brand on --night is 2.67:1 — under the 3:1 that
    WCAG 1.4.11 asks of a meaningful graphic. Same hue, lifted to clear it. */
-.footer__brand .brand__mark { color: #7EC8FF; }
-.footer__brand p { margin-top: 1rem; max-width: 34ch; color: #C2D3E6; }
+.footer__brand .brand__mark { color: #D8ECFF; }
+.footer__brand p { margin-top: 1rem; max-width: 34ch; color: #E6F0FA; }
 .footer__col h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: 1rem; }
 .footer__col ul { list-style: none; padding: 0; margin: 0; }
 .footer__col li { margin-bottom: .6rem; }
-.footer__col a { color: #D3E1F2; text-decoration: none; }
+.footer__col a { color: #FFFFFF; text-decoration: none; }
 .footer__col a:hover { color: #fff; text-decoration: underline; }
-.footer__col address { font-style: normal; color: #D3E1F2; line-height: 1.7; }
+.footer__col address { font-style: normal; color: #FFFFFF; line-height: 1.7; }
 /* Partnership mark. The artwork is transparent PNG-derived and its darker
    lettering would disappear into the blue footer, so it sits on a white chip
    rather than being recoloured — a partner's mark is theirs, not ours to tint. */
@@ -773,7 +791,7 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   width: 104px; height: auto; flex: none;
   background: #fff; border-radius: 8px; padding: .45rem .6rem;
 }
-.footer__partner p { margin: 0; color: #C2D3E6; font-size: var(--step--1); max-width: 22ch; }
+.footer__partner p { margin: 0; color: #E6F0FA; font-size: var(--step--1); max-width: 22ch; }
 
 .footer__bottom {
   margin-top: 3rem; padding-block: 1.75rem;
@@ -781,13 +799,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center;
 }
 .footer__bottom p { margin: 0; }
-.footer__copy { color: #C2D3E6; }
+.footer__copy { color: #E6F0FA; }
 .footer__legal { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
 .footer__legal li { margin: 0; }
 /* These had no colour of their own and fell through to the global link colour,
    --brand-ink, which is chosen to pass on WHITE. On the old navy that was
    already 2.73:1; on --night it would be 1.50:1. */
-.footer__legal a { color: #D3E1F2; }
+.footer__legal a { color: #FFFFFF; }
 .footer__legal a:hover { color: #fff; }
 
 /* --------------------------------------------------------------------------
@@ -847,9 +865,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .h-sub { font-size: var(--step-1); margin-top: 2rem; }
 
 /* Inverted card used as the last cell in a card grid */
-.card--invert { background: var(--night); border-color: var(--night); color: #CBD9E9; }
+.card--invert { background: var(--night); border-color: var(--night); color: #E6F0FA; }
 .card--invert h3 { color: #fff; }
-.card--invert .link-arrow { color: #8FD0FF; }
+.card--invert .link-arrow { color: #FFFFFF; }
 .card--invert .link-arrow:hover { color: #fff; }
 
 /* Advisory / caveat card */
