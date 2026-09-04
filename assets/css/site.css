@@ -350,9 +350,28 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
   background: url("../img/hero-night-bg.webp") no-repeat center right / cover;
-  transform: scale(1.08);
-  animation: hero-drift 24s ease-in-out infinite alternate;
+  transform: scale(1.05);
+  animation: hero-drift 20s ease-in-out infinite alternate;
   pointer-events: none;
+}
+
+/* A second, faster-moving layer. The photograph alone drifts too slowly to
+   register as motion — this is what actually reads as "the page is alive".
+   Sits above the picture, below the scrim, so it lights the photo rather than
+   floating over the text. */
+.hero__aurora {
+  position: absolute; inset: -20%; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(38% 46% at 22% 30%, rgba(0,148,239,.50), transparent 70%),
+    radial-gradient(32% 40% at 74% 68%, rgba(64,196,255,.38), transparent 72%),
+    radial-gradient(30% 34% at 52% 12%, rgba(0,110,190,.34), transparent 70%);
+  filter: blur(6px);
+  animation: aurora-a 17s ease-in-out infinite alternate;
+}
+@keyframes aurora-a {
+  0%   { transform: translate3d(-4%, -2%, 0) scale(1); }
+  50%  { transform: translate3d(3%, 4%, 0) scale(1.16); }
+  100% { transform: translate3d(6%, -3%, 0) scale(1.06); }
 }
 .hero::after {
   content: ""; position: absolute; inset: 0; z-index: 0;
@@ -372,8 +391,8 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* Scale stays >= 1.08 and the pan stays well inside the resulting overflow, so
    no edge of the photograph is ever exposed. */
 @keyframes hero-drift {
-  from { transform: scale(1.08) translate3d(0, 0, 0); }
-  to   { transform: scale(1.22) translate3d(-3%, -2%, 0); }
+  from { transform: scale(1.05) translate3d(0, 0, 0); }
+  to   { transform: scale(1.26) translate3d(-4%, -2.5%, 0); }
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }
@@ -703,7 +722,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    -------------------------------------------------------------------------- */
 .site-footer { background: var(--night); color: #C2D3E6; padding-block: clamp(3rem, 6vw, 4.5rem) 0; font-size: var(--step--1); }
 .site-footer h2, .site-footer h3 { color: #fff; }
-.footer__grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+/* Three columns, not four: "Contact" and "Visit" were split across two columns
+   for one phone number, one address and a fax line nobody uses. */
+.footer__grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+.footer__col address { margin-top: 1rem; }
 .footer__brand .brand__name { color: #fff; }
 .footer__brand .brand__tag { color: #7EC8FF; }
 /* The header mark is the logo blue on white, as it should be. Here the ground
@@ -718,26 +740,25 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .footer__col a:hover { color: #fff; text-decoration: underline; }
 .footer__col address { font-style: normal; color: #D3E1F2; line-height: 1.7; }
 /* Partnership mark. The artwork is transparent PNG-derived and its darker
-   lettering would disappear into the navy footer, so it sits on a white chip
+   lettering would disappear into the blue footer, so it sits on a white chip
    rather than being recoloured — a partner's mark is theirs, not ours to tint. */
 .footer__partner {
-  margin-top: 3rem; padding-top: 2rem;
-  border-top: 1px solid rgba(255,255,255,.1);
-  display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+  display: flex; align-items: center; gap: .9rem;
+  margin-right: auto;
 }
 .footer__partner img {
-  width: 132px; height: auto; flex: none;
-  background: #fff; border-radius: 10px; padding: .55rem .7rem;
+  width: 104px; height: auto; flex: none;
+  background: #fff; border-radius: 8px; padding: .45rem .6rem;
 }
-.footer__partner p { margin: 0; color: #C2D3E6; font-size: var(--step--1); }
-.footer__partner strong { color: #D6E2F0; font-weight: 650; }
+.footer__partner p { margin: 0; color: #C2D3E6; font-size: var(--step--1); max-width: 22ch; }
 
 .footer__bottom {
-  margin-top: 2rem; padding-block: 1.5rem;
+  margin-top: 3rem; padding-block: 1.75rem;
   border-top: 1px solid rgba(255,255,255,.1);
-  display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
+  display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center;
 }
 .footer__bottom p { margin: 0; }
+.footer__copy { color: #C2D3E6; }
 .footer__legal { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
 .footer__legal li { margin: 0; }
 /* These had no colour of their own and fell through to the global link colour,
@@ -826,6 +847,32 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    transition, not a keyframe, so the reduced-motion block still kills it. */
 .grid > .reveal:nth-child(3n+2) { transition-delay: .09s; }
 .grid > .reveal:nth-child(3n)   { transition-delay: .18s; }
+
+/* Children of a revealed block cascade once their parent is in view. */
+.reveal.is-in .problem-list li { animation: rise-in .55s cubic-bezier(.22,.61,.36,1) both; }
+.reveal.is-in .problem-list li:nth-child(2) { animation-delay: .08s; }
+.reveal.is-in .problem-list li:nth-child(3) { animation-delay: .16s; }
+.reveal.is-in .problem-list li:nth-child(4) { animation-delay: .24s; }
+
+.steps.is-in > li { animation: rise-in .55s cubic-bezier(.22,.61,.36,1) both; }
+.steps.is-in > li:nth-child(2) { animation-delay: .10s; }
+.steps.is-in > li:nth-child(3) { animation-delay: .20s; }
+.steps.is-in > li:nth-child(4) { animation-delay: .30s; }
+.steps.is-in > li:nth-child(5) { animation-delay: .40s; }
+
+/* The trust strip runs in under the hero on load. */
+.trustbar__list li { animation: rise-in .6s cubic-bezier(.22,.61,.36,1) both; }
+.trustbar__list li:nth-child(1) { animation-delay: .34s; }
+.trustbar__list li:nth-child(2) { animation-delay: .42s; }
+.trustbar__list li:nth-child(3) { animation-delay: .50s; }
+.trustbar__list li:nth-child(4) { animation-delay: .58s; }
+
+/* Media panels settle rather than simply appearing. */
+.reveal.is-in .media-frame { animation: frame-in .8s cubic-bezier(.22,.61,.36,1) both; }
+@keyframes frame-in {
+  from { opacity: 0; transform: scale(.965); }
+  to   { opacity: 1; transform: none; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

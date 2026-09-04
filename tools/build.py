@@ -17,6 +17,7 @@ tools/pages/<name>.html or tools/partials/ and rebuild.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -163,8 +164,8 @@ HEAD_TEMPLATE = """<!doctype html>
 <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 
-<link rel="stylesheet" href="/assets/css/site.css">
-<script src="/assets/js/site.js" defer></script>
+<link rel="stylesheet" href="/assets/css/site.css?v={css_v}">
+<script src="/assets/js/site.js?v={js_v}" defer></script>
 
 <script type="application/ld+json">
 {jsonld}
@@ -439,7 +440,20 @@ def mark_active(header_html: str, nav_href: str) -> str:
     )
 
 
+def asset_version(rel: str) -> str:
+    """Short content hash appended to the CSS/JS URLs.
+
+    Without it a browser serves a cached stylesheet after a deploy and the change
+    looks like it never shipped. The hash moves only when the file does, so
+    caching stays aggressive and correctness stops depending on anyone
+    remembering to hard-refresh.
+    """
+    return hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()[:8]
+
+
 def build() -> int:
+    css_v = asset_version("assets/css/site.css")
+    js_v = asset_version("assets/js/site.js")
     sprite = (PARTIALS / "sprite.html").read_text(encoding="utf-8").rstrip()
     header = (PARTIALS / "header.html").read_text(encoding="utf-8").rstrip()
     footer = (PARTIALS / "footer.html").read_text(encoding="utf-8").rstrip()
@@ -465,6 +479,8 @@ def build() -> int:
             og_description=page.get("og_description", page["description"]),
             og_image=OG_IMAGE,
             jsonld=page_jsonld(page),
+            css_v=css_v,
+            js_v=js_v,
         )
 
         html = (
