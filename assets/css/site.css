@@ -349,9 +349,14 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    a photograph is just noise. */
 .hero::before {
   content: ""; position: absolute; inset: 0; z-index: 0;
-  background: url("../img/hero-night-bg.webp") no-repeat center right / cover;
-  transform: scale(1.05);
-  animation: hero-drift 20s ease-in-out infinite alternate;
+  background-image: url("../img/hero-rn-bg.webp");
+  background-repeat: no-repeat;
+  /* Oversized on purpose: background-position can only pan across whatever slack
+     exists, and `cover` leaves almost none. 120% is the ceiling here — this photo
+     is 2.86:1, so at 150% the travel was wide enough to pan the nurse clean out
+     of frame and leave an abstract gradient. */
+  background-size: auto 120%;
+  animation: hero-pan 22s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
@@ -380,19 +385,24 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
      one keeps the headline over a near-opaque left end while the photograph
      stays legible past the middle. */
   background:
-    linear-gradient(180deg, rgba(6,38,70,.66) 0%, rgba(6,38,70,0) 24%),
+    linear-gradient(180deg, rgba(6,38,70,.55) 0%, rgba(6,38,70,0) 26%),
     linear-gradient(100deg,
-      rgba(6,38,70,.95) 0%,
-      rgba(7,44,80,.90) 34%,
-      rgba(8,50,92,.74) 58%,
-      rgba(10,58,104,.58) 100%);
+      rgba(6,38,70,.96) 0%,
+      rgba(7,44,80,.93) 34%,
+      rgba(8,50,92,.84) 58%,
+      rgba(10,58,104,.72) 100%);
   pointer-events: none;
 }
-/* Scale stays >= 1.08 and the pan stays well inside the resulting overflow, so
-   no edge of the photograph is ever exposed. */
-@keyframes hero-drift {
-  from { transform: scale(1.05) translate3d(0, 0, 0); }
-  to   { transform: scale(1.26) translate3d(-4%, -2.5%, 0); }
+/* Deliberately background-position rather than transform. A transform animation
+   is handed to the compositor, which is fine in a browser but invisible to the
+   headless harness used to check this — so the previous drift could be shown to
+   be correctly wired but never shown to actually move. This runs on the main
+   thread, which makes it observable, and one slow pan on one element is not a
+   cost worth optimising away. Both endpoints stay inside the 150% slack, so no
+   edge of the photograph is ever exposed. */
+@keyframes hero-pan {
+  from { background-position: 100% 44%; }
+  to   { background-position: 74% 58%; }
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }

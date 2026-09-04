@@ -38,8 +38,8 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `nurse-careers.webp` | [Pexels 4930705](https://www.pexels.com/photo/4930705/) | mix-and-match-studio | Careers — "Why Signia" |
 | `care-team.webp` | Inherited from the previous signiasolutions.com WordPress site (`2024/03/health-head-2.jpg`) | unknown — **see note** | Home, Who We Are |
 | `leadingage-mn-partner.webp` | Inherited from the previous site (`2026/01/2026_BPLogoMinnesota.png`) | LeadingAge Minnesota | Footer, site-wide — **see note** |
-| `hero-night-bg.webp` | Landscape crop of the same AI original as `night-triage-rn.webp` | **AI-generated — see note** | Home — hero background |
 | `rn-portrait-band.webp` | Inherited from signiasolutions.com (`2025/01/Hero-CS-Delegated-Utilization-Management.png`) | unknown — commercial stock, **rights unconfirmed** | Home — "How we support you" |
+| `hero-rn-bg.webp` | Same original as `rn-portrait-band.webp`, resized for the hero | unknown — commercial stock, **rights unconfirmed** | Home — hero background |
 | `care-team-band.webp` | Inherited from signiasolutions.com (`2024/03/hero-bg6.png`) | unknown — commercial stock, **rights unconfirmed** | Home — "The impact on your community" |
 | `signia-mark.svg`, `favicon-*.png`, `icon-*.png`, `apple-touch-icon.png` | Traced from the official logo `Signia.png` | Signia Solutions | Site-wide |
 | `og-default.png` | Generated for this site from the brand assets | — | Social share card |
