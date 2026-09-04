@@ -221,13 +221,15 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   font: inherit; font-weight: 700; font-size: var(--step--1);
   letter-spacing: .085em; text-transform: uppercase;
   line-height: 1.2; text-decoration: none; cursor: pointer;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease,
+              transform .15s ease;
   white-space: nowrap;
 }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 
 .btn--primary { background: var(--brand-action); color: #fff; }
-.btn--primary:hover { background: var(--brand-action-hover); color: #fff; }
+.btn--primary:hover { background: var(--brand-action-hover); color: #fff; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
 
 /* Same hover as a nav item: brand tint behind brand-ink text. */
 .btn--ghost { background: #fff; color: var(--ink); border-color: var(--line-btn); }
@@ -527,8 +529,30 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   width: 46px; height: 46px; border-radius: 12px;
   display: grid; place-items: center; margin-bottom: 1rem;
   background: var(--brand-tint); color: var(--brand-ink);
+  transition: transform .28s cubic-bezier(.34,1.4,.64,1), background-color .28s ease;
 }
 .card__icon svg { width: 23px; height: 23px; }
+.card:hover .card__icon { transform: translateY(-3px) rotate(-4deg); }
+
+/* A rotating accent so a six-card grid is not six identical blue chips. Every
+   glyph/chip pair here was measured at >=3:1, the floor SC 1.4.11 sets for a
+   graphic that carries meaning — the palette is decorative, the legibility is
+   not negotiable. */
+.grid > .card:nth-child(4n+2) .card__icon { background: #E2F5EE; color: #0F7B54; }
+.grid > .card:nth-child(4n+3) .card__icon { background: #EFEBFD; color: #5A44C0; }
+.grid > .card:nth-child(4n+4) .card__icon { background: #FDF2E6; color: #B45309; }
+
+/* A rule that draws itself across the top edge on hover. */
+.card { position: relative; }
+.card::before {
+  content: ""; position: absolute; inset: 0 auto auto 0;
+  height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--brand), var(--brand-action));
+  border-radius: var(--radius) var(--radius) 0 0;
+  transition: width .4s cubic-bezier(.22,.61,.36,1);
+}
+.card:hover::before { width: 100%; }
+.card--flat::before { display: none; }
 
 .section--dark .card {
   background: rgba(255,255,255,.05);
@@ -536,6 +560,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   box-shadow: none; color: #C2D0E2;
 }
 .section--dark .card:hover { border-color: rgba(56,166,233,.5); background: rgba(255,255,255,.08); }
+/* Outranks the nth-child accents above, so a dark band keeps its own treatment
+   instead of inheriting light chips meant for white cards. */
+.section--dark .grid > .card .card__icon,
 .section--dark .card__icon { background: rgba(255,255,255,.16); color: #D8ECFF; }
 
 /* Problem list (the after-hours gap).
@@ -654,7 +681,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   box-shadow: var(--shadow-lg); background: var(--brand-tint);
   position: relative;
 }
-.media-frame img { width: 100%; }
+.media-frame img {
+  width: 100%;
+  transition: transform .6s cubic-bezier(.22,.61,.36,1);
+}
+/* The frame already clips, so the picture can grow inside it without nudging
+   anything on the page — no reflow, no layout shift. */
+.media-frame:hover img { transform: scale(1.045); }
 
 
 /* --------------------------------------------------------------------------
@@ -951,6 +984,30 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .reveal.is-in .problem-list li:nth-child(2) { animation-delay: .08s; }
 .reveal.is-in .problem-list li:nth-child(3) { animation-delay: .16s; }
 .reveal.is-in .problem-list li:nth-child(4) { animation-delay: .24s; }
+
+/* Checklists tick through in order rather than landing as a block. */
+.reveal.is-in .checklist li { animation: rise-in .5s cubic-bezier(.22,.61,.36,1) both; }
+.reveal.is-in .checklist li:nth-child(2) { animation-delay: .07s; }
+.reveal.is-in .checklist li:nth-child(3) { animation-delay: .14s; }
+.reveal.is-in .checklist li:nth-child(4) { animation-delay: .21s; }
+.reveal.is-in .checklist li:nth-child(5) { animation-delay: .28s; }
+.reveal.is-in .checklist li:nth-child(6) { animation-delay: .35s; }
+
+/* The eyebrow's little rule draws itself out from nothing. */
+.reveal.is-in .eyebrow::before { animation: rule-draw .55s cubic-bezier(.22,.61,.36,1) both; }
+@keyframes rule-draw { from { width: 0; } to { width: 22px; } }
+
+/* The step numeral overshoots slightly on arrival — the one place a bit of
+   bounce suits, because the numerals are the sequence. */
+.steps.is-in > li::before { animation: badge-pop .5s cubic-bezier(.34,1.56,.64,1) both; }
+.steps.is-in > li:nth-child(2)::before { animation-delay: .10s; }
+.steps.is-in > li:nth-child(3)::before { animation-delay: .20s; }
+.steps.is-in > li:nth-child(4)::before { animation-delay: .30s; }
+.steps.is-in > li:nth-child(5)::before { animation-delay: .40s; }
+@keyframes badge-pop {
+  from { transform: scale(.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
 
 .steps.is-in > li { animation: rise-in .55s cubic-bezier(.22,.61,.36,1) both; }
 .steps.is-in > li:nth-child(2) { animation-delay: .10s; }
