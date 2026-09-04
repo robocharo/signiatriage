@@ -425,7 +425,9 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }
 
 .hero h1 { color: #fff; }
-.hero__lede { font-size: var(--step-1); color: #B9C7DA; max-width: 56ch; }
+/* #B9C7DA was set against the old navy; on azure it is 4.12:1, under the 4.5:1
+   body copy needs. */
+.hero__lede { font-size: var(--step-1); color: #E6F0FA; max-width: 56ch; }
 .hero .eyebrow { color: #E0F0FF; }
 
 /* The solid button was --brand-action on a navy ground, which read clearly. On
@@ -433,10 +435,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    is its only boundary, so at that ratio it dissolves into the section (SC
    1.4.11 wants 3:1). Inverted to white, it is 5.59:1 both ways. */
 .hero .btn--primary,
+.page-hero--media .btn--primary,
 .section--dark .btn--primary {
   background: #fff; color: var(--night); border-color: #fff;
 }
 .hero .btn--primary:hover,
+.page-hero--media .btn--primary:hover,
 .section--dark .btn--primary:hover {
   background: #E0F0FF; color: var(--night-deep); border-color: #E0F0FF;
 }
@@ -821,6 +825,53 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .page-hero h1 { color: var(--ink); max-width: 20ch; }
 .page-hero .lede { color: var(--body); max-width: 62ch; }
+
+/* Photo-backed page hero, built the same way as the home one: ::before carries
+   the picture and pans, ::after the scrim, content sits above both. Taller than
+   the plain .page-hero so the photograph reads as the whole top of the page
+   rather than a stripe behind the heading. */
+.page-hero--media {
+  position: relative; overflow: hidden;
+  background: var(--night-deep);
+  border-bottom: 0;
+  padding-block: clamp(4rem, 9vw, 7rem) clamp(3.5rem, 8vw, 6rem);
+}
+.page-hero--media > .container { position: relative; z-index: 1; }
+.page-hero--media::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("../img/triage-hero-bg.webp");
+  background-repeat: no-repeat;
+  /* 150%, not 122%: this photo is 1.78:1 where the home hero's is 2.86:1, so at
+     the same oversize it had only ~56px of travel and measured 1.8% movement —
+     technically animating, visibly still. */
+  background-size: auto 165%;
+  background-position: 60% 50%;   /* the still frame when motion is reduced */
+  animation: triage-pan 20s ease-in-out infinite alternate;
+}
+.page-hero--media::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(10,87,172,.45) 0%, rgba(10,87,172,0) 24%),
+    linear-gradient(100deg,
+      rgba(10,87,172,.95) 0%,
+      rgba(11,102,201,.90) 38%,
+      rgba(20,120,224,.78) 66%,
+      rgba(30,134,236,.66) 100%);
+}
+/* Both stops keep her face inside the window; the travel is ~200px. */
+@keyframes triage-pan {
+  from { background-position: 76% 42%; }
+  to   { background-position: 44% 60%; }
+}
+
+.page-hero--media h1 { color: #fff; }
+.page-hero--media .lede { color: #E6F0FA; }
+.page-hero--media .eyebrow { color: #E0F0FF; }
+.page-hero--media .eyebrow::before { background: #E0F0FF; }
+.page-hero--media .breadcrumb li { color: #D3E4F7; }
+.page-hero--media .breadcrumb a { color: #FFFFFF; }
+.page-hero--media .breadcrumb li + li::before { color: #C6DCF2; }
+.page-hero--media .breadcrumb [aria-current="page"] { color: #E6F0FA; }
 
 .breadcrumb { margin-bottom: 1.25rem; font-size: var(--step--1); }
 .breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: .45rem; padding: 0; margin: 0; }
