@@ -103,6 +103,12 @@ Everything is derived from the real logo, not eyeballed.
 `currentColor`, so it recolours cleanly on dark backgrounds and scales to any size.
 The original PNG is kept at `assets/img/signia-logo-original.png` for reference.
 
+That inheritance was claimed here before it was true. The `#signia-mark` sprite symbol
+carried no `fill`, so every `<rect>` in it fell back to the SVG default of black and the
+mark rendered `rgb(0,0,0)` in the header and footer regardless of the `color: var(--brand)`
+sitting on `.brand__mark`. Fixed 2026-09-03 by putting `fill="currentColor"` on the
+symbol's group; the mark now renders in the logo blue it was always supposed to be.
+
 Type is a system font stack: zero network requests, zero layout shift, native rendering
 on every platform. If a licensed brand typeface is ever adopted, self-host it and add
 `font-display: swap` — do not link Google Fonts, it re-introduces a third-party
@@ -204,8 +210,12 @@ submit button while a request is in flight.
 - [ ] **Replace the form endpoints** (§6). Submit a test message and confirm it arrives.
 - [ ] **Have counsel review `privacy/`.** It is an accurate draft of how the site behaves,
       but it is not legal advice. Remove the yellow review notice once approved.
-- [ ] **Confirm the award badge** — `2026 Best Places to Work Minnesota` was pulled from the
-      current site. Verify it is still current and that the usage terms allow it.
+- [ ] **Confirm the LeadingAge Minnesota partnership.** The badge inherited from the old
+      site was captioned "Best Places to Work Minnesota, 2026"; it is in fact the
+      LeadingAge Minnesota *Business Partner* mark — a partner designation, not an award.
+      The award claim is gone and the mark now sits in the footer worded as a partnership.
+      Verify the partnership is current for 2026 and that LeadingAge's mark-usage terms
+      allow display; if not, drop `.footer__partner` from `tools/partials/footer.html`.
 - [ ] **Pick a canonical host** (www or non-www) and make the other 301 to it. Both
       `.htaccess` and `_redirects` assume **non-www**; flip them if you prefer www.
 - [ ] **Verify the redirects fire**: `/who/` → `/who-we-are/` and `/triage/` → `/nurse-triage/`,

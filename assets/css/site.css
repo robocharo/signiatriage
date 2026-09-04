@@ -334,14 +334,35 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   padding-block: clamp(3.5rem, 8vw, 6.5rem);
   border-bottom: 1px solid rgba(255,255,255,.10);
 }
+/* The triage photograph, drifting slowly enough that you notice it only if you
+   stay. ::before is the picture, ::after the scrim over it — the brand-mark
+   watermark that used to live on ::after is gone, because a watermark laid over
+   a photograph is just noise. */
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: url("../img/hero-night-bg.webp") no-repeat center right / cover;
+  transform: scale(1.06);
+  animation: hero-drift 38s ease-in-out infinite alternate;
+  pointer-events: none;
+}
 .hero::after {
-  /* watermark of the brand mark — decorative only */
-  content: ""; position: absolute; right: -6%; bottom: -18%;
-  width: min(46vw, 520px); aspect-ratio: 1;
-  background: #7EC8FF;
-  -webkit-mask: url("../img/signia-mark.svg") no-repeat center / contain;
-  mask: url("../img/signia-mark.svg") no-repeat center / contain;
-  opacity: .06; pointer-events: none;
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  /* Two passes. The vertical one darkens the top edge so the subject's cropped
+     head fades into the white header instead of butting against it; the angled
+     one keeps the headline over a near-opaque left end while the photograph
+     stays legible past the middle. */
+  background:
+    linear-gradient(180deg, rgba(10,17,27,.62) 0%, rgba(10,17,27,0) 24%),
+    linear-gradient(100deg,
+      rgba(10,17,27,.97) 0%,
+      rgba(10,17,27,.92) 34%,
+      rgba(12,20,31,.76) 58%,
+      rgba(12,20,31,.60) 100%);
+  pointer-events: none;
+}
+@keyframes hero-drift {
+  from { transform: scale(1.06) translate3d(0, 0, 0); }
+  to   { transform: scale(1.14) translate3d(-1.6%, -1.1%, 0); }
 }
 .hero__inner { position: relative; z-index: 1; display: grid; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
 @media (min-width: 900px) { .hero__inner { grid-template-columns: 1.15fr .85fr; } }
@@ -358,10 +379,24 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .hero__badge .dot {
   /* brightened off the body green — .16 alpha of the light-mode dot disappears
-     against the night ground */
+     against the night ground. The pulse is the one animation on this page that
+     means something: the line is open right now. */
   width: 8px; height: 8px; border-radius: 50%; background: #29CE90; flex: none;
-  box-shadow: 0 0 0 4px rgba(41,206,144,.22);
+  animation: dot-pulse 2.6s ease-out infinite;
 }
+@keyframes dot-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(41,206,144,.55); }
+  70%  { box-shadow: 0 0 0 10px rgba(41,206,144,0); }
+  100% { box-shadow: 0 0 0 0 rgba(41,206,144,0); }
+}
+
+/* Hero entrance: the copy arrives, then the call card a beat later. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero__inner > * { animation: rise-in .75s cubic-bezier(.22,.61,.36,1) both; }
+.hero__inner > *:nth-child(2) { animation-delay: .16s; }
 
 .hero__card {
   background: #fff;
@@ -668,8 +703,23 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .footer__col a { color: #B6C4D6; text-decoration: none; }
 .footer__col a:hover { color: #fff; text-decoration: underline; }
 .footer__col address { font-style: normal; color: #B6C4D6; line-height: 1.7; }
+/* Partnership mark. The artwork is transparent PNG-derived and its darker
+   lettering would disappear into the navy footer, so it sits on a white chip
+   rather than being recoloured — a partner's mark is theirs, not ours to tint. */
+.footer__partner {
+  margin-top: 3rem; padding-top: 2rem;
+  border-top: 1px solid rgba(255,255,255,.1);
+  display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+}
+.footer__partner img {
+  width: 132px; height: auto; flex: none;
+  background: #fff; border-radius: 10px; padding: .55rem .7rem;
+}
+.footer__partner p { margin: 0; color: #94A5BC; font-size: var(--step--1); }
+.footer__partner strong { color: #D6E2F0; font-weight: 650; }
+
 .footer__bottom {
-  margin-top: 3rem; padding-block: 1.5rem;
+  margin-top: 2rem; padding-block: 1.5rem;
   border-top: 1px solid rgba(255,255,255,.1);
   display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;
 }
@@ -753,12 +803,21 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .reveal { opacity: 0; transform: translateY(18px); }
 .reveal.is-in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s cubic-bezier(.22,.61,.36,1); }
 
+/* Cards in a row arrive across rather than all at once. Delay is on the
+   transition, not a keyframe, so the reduced-motion block still kills it. */
+.grid > .reveal:nth-child(3n+2) { transition-delay: .09s; }
+.grid > .reveal:nth-child(3n)   { transition-delay: .18s; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: .001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .001ms !important;
+    /* Delays too, or a staggered card still waits its turn to appear and the
+       hero copy still arrives late — a near-zero duration alone is not enough. */
+    animation-delay: 0s !important;
+    transition-delay: 0s !important;
   }
   .reveal { opacity: 1; transform: none; }
 }

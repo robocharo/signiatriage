@@ -37,7 +37,8 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `senior-living-residents.webp` | [Pexels 39191570](https://www.pexels.com/photo/39191570/) | SilverKBlack | Home — "Who we serve" |
 | `nurse-careers.webp` | [Pexels 4930705](https://www.pexels.com/photo/4930705/) | mix-and-match-studio | Careers — "Why Signia" |
 | `care-team.webp` | Inherited from the previous signiasolutions.com WordPress site (`2024/03/health-head-2.jpg`) | unknown — **see note** | Home, Who We Are |
-*(The LeadingAge Minnesota badge was removed from the site on 2026-09-03 — see below.)*
+| `leadingage-mn-partner.webp` | Inherited from the previous site (`2026/01/2026_BPLogoMinnesota.png`) | LeadingAge Minnesota | Footer, site-wide — **see note** |
+| `hero-night-bg.webp` | Landscape crop of the same AI original as `night-triage-rn.webp` | **AI-generated — see note** | Home — hero background |
 | `signia-mark.svg`, `favicon-*.png`, `icon-*.png`, `apple-touch-icon.png` | Traced from the official logo `Signia.png` | Signia Solutions | Site-wide |
 | `og-default.png` | Generated for this site from the brand assets | — | Social share card |
 
@@ -49,23 +50,28 @@ to `care-team.webp`** before treating it as cleared — it looks like commercial
 stock. If the licence cannot be produced, replace it; a same-shaped substitute
 is a ten-minute job.
 
-### The award badge was removed
+### The award claim, and what replaced it
 
 The site carried a badge captioned "Best Places to Work Minnesota, 2026" on the
 home, who-we-are and careers pages. The artwork was never that award: it is the
 **LeadingAge Minnesota 2026 Business Partner** mark — a trade-association partner
 designation, which is a paid relationship rather than a competitive award for
 being a good employer. Claiming it as the latter on a careers page is the kind of
-thing a candidate or a competitor can check.
+thing a candidate or a competitor can check. That claim is gone for good.
 
-Nothing in the repository or on the live site substantiated the partnership
-either. **Removed entirely on 2026-09-03** rather than relabelled, on the
-principle that an unverifiable credential is worth less than the space it takes.
+The mark itself now appears once, in the **footer**, worded as what it is:
+"Signia Solutions is a LeadingAge Minnesota business partner." A partnership
+stated plainly is a fair claim; an award that was never won is not.
 
-To put it back, three things have to be true: Signia is a current LeadingAge
-Minnesota Business Partner for 2026, LeadingAge's mark-usage terms permit display
-on a commercial site, and the caption says *Business Partner* — not an award.
-The artwork is recoverable from git history (`git show 79df912:assets/img/leadingage-mn-2026-business-partner.webp`).
+Two things still need confirming, and neither is a design question:
+
+1. That the partnership is **current for 2026** — nothing in this repository or
+   on the live site evidences it, only the artwork.
+2. That LeadingAge Minnesota's **mark-usage terms** permit display on a
+   commercial site.
+
+If either fails, delete the `.footer__partner` block from
+`tools/partials/footer.html` and the matching CSS. Nothing else depends on it.
 
 ### Note on the AI-generated images
 
