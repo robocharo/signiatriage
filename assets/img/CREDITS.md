@@ -32,6 +32,7 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `rn-triage-call.webp` | [Pexels 7195317](https://www.pexels.com/photo/7195317/) | Karola G | Home — "The after-hours gap is real" |
 | `triage-hero-bg.webp` | Inherited from signiasolutions.com (`2026/03/Night-shift-triage-nurse-at-work.png`) | **AI-generated — see note** | Nurse Triage — page hero background |
 | `rn-headset-portrait.webp` | Inherited from signiasolutions.com (`2026/03/A-professional-regis.png`) | **AI-generated — see note** | Contact — "Tell us about your community" |
+| `care-bedside.webp` | Inherited from signiasolutions.com (`2024/03/PHOTO-51001274-WEB.jpg`) | unknown — commercial stock, **rights unconfirmed** | Nurse Triage — "The impact on your community" |
 | `rn-triage-workstation.webp` | [Pexels 7195308](https://www.pexels.com/photo/7195308/) | Karola G | Nurse Triage — "Our RNs support your team by" |
 | `senior-living-residents.webp` | [Pexels 39191570](https://www.pexels.com/photo/39191570/) | SilverKBlack | Home — "Who we serve" |
 | `nurse-careers.webp` | [Pexels 4930705](https://www.pexels.com/photo/4930705/) | mix-and-match-studio | Careers — "Why Signia" |
@@ -42,7 +43,6 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `care-team-band.webp` | Inherited from signiasolutions.com (`2024/03/hero-bg6.png`) | unknown — commercial stock, **rights unconfirmed** | Home — "The impact on your community" |
 | `signia-mark.svg`, `favicon-*.png`, `icon-*.png`, `apple-touch-icon.png` | Traced from the official logo `Signia.png` | Signia Solutions | Site-wide |
 | `og-default.png` | Generated for this site from the brand assets | — | Social share card |
-| `rn-on-phone.webp` | Crop of the same AI original as the Nurse Triage hero, framed on the handset | **AI-generated — see note** | Nurse Triage — closing band |
 
 ### Note on inherited images
 
