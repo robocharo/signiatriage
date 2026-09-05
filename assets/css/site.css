@@ -640,44 +640,57 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   color: var(--brand-action);
 }
 
-/* Commitment — a sheet of paper on a desk, not a section.
-   The photograph is the ground and the copy sits on an actual page within it,
-   which is why this reads as something being read rather than another band.
-   Three details do that work: a 3px radius instead of the site's 14px (paper
-   has a corner, not a rounded UI edge), a fractional rotation so it is laid
-   down rather than aligned to the grid, and a long soft shadow so it floats
-   above the desk. */
+/* Commitment — a sheet of paper on a desk, held inside an azure band.
+   The photograph used to bleed across the full section; it is now cropped into
+   a rounded scene panel, so the band reads as brand colour with a picture set
+   into it rather than as a photograph wearing the whole section. */
 .commitment {
+  background: var(--night);
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.commitment__scene {
   position: relative;
   overflow: hidden;
-  background: #201a16;
-  padding-block: clamp(3rem, 8vw, 6.5rem);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  background: var(--night-deep);
+  min-height: clamp(21rem, 34vw, 27rem);
+  display: flex;
+  align-items: center;
+  padding: clamp(1.25rem, 3.5vw, 2.75rem);
 }
-.commitment::before {
+.commitment__scene::before {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
   background: url("../img/desk-reading.webp") no-repeat center / cover;
   animation: desk-drift 34s ease-in-out infinite alternate;
 }
-/* Darkens the desk just enough that the white page reads as lit, and keeps the
-   left third quieter so the sheet is the thing you look at. */
-.commitment::after {
+/* Azure rather than the neutral darkening this had before, so the panel sits
+   in the same colour family as the band around it. Weighted to the left, where
+   the sheet is. */
+.commitment__scene::after {
   content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background: linear-gradient(100deg, rgba(20,16,13,.62) 0%, rgba(20,16,13,.34) 46%, rgba(20,16,13,.12) 100%);
+  background: linear-gradient(100deg,
+      rgba(10,87,172,.90) 0%,
+      rgba(11,102,201,.78) 44%,
+      rgba(20,120,224,.52) 100%);
 }
 @keyframes desk-drift {
   from { transform: scale(1.04) translate3d(0, 0, 0); }
   to   { transform: scale(1.10) translate3d(-1.5%, -1%, 0); }
 }
 
-.commitment > .container { position: relative; z-index: 1; }
-
+/* Paper, not a UI card: a 3px corner rather than the site's 14px, a fractional
+   rotation so it is laid down rather than snapped to the grid, and a long soft
+   shadow so it lifts off what is behind it. */
 .commitment__sheet {
+  position: relative; z-index: 1;
   max-width: 33rem;
   background: #fff;
   color: var(--body);
-  padding: clamp(1.6rem, 4vw, 2.75rem);
+  padding: clamp(1.5rem, 3.5vw, 2.5rem);
   border-radius: 3px;
-  box-shadow: 0 22px 60px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.22);
+  box-shadow: 0 22px 60px rgba(0,0,0,.34), 0 2px 8px rgba(0,0,0,.18);
   transform: rotate(-0.7deg);
 }
 .commitment__sheet p:last-child { margin-bottom: 0; }
