@@ -616,6 +616,16 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .checklist svg { width: 21px; height: 21px; color: var(--brand-ink); flex: none; margin-top: .2rem; }
 .section--dark .checklist svg { color: #BFE3FF; }
 
+/* The mission statement, set apart from the paragraphs around it by weight,
+   slant and colour rather than by size — the surrounding copy is all one size
+   deliberately. --brand-action, not --brand: this is body-size text and needs
+   4.5:1 on white, which --brand-action clears at 4.84:1 and --brand does not. */
+.mission {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--brand-action);
+}
+
 /* Pull quote */
 .pullquote {
   margin: 0; padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 4vw, 3rem);
