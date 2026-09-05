@@ -46,7 +46,6 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `who-story.webp` | Inherited from signiasolutions.com (`2026/02/cw25_image_modern-workplace-de_02.jpg`) | unknown — commercial stock, **rights unconfirmed** | Who We Are — "Who We Are" |
 | `care-faces.webp` | Same original as the retired `care-bedside.webp` (`2024/03/PHOTO-51001274-WEB.jpg`) | unknown — commercial stock, **rights unconfirmed** | Nurse Triage — closing pair |
 | `rn-on-phone.webp` | Crop of the same AI original as the Nurse Triage hero, framed on the handset | **AI-generated — see note** | Nurse Triage — closing pair |
-| `partnership.webp` | Supplied by Signia (`Partner Booklet.png`) | unknown — **licence unconfirmed, see note** | Who We Are — "How We Partner With You" |
 
 ### Note on inherited images
 
@@ -78,19 +77,6 @@ Two things still need confirming, and neither is a design question:
 
 If either fails, delete the `.footer__partner` block from
 `tools/partials/footer.html` and the matching CSS. Nothing else depends on it.
-
-### Note on `partnership.webp`
-
-Supplied directly rather than sourced here, so its licence is not recorded in
-this repository. **Confirm Signia holds commercial rights to it** before launch —
-if it came from a stock library, the licence needs to cover use on a commercial
-website; if it came from a booklet a designer produced, the rights may sit with
-the designer or their stock account rather than with Signia.
-
-It is also the smallest photograph on the site at 557x327. That is enough for the
-column it sits in and it is not upscaled, but it will look soft on a high-DPI
-screen, and it cannot be reused anywhere larger. A higher-resolution original
-would fix both.
 
 ### Note on the AI-generated images
 
