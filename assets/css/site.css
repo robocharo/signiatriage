@@ -880,51 +880,61 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    15. Footer
    -------------------------------------------------------------------------- */
-.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(2rem, 3.5vw, 2.75rem) 0; font-size: var(--step--1); }
+/* Footer. Rebuilt as two compact rows — a brand/nav/contact line and a thin
+   bottom bar — rather than three columns stacked above a bottom bar. The
+   column layout was spending most of its height on whitespace between short
+   lists, so it cost 344px to carry about a dozen links. */
+.site-footer {
+  background: var(--night); color: #E6F0FA;
+  font-size: .875rem;
+  padding-block: 1.4rem 0;
+}
 .site-footer h2, .site-footer h3 { color: #fff; }
-/* Three columns, not four: "Contact" and "Visit" were split across two columns
-   for one phone number, one address and a fax line nobody uses. */
-.footer__grid { display: grid; gap: 1.5rem 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
-.footer__col address { margin-top: .75rem; }
-.footer__brand .brand__name { color: #fff; }
-.footer__brand .brand__tag { color: #E0F0FF; }
+
+.footer__top {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: .9rem 2rem;
+  padding-bottom: 1.1rem;
+}
+.footer__brand .brand__name,
+.brand--footer .brand__name { color: #fff; }
+.brand--footer .brand__tag { color: #E0F0FF; }
 /* The header mark is the logo blue on white, as it should be. Here the ground
    is itself blue, and --brand on --night is 2.67:1 — under the 3:1 that
    WCAG 1.4.11 asks of a meaningful graphic. Same hue, lifted to clear it. */
-.footer__brand .brand__mark { color: #D8ECFF; }
-.footer__brand p { margin-top: .7rem; max-width: 34ch; color: #E6F0FA; }
-.footer__col h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: .65rem; }
-.footer__col ul { list-style: none; padding: 0; margin: 0; }
-.footer__col li { margin-bottom: .4rem; }
-.footer__col a { color: #FFFFFF; text-decoration: none; }
-.footer__col a:hover { color: #fff; text-decoration: underline; }
-.footer__col address { font-style: normal; color: #FFFFFF; line-height: 1.7; }
+.brand--footer .brand__mark { color: #D8ECFF; width: 30px; height: 30px; }
+
+.footer__nav { display: flex; flex-wrap: wrap; gap: .6rem 1.4rem; margin-right: auto; }
+.footer__nav a,
+.footer__reach a { color: #fff; text-decoration: none; font-weight: 600; }
+.footer__nav a:hover,
+.footer__reach a:hover { text-decoration: underline; }
+.footer__reach { display: flex; flex-wrap: wrap; gap: .4rem 1.4rem; }
+
+.footer__bottom {
+  border-top: 1px solid rgba(255,255,255,.14);
+  padding-block: .85rem 1.1rem;
+  display: flex; flex-wrap: wrap; align-items: center; gap: .7rem 1.5rem;
+}
+.footer__bottom address { font-style: normal; color: #E6F0FA; margin: 0; }
+.footer__copy { margin: 0; color: #E6F0FA; margin-left: auto; }
+
 /* Partnership mark. The artwork is transparent PNG-derived and its darker
    lettering would disappear into the blue footer, so it sits on a white chip
    rather than being recoloured — a partner's mark is theirs, not ours to tint. */
-.footer__partner {
-  display: flex; align-items: center; gap: .9rem;
-  margin-right: auto;
-}
+.footer__partner { display: flex; align-items: center; gap: .7rem; }
 .footer__partner img {
-  width: 168px; height: auto; flex: none;
-  background: #fff; border-radius: 10px; padding: .55rem .75rem;
+  width: 132px; height: auto; flex: none;
+  background: #fff; border-radius: 8px; padding: .4rem .55rem;
 }
-.footer__partner p { margin: 0; color: #E6F0FA; font-size: var(--step--1); max-width: 22ch; }
+.footer__partner span { color: #E6F0FA; }
 
-.footer__bottom {
-  margin-top: 1.75rem; padding-block: 1.15rem;
-  border-top: 1px solid rgba(255,255,255,.1);
-  display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center;
-}
-.footer__bottom p { margin: 0; }
-.footer__copy { color: #E6F0FA; }
-.footer__legal { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+.footer__legal { display: flex; flex-wrap: wrap; gap: 1.1rem; list-style: none; margin: 0; padding: 0; }
 .footer__legal li { margin: 0; }
 /* These had no colour of their own and fell through to the global link colour,
    --brand-ink, which is chosen to pass on WHITE. On the old navy that was
    already 2.73:1; on --night it would be 1.50:1. */
-.footer__legal a { color: #FFFFFF; }
+.footer__legal a { color: #fff; }
 .footer__legal a:hover { color: #fff; }
 
 /* --------------------------------------------------------------------------
