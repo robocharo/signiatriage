@@ -635,39 +635,51 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   color: var(--brand-action);
 }
 
-/* Commitment panel — one framed card rather than a full-width band, so the
-   section reads as a page lifted out of a brochure. The photograph runs to the
-   panel's own edge instead of sitting in a floating frame, which is what makes
-   it look composed rather than assembled. */
+/* Commitment — a sheet of paper on a desk, not a section.
+   The photograph is the ground and the copy sits on an actual page within it,
+   which is why this reads as something being read rather than another band.
+   Three details do that work: a 3px radius instead of the site's 14px (paper
+   has a corner, not a rounded UI edge), a fractional rotation so it is laid
+   down rather than aligned to the grid, and a long soft shadow so it floats
+   above the desk. */
 .commitment {
-  display: grid;
+  position: relative;
+  overflow: hidden;
+  background: #201a16;
+  padding-block: clamp(3rem, 8vw, 6.5rem);
+}
+.commitment::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: url("../img/desk-reading.webp") no-repeat center / cover;
+  animation: desk-drift 34s ease-in-out infinite alternate;
+}
+/* Darkens the desk just enough that the white page reads as lit, and keeps the
+   left third quieter so the sheet is the thing you look at. */
+.commitment::after {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(100deg, rgba(20,16,13,.62) 0%, rgba(20,16,13,.34) 46%, rgba(20,16,13,.12) 100%);
+}
+@keyframes desk-drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to   { transform: scale(1.10) translate3d(-1.5%, -1%, 0); }
+}
+
+.commitment > .container { position: relative; z-index: 1; }
+
+.commitment__sheet {
+  max-width: 33rem;
   background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-lg);
-  overflow: hidden;   /* clips the photo to the rounded corner */
+  color: var(--body);
+  padding: clamp(1.6rem, 4vw, 2.75rem);
+  border-radius: 3px;
+  box-shadow: 0 22px 60px rgba(0,0,0,.42), 0 2px 8px rgba(0,0,0,.22);
+  transform: rotate(-0.7deg);
 }
-.commitment__body {
-  padding: clamp(1.5rem, 4vw, 3rem);
-  align-self: center;
-}
-.commitment__body p:last-child { margin-bottom: 0; }
-
-/* Stacked on a phone the media needs its own shape; side by side it simply
-   matches the height of the copy next to it. */
-.commitment__media { aspect-ratio: 3 / 2; overflow: hidden; }
-.commitment__media img {
-  width: 100%; height: 100%; object-fit: cover;
-  animation: commitment-pan 30s ease-in-out infinite alternate;
-}
-@keyframes commitment-pan {
-  from { object-position: 42% 50%; }
-  to   { object-position: 62% 50%; }
-}
-
-@media (min-width: 860px) {
-  .commitment { grid-template-columns: 1.05fr .95fr; }
-  .commitment__media { aspect-ratio: auto; min-height: 100%; }
+.commitment__sheet p:last-child { margin-bottom: 0; }
+/* Straightened on small screens — a tilt that looks deliberate at 33rem just
+   looks broken when the sheet is the full width of a phone. */
+@media (max-width: 620px) {
+  .commitment__sheet { transform: none; }
 }
 
 /* Pull quote */
