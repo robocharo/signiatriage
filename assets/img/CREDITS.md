@@ -46,6 +46,7 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `who-story.webp` | Inherited from signiasolutions.com (`2026/02/cw25_image_modern-workplace-de_02.jpg`) | unknown — commercial stock, **rights unconfirmed** | Who We Are — "Who We Are" |
 | `care-faces.webp` | Same original as the retired `care-bedside.webp` (`2024/03/PHOTO-51001274-WEB.jpg`) | unknown — commercial stock, **rights unconfirmed** | Nurse Triage — closing pair |
 | `rn-on-phone.webp` | Crop of the same AI original as the Nurse Triage hero, framed on the handset | **AI-generated — see note** | Nurse Triage — closing pair |
+| `care-partnership.webp` | [Pexels 18459198](https://www.pexels.com/photo/18459198/) | Jsme MILA | Who We Are — "How We Partner With You" |
 
 ### Note on inherited images
 
