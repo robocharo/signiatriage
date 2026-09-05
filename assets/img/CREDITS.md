@@ -47,6 +47,7 @@ about staff on a healthcare site. Keep the descriptive phrasing.
 | `care-faces.webp` | Same original as the retired `care-bedside.webp` (`2024/03/PHOTO-51001274-WEB.jpg`) | unknown — commercial stock, **rights unconfirmed** | Nurse Triage — closing pair |
 | `rn-on-phone.webp` | Crop of the same AI original as the Nurse Triage hero, framed on the handset | **AI-generated — see note** | Nurse Triage — closing pair |
 | `desk-reading.webp` | [Pexels 7648004](https://www.pexels.com/photo/7648004/) | RDNE Stock project | Who We Are — "Our commitment" backdrop |
+| `contact-hero-bg.webp` | [Pexels 18459198](https://www.pexels.com/photo/18459198/) | Jsme MILA | Contact — page hero background (mirrored) |
 
 ### Note on inherited images
 

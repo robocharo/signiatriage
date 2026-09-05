@@ -959,6 +959,15 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 
 /* Who We Are: a wider photo (2.68:1 against the triage shot's 1.78:1), so it
    needs less oversize to leave the same room to travel. */
+.page-hero--contact {
+  --hero-img: url("../img/contact-hero-bg.webp");
+  /* 2.06:1, wider than either other hero photo, so it needs less oversize to
+     fill the band. The trade-off is that at 128% it has only ~118px of
+     horizontal slack, so --hero-pos barely moves the framing here — the crop
+     itself is what places the subjects, not this value. */
+  --hero-size: auto 128%;
+  --hero-pos: 50% 42%;
+}
 .page-hero--who {
   --hero-img: url("../img/who-hero-bg.webp");
   --hero-size: auto 128%;
