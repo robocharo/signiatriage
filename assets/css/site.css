@@ -19,8 +19,14 @@
   --brand-logo:   #0094EF;   /* the colour traced from the official logo file. The mark
                                 keeps it even as --brand moves, because the logo is the
                                 one thing on the page that is not ours to restyle. */
-  --brand-action: #0076BF;   /* button fill — white label passes 4.83:1 */
-  --brand-action-hover: #00609B; /* 7.43:1 */
+  /* The interactive colour, and deliberately the same azure as --night below.
+     Azure owned the dark bands but nothing in the light half of the page, so
+     one blue now does every interactive job — buttons, focus rings, accent
+     words, stat numerals, the mission line — and the palette reads as one
+     idea rather than two similar blues. It is also the more legible of the
+     two: white on it is 5.59:1 against the old #0076BF's 4.83:1. */
+  --brand-action: #0B66C9;
+  --brand-action-hover: #0A57AC; /* 7.07:1 */
   --brand-ink:    #0069AE;   /* darkened for body-size links (>=4.5:1 on white) */
   --brand-deep:   #066AAB;
   --brand-tint:   #EAF4FE;
@@ -507,7 +513,10 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* Trust strip beneath the hero */
 .trustbar {
   background: var(--sky); color: var(--ink);
-  border-top: 1px solid #D2E7FF; border-bottom: 1px solid #D2E7FF;
+  /* A thin azure edge carries the hero's colour into the light band instead
+     of stopping it dead at the fold. */
+  border-top: 3px solid var(--night);
+  border-bottom: 1px solid #D2E7FF;
 }
 .trustbar__list {
   display: flex; flex-wrap: wrap; gap: clamp(1rem, 4vw, 3rem);

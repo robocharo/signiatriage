@@ -93,7 +93,7 @@ Everything is derived from the real logo, not eyeballed.
 | Token | Value | Where it's used |
 |---|---|---|
 | `--brand` | `#38a6e9` | Brand blue. Marks, icons, borders, decorative rules, the glows in dark bands. **Not** the focus ring or display numerals: at 2.69:1 on white it misses the 3:1 those require. |
-| `--brand-action` | `#0076BF` | Button fills, focus indicators, control edges, display numerals — anything that must clear 3:1 on white (it is 4.84:1). |
+| `--brand-action` | `#0B66C9` | The interactive colour, and the same azure as `--night`. Button fills, focus indicators, control edges, accent words, display numerals — anything that must clear 3:1 on white (it is 5.59:1). |
 | `--brand-ink` | `#0069AE` | Body-size links and eyebrow labels (5.78:1 on white). |
 | `--ink` | `#18212F` | Headlines and dark sections — taken from the live site's own CSS. |
 | `--brand-tint` | `#EAF4FE` | Section washes, icon chips. |
