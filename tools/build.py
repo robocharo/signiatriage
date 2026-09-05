@@ -264,7 +264,8 @@ SERVICE = {
     "url": f"{SITE_URL}/nurse-triage/",
     "description": (
         "RN-led triage for every after-hours call, with evidence-based guidance for staff, "
-        "documentation and leadership notifications, custom escalation pathways, quality "
+        "documentation and leadership notifications, custom escalation pathways, policies and "
+        "procedures, quality "
         "reporting and predictable census-aligned flat-fee pricing."
     ),
     "hasOfferCatalog": {
@@ -276,7 +277,7 @@ SERVICE = {
                 "RN-led triage for every after-hours call",
                 "Clear, evidence-based guidance for staff",
                 "Documentation and leadership notifications",
-                "Custom escalation pathways",
+                "Custom escalation pathways, policies and procedures",
                 "Quality reporting and analytics",
                 "Predictable, census-aligned flat fee pricing",
             ]
@@ -299,7 +300,8 @@ FAQ_ITEMS = [
         "How is Signia Solutions different from an answering service or call center?",
         "An answering service records a message and passes it along. Signia's calls are answered "
         "by an experienced registered nurse who assesses the situation, applies evidence-based "
-        "clinical guidance and your community's own policies and escalation pathways, and gives "
+        "clinical guidance and your community's own policies, procedures and escalation pathways, "
+        "and gives "
         "your caregiver a specific next step. Every call is documented and sent to leadership.",
     ),
     (
@@ -323,8 +325,8 @@ FAQ_ITEMS = [
     ),
     (
         "Do your nurses follow our escalation policies?",
-        "Yes. We operate as an extension of your team, following your policies and escalation "
-        "pathways. Your on-call tree, your notification thresholds and your clinical standards "
+        "Yes. We operate as an extension of your team, following your policies, procedures and "
+        "escalation pathways. Your on-call tree, your notification thresholds and your clinical standards "
         "are built into the workflow before the first call, so decisions align with how your "
         "community already works.",
     ),
@@ -332,7 +334,8 @@ FAQ_ITEMS = [
         "What happens after a call is completed?",
         "Every call is documented and sent to leadership for transparency and follow-through. If "
         "the situation requires leadership involvement or emergency services, the RN initiates "
-        "the appropriate pathway at the time of the call rather than waiting for morning.",
+        "the appropriate pathway under your policies and procedures at the time of the call "
+        "rather than waiting for morning.",
     ),
     (
         "Where is Signia Solutions located?",

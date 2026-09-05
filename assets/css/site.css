@@ -519,10 +519,15 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   border-bottom: 1px solid #D2E7FF;
 }
 .trustbar__list {
-  display: flex; flex-wrap: wrap; gap: clamp(1rem, 4vw, 3rem);
+  /* Measured, not guessed: naming pathways, policies and procedures in full put
+     the four items at 1089px inside a 1080px container — over by 9px, which
+     stranded the last one on a row of its own. Dropping the strip to 14px and
+     easing the gap back brings it to ~1041px, leaving real slack rather than
+     sitting on the boundary. */
+  display: flex; flex-wrap: wrap; gap: clamp(.9rem, 2.2vw, 1.75rem);
   list-style: none; margin: 0; padding: 1.15rem 0;
   justify-content: center; align-items: center;
-  font-size: var(--step--1); font-weight: 600; letter-spacing: .04em;
+  font-size: .875rem; font-weight: 600; letter-spacing: .04em;
 }
 .trustbar__list li { display: inline-flex; align-items: center; gap: .5rem; margin: 0; }
 .trustbar__list svg { width: 17px; height: 17px; color: var(--brand-ink); flex: none; }
