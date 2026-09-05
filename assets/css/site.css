@@ -194,6 +194,24 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   color: #E6F0FA;
 }
 .section--dark h2, .section--dark h3, .section--dark h4 { color: #fff; }
+
+/* A dark band held inside the page rather than spanning it. The section keeps
+   every .section--dark descendant rule — white headings, inverted buttons,
+   lifted link and eyebrow colours — while the azure surface itself moves onto
+   the container, so the band becomes a panel with page showing either side. */
+.section--dark.section--boxed {
+  background: transparent;
+  padding-block: clamp(2.25rem, 5vw, 3.75rem);
+}
+.section--boxed > .container {
+  background:
+    radial-gradient(760px 380px at 88% -12%, rgba(56,166,233,.24), transparent 62%),
+    radial-gradient(520px 300px at 4% 112%, rgba(56,166,233,.14), transparent 64%),
+    var(--night);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding-block: clamp(2.25rem, 5vw, 3.25rem);
+}
 .section--dark a { color: #FFFFFF; }
 
 .stack > * + * { margin-top: 1rem; }
