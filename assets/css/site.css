@@ -635,6 +635,41 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   color: var(--brand-action);
 }
 
+/* Commitment panel — one framed card rather than a full-width band, so the
+   section reads as a page lifted out of a brochure. The photograph runs to the
+   panel's own edge instead of sitting in a floating frame, which is what makes
+   it look composed rather than assembled. */
+.commitment {
+  display: grid;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;   /* clips the photo to the rounded corner */
+}
+.commitment__body {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  align-self: center;
+}
+.commitment__body p:last-child { margin-bottom: 0; }
+
+/* Stacked on a phone the media needs its own shape; side by side it simply
+   matches the height of the copy next to it. */
+.commitment__media { aspect-ratio: 3 / 2; overflow: hidden; }
+.commitment__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  animation: commitment-pan 30s ease-in-out infinite alternate;
+}
+@keyframes commitment-pan {
+  from { object-position: 42% 50%; }
+  to   { object-position: 62% 50%; }
+}
+
+@media (min-width: 860px) {
+  .commitment { grid-template-columns: 1.05fr .95fr; }
+  .commitment__media { aspect-ratio: auto; min-height: 100%; }
+}
+
 /* Pull quote */
 .pullquote {
   margin: 0; padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.5rem, 4vw, 3rem);
