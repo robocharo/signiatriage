@@ -63,8 +63,14 @@
   --amber-tint: #FDF2E6;     /* icon-chip wash behind an amber glyph */
   --amber-line: #EFD5B4;     /* hairline that reads as amber without shouting */
   --green:      #0F7B54;   /* green text on white (5.27:1) — form success, card icon */
-  --green-deep: #0E6B4A;   /* the commitment band. Deep enough that white clears 6.52:1;
-                              a lighter, more obviously green green would not. */
+  /* The commitment band and every primary CTA. This is as bright as the green
+     can go: the band's body copy (#E6F0FA) lands at 4.57:1 here, and one step
+     lighter (#118A5F) drops it to 3.77:1 — a fail. Switching that copy to pure
+     white does not rescue it either, since #118A5F is only 4.35:1 against white.
+     Brighter than this needs dark text on a pale green, which is a different
+     section entirely. */
+  --green-deep: #0F7B54;
+  --green-deeper: #0B5F42; /* CTA hover — white on it is 7.69:1 */
 
   /* Type scale (fluid) */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -231,10 +237,6 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
    does not arrive azure on a green panel. Needs .section--dark in the selector
    to outrank ".section--dark .btn--primary", which is equal specificity but
    declared later in the file. */
-.section--dark.section--boxed--green .btn--primary { color: var(--green-deep); }
-.section--dark.section--boxed--green .btn--primary:hover {
-  color: var(--green-deep); background: #E4F5EC; border-color: #E4F5EC;
-}
 /* Same reason: the eyebrow's little rule is --brand, which is azure. */
 .section--dark.section--boxed--green .eyebrow::before { background: #E0F0FF; }
 .section--dark a { color: #FFFFFF; }
@@ -286,8 +288,11 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 }
 .btn svg { width: 1.15em; height: 1.15em; flex: none; }
 
-.btn--primary { background: var(--brand-action); color: #fff; }
-.btn--primary:hover { background: var(--brand-action-hover); color: #fff; transform: translateY(-1px); }
+/* Green, not --brand-action: the call to action is the one place the palette
+   wants a colour of its own, distinct from the azure that carries brand,
+   links, focus rings and accent words. */
+.btn--primary { background: var(--green-deep); color: #fff; }
+.btn--primary:hover { background: var(--green-deeper); color: #fff; transform: translateY(-1px); }
 .btn:active { transform: translateY(0); }
 
 /* Same hover as a nav item: brand tint behind brand-ink text. */
@@ -499,12 +504,12 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .hero .btn--primary,
 .page-hero--media .btn--primary,
 .section--dark .btn--primary {
-  background: #fff; color: var(--night); border-color: #fff;
+  background: #fff; color: var(--green-deep); border-color: #fff;
 }
 .hero .btn--primary:hover,
 .page-hero--media .btn--primary:hover,
 .section--dark .btn--primary:hover {
-  background: #E0F0FF; color: var(--night-deep); border-color: #E0F0FF;
+  background: #E4F5EC; color: var(--green-deeper); border-color: #E4F5EC;
 }
 
 .hero__badge {
