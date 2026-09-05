@@ -809,22 +809,22 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    15. Footer
    -------------------------------------------------------------------------- */
-.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(3rem, 6vw, 4.5rem) 0; font-size: var(--step--1); }
+.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(2rem, 3.5vw, 2.75rem) 0; font-size: var(--step--1); }
 .site-footer h2, .site-footer h3 { color: #fff; }
 /* Three columns, not four: "Contact" and "Visit" were split across two columns
    for one phone number, one address and a fax line nobody uses. */
-.footer__grid { display: grid; gap: 2.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
-.footer__col address { margin-top: 1rem; }
+.footer__grid { display: grid; gap: 1.5rem 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
+.footer__col address { margin-top: .75rem; }
 .footer__brand .brand__name { color: #fff; }
 .footer__brand .brand__tag { color: #E0F0FF; }
 /* The header mark is the logo blue on white, as it should be. Here the ground
    is itself blue, and --brand on --night is 2.67:1 — under the 3:1 that
    WCAG 1.4.11 asks of a meaningful graphic. Same hue, lifted to clear it. */
 .footer__brand .brand__mark { color: #D8ECFF; }
-.footer__brand p { margin-top: 1rem; max-width: 34ch; color: #E6F0FA; }
-.footer__col h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: 1rem; }
+.footer__brand p { margin-top: .7rem; max-width: 34ch; color: #E6F0FA; }
+.footer__col h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: .65rem; }
 .footer__col ul { list-style: none; padding: 0; margin: 0; }
-.footer__col li { margin-bottom: .6rem; }
+.footer__col li { margin-bottom: .4rem; }
 .footer__col a { color: #FFFFFF; text-decoration: none; }
 .footer__col a:hover { color: #fff; text-decoration: underline; }
 .footer__col address { font-style: normal; color: #FFFFFF; line-height: 1.7; }
@@ -836,13 +836,13 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   margin-right: auto;
 }
 .footer__partner img {
-  width: 104px; height: auto; flex: none;
-  background: #fff; border-radius: 8px; padding: .45rem .6rem;
+  width: 168px; height: auto; flex: none;
+  background: #fff; border-radius: 10px; padding: .55rem .75rem;
 }
 .footer__partner p { margin: 0; color: #E6F0FA; font-size: var(--step--1); max-width: 22ch; }
 
 .footer__bottom {
-  margin-top: 3rem; padding-block: 1.75rem;
+  margin-top: 1.75rem; padding-block: 1.15rem;
   border-top: 1px solid rgba(255,255,255,.1);
   display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center;
 }
