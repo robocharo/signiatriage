@@ -62,7 +62,9 @@
   --amber:    #B45309;
   --amber-tint: #FDF2E6;     /* icon-chip wash behind an amber glyph */
   --amber-line: #EFD5B4;     /* hairline that reads as amber without shouting */
-  --green:    #0F7B54;
+  --green:      #0F7B54;   /* green text on white (5.27:1) — form success, card icon */
+  --green-deep: #0E6B4A;   /* the commitment band. Deep enough that white clears 6.52:1;
+                              a lighter, more obviously green green would not. */
 
   /* Type scale (fluid) */
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
@@ -212,6 +214,29 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   box-shadow: var(--shadow-lg);
   padding-block: clamp(2.25rem, 5vw, 3.25rem);
 }
+
+/* The commitment band in green rather than azure. Green as an *accent on* azure
+   was the first idea and it does not survive measurement: the greens that read
+   as green are 2.75-2.91:1 against #0B66C9, under even the 3:1 for a graphic,
+   because the two hues sit too close in luminance. Green as the surface works
+   — white on it is 6.52:1 — and gives the page a second colour moment instead
+   of a weak accent. */
+.section--boxed--green > .container {
+  background:
+    radial-gradient(760px 380px at 88% -12%, rgba(41,206,144,.20), transparent 62%),
+    radial-gradient(520px 300px at 4% 112%, rgba(41,206,144,.12), transparent 64%),
+    var(--green-deep);
+}
+/* The inverted button takes the band's own colour, not --night, so its label
+   does not arrive azure on a green panel. Needs .section--dark in the selector
+   to outrank ".section--dark .btn--primary", which is equal specificity but
+   declared later in the file. */
+.section--dark.section--boxed--green .btn--primary { color: var(--green-deep); }
+.section--dark.section--boxed--green .btn--primary:hover {
+  color: var(--green-deep); background: #E4F5EC; border-color: #E4F5EC;
+}
+/* Same reason: the eyebrow's little rule is --brand, which is azure. */
+.section--dark.section--boxed--green .eyebrow::before { background: #E0F0FF; }
 .section--dark a { color: #FFFFFF; }
 
 .stack > * + * { margin-top: 1rem; }

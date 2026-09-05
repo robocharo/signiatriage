@@ -97,6 +97,7 @@ Everything is derived from the real logo, not eyeballed.
 | `--brand-ink` | `#0069AE` | Body-size links and eyebrow labels (5.78:1 on white). |
 | `--ink` | `#18212F` | Headlines and dark sections — taken from the live site's own CSS. |
 | `--brand-tint` | `#EAF4FE` | Section washes, icon chips. |
+| `--green-deep` | `#0E6B4A` | The commitment band. Green as an *accent on* azure fails measurement — the greens that read as green are 2.75–2.91:1 against `#0B66C9` — so green is used as a surface instead, where white clears 6.52:1. |
 
 `assets/img/signia-mark.svg` is a **pixel-exact vector trace** of the logo mark from
 `Signia.png` — verified as 0 mismatched pixels against the original raster. It inherits
