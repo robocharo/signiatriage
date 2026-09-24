@@ -450,8 +450,17 @@ def asset_version(rel: str) -> str:
     looks like it never shipped. The hash moves only when the file does, so
     caching stays aggressive and correctness stops depending on anyone
     remembering to hard-refresh.
+
+    Line endings are normalised before hashing. Git stores LF but checks out CRLF
+    on Windows (core.autocrlf=true), so hashing raw bytes made the token depend on
+    WHICH MACHINE ran the build rather than on the file's content: site.js hashed
+    to 9e1a1c72 on a CRLF checkout and 40a05d94 on an LF one, from a byte-identical
+    blob. The committed HTML then flip-flopped between the two, and a build on one
+    machine looked like a change on the other. Normalising makes the hash a
+    property of the content, which is the only thing it was ever meant to track.
     """
-    return hashlib.sha256((ROOT / rel).read_bytes()).hexdigest()[:8]
+    raw = (ROOT / rel).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(raw).hexdigest()[:8]
 
 
 def build() -> int:

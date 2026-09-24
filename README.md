@@ -246,6 +246,8 @@ submit button while a request is in flight.
 | | |
 |---|---|
 | **URL** | https://polite-water-07a742710.7.azurestaticapps.net |
+| Azure tenant | **viceshield.com** (Vice Shield) — sign in as `rob@viceshield.com` |
+| Subscription | `2668315a-cb9c-4cba-965d-f6888cbf76a9` ("Azure subscription 1") |
 | Resource group | `signia-triage-rg` (centralus) |
 | App name | `signia-triage` |
 | SKU | Free |
@@ -254,14 +256,47 @@ Azure ignores `_redirects` and `.htaccess`, so all routing, headers and 404
 handling for this host live in **`staticwebapp.config.json`**. Edit that file if
 you change either of the other two.
 
-Deploy from the repo root:
+#### Deploying
+
+**A push to `main` deploys the site.** `.github/workflows/azure-static-web-apps.yml`
+rebuilds from `tools/`, stages everything except the build inputs, uploads it, and
+then curls the live URL to confirm the deploy actually landed. Nothing else is
+needed day to day.
+
+That workflow exists because deploys used to be manual, and the consequence was
+concrete: the 5 September work was committed and pushed correctly, then sat
+undeployed for **nineteen days** because publishing was a separate act nobody
+performed. Pushing and deploying are now the same event.
+
+**One-time setup — the repository secret.** The workflow needs the SWA deployment
+token. Get it (note `--subscription`: this account has more than one, and the CLI
+default is not always the right one):
+
+```bash
+az staticwebapp secrets list \
+  --subscription 2668315a-cb9c-4cba-965d-f6888cbf76a9 \
+  --name signia-triage --resource-group signia-triage-rg \
+  --query "properties.apiKey" -o tsv
+```
+
+Then in GitHub: **Settings → Secrets and variables → Actions → New repository
+secret**, named exactly `AZURE_STATIC_WEB_APPS_API_TOKEN`, with that value. It is
+a deploy credential for this one Static Web App — treat it like a password, and
+rotate it with `az staticwebapp secrets reset-api-key` if it ever leaks.
+
+**Manual deploy**, if CI is unavailable or you want to publish without a commit:
 
 ```bash
 python tools/build.py
-TOKEN=$(az staticwebapp secrets list --name signia-triage \
-          --resource-group signia-triage-rg --query "properties.apiKey" -o tsv)
+TOKEN=$(az staticwebapp secrets list \
+          --subscription 2668315a-cb9c-4cba-965d-f6888cbf76a9 \
+          --name signia-triage --resource-group signia-triage-rg \
+          --query "properties.apiKey" -o tsv)
 npx @azure/static-web-apps-cli deploy . --env production --deployment-token "$TOKEN"
 ```
+
+There is also a **Run workflow** button on the Actions tab (`workflow_dispatch`)
+that redeploys the current `main` without needing an empty commit.
 
 **Two Azure-specific traps, both hit during setup and both now documented in the
 config file itself:**
@@ -276,9 +311,16 @@ config file itself:**
 Also note Azure normalises `/who` and `/who/` to the same rule, so declaring both
 fails the deployment outright. Declare the trailing-slash form only; it matches both.
 
-To wire up push-to-deploy, add the deployment token to the repo as a secret named
-`AZURE_STATIC_WEB_APPS_API_TOKEN` and add a workflow using
-`Azure/static-web-apps-deploy@v1`.
+#### A third trap, this one ours, not Azure's
+
+`asset_version()` in `tools/build.py` hashes the CSS and JS to build the `?v=`
+cache-bust token. It used to hash **raw bytes**. Git stores LF but checks out CRLF
+on Windows, so the token became a property of *which machine ran the build* rather
+than of the file: `site.js` hashed to `9e1a1c72` on a CRLF checkout and `40a05d94`
+on an LF one — from a byte-identical blob. The committed HTML then flip-flopped
+between the two hashes, and a rebuild on one machine looked like a real change on
+the other. Fixed by normalising line endings before hashing. If you add another
+hashed asset, normalise it the same way.
 
 ### Netlify / Cloudflare Pages
 Connect the repository. Build command: *(none)*. Publish directory: `/`.

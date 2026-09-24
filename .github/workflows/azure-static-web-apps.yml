@@ -1,0 +1,100 @@
+name: Deploy to Azure Static Web Apps
+
+# Why this exists: deploys used to be a manual SWA CLI run from someone's laptop.
+# The Sept 5 work sat correctly committed and pushed on GitHub for nineteen days
+# without ever reaching the live site, because pushing and deploying were two
+# separate acts and only one of them happened. Now a push to main IS the deploy.
+#
+# One-time setup: add a repository secret named AZURE_STATIC_WEB_APPS_API_TOKEN.
+# See README.md -> "Azure Static Web Apps" for where to get the value.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # lets you redeploy by hand without an empty commit
+
+concurrency:
+  # A second push while one deploy is in flight cancels the first — the newer
+  # commit is the one that should win, and two concurrent SWA uploads race.
+  group: swa-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Build and deploy
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'   # build.py is standard-library only
+
+      # Rebuild from tools/ rather than trusting the committed HTML. What ships
+      # is then guaranteed to match the sources it was generated from, even if
+      # someone edited tools/pages/ and forgot to run the build before pushing.
+      - name: Build
+        run: python tools/build.py
+
+      # Drift is reported, never fatal. A failed deploy is the exact problem this
+      # workflow exists to prevent, so a stale-HTML warning must not block the
+      # site from going live. sitemap.xml is excluded: its <lastmod> is today's
+      # date by construction, so it differs on every build by design.
+      - name: Report stale committed HTML
+        run: |
+          if ! git diff --quiet -- . ':(exclude)sitemap.xml'; then
+            echo "::warning::Committed HTML was stale vs tools/ sources. Deploying the freshly built output. Run 'python tools/build.py' locally and commit the result."
+            git diff --stat -- . ':(exclude)sitemap.xml'
+          else
+            echo "Committed HTML matches a fresh build."
+          fi
+
+      # Assemble exactly what the web server should see. tools/ is build input,
+      # not web content, and _redirects/_headers/.htaccess belong to other hosts.
+      # staticwebapp.config.json blocks /tools/* at request time too, but not
+      # shipping it at all is the stronger guarantee.
+      - name: Stage the deploy artifact
+        run: |
+          mkdir -p _site
+          rsync -a \
+            --exclude '.git' \
+            --exclude '.github' \
+            --exclude '_site' \
+            --exclude 'tools' \
+            --exclude 'README.md' \
+            --exclude '.gitignore' \
+            --exclude '_redirects' \
+            --exclude '_headers' \
+            --exclude '.htaccess' \
+            --exclude 'assets/img/CREDITS.md' \
+            ./ _site/
+          echo "Staged $(find _site -type f | wc -l) files:"
+          find _site -maxdepth 1 -mindepth 1 | sort
+
+      - name: Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: upload
+          app_location: '_site'
+          output_location: ''       # nothing to build on Azure's side
+          skip_app_build: true
+          skip_api_build: true
+
+      # Fail loudly if the site did not actually change. A green tick on a deploy
+      # that silently shipped nothing is worse than a red one.
+      - name: Verify the deploy is live
+        run: |
+          sleep 15
+          URL=https://polite-water-07a742710.7.azurestaticapps.net
+          for path in / /nurse-triage/ /who-we-are/ /careers/ /contact/ /robots.txt /sitemap.xml; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$URL$path")
+            printf '  %-18s %s\n' "$path" "$code"
+            [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
+          done
+          live=$(curl -s --max-time 30 "$URL/assets/css/site.css" | tr -d '\r' | sha256sum | cut -c1-16)
+          repo=$(tr -d '\r' < _site/assets/css/site.css | sha256sum | cut -c1-16)
+          echo "  live css $live"
+          echo "  repo css $repo"
+          [ "$live" = "$repo" ] || { echo "::error::Live CSS does not match what was just deployed."; exit 1; }
+          echo "Deploy verified."
