@@ -284,60 +284,61 @@ governs **all** mail for the domain including Microsoft 365, and a careless
 `p=reject` will start bouncing legitimate staff email. If you add one, start at
 `p=none` and read the reports before tightening.
 
-## 7. Wiring up the forms (historical — now done)
+## 7. Before launch — checklist
 
-A static site has no server, so the two forms need an endpoint. Both are marked
-`action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"` and will refuse to submit until that is
-changed — deliberately, so a broken form can't silently swallow a lead.
+> **Compliance note, carried over.** These forms are for business inquiries and job
+> applications only. Never route protected health information through them. Both
+> forms say so on the page; keep that copy.
 
-**Option A — Netlify / Cloudflare Pages Forms (simplest).** The `data-netlify="true"`
-and hidden `form-name` fields are already in place. Delete the `data-ajax="true"`
-attribute and set `action="/contact/"`, then enable Forms in the dashboard.
 
-**Option B — a hosted form endpoint** (Formspree, Basin, Getform, a Zapier catch hook, or
-your own handler). Paste the endpoint URL into `action` and leave `data-ajax="true"` —
-`site.js` posts in the background and shows an inline confirmation without a page reload.
+### Done
 
-Both forms already include a honeypot field, client-side validation, and a disabled
-submit button while a request is in flight.
+- [x] **Forms deliver to `hi@signiasolutions.com`** — SWA Functions + ACS, spam-scored,
+      verified end to end (contact, careers with attachment, spam dropped, bad file
+      rejected). See §6.
+- [x] **Canonical host chosen: the apex**, `https://signiasolutions.com`. `www` resolves
+      to the same app; every canonical tag, sitemap entry and schema `@id` names the apex.
+- [x] **Legacy redirects fire** — `/who/` → `/who-we-are/` and `/triage/` → `/nurse-triage/`,
+      both `301`, verified against the live domain.
+- [x] **Indexing is on.** Every page sends `index, follow` and `robots.txt` allows
+      crawling — the fix for audit finding #1, confirmed in production.
+- [x] **Push-to-deploy** — a push to `main` builds, deploys and then curls the live site
+      to prove the upload landed.
 
-> **Compliance note.** These forms are for business inquiries and job applications only.
-> Whatever endpoint you choose is a third party and is almost certainly **not** covered by
-> a business associate agreement. Never route protected health information through them.
-> Both forms say so on the page; keep that copy.
+### Still open
 
----
-
-## 8. Before launch — checklist
-
-- [ ] **Replace the form endpoints** (§6). Submit a test message and confirm it arrives.
+- [ ] **Google Search Console**: add the property, submit `https://signiasolutions.com/sitemap.xml`,
+      then use *URL Inspection → Request Indexing* on the homepage and `/nurse-triage/`.
+      Because the old site was `noindex`, Google has nothing cached — the first crawl is
+      effectively a new site launch. The `google-site-verification` TXT is still in DNS,
+      so access is intact.
 - [ ] **Have counsel review `privacy/`.** It is an accurate draft of how the site behaves,
-      but it is not legal advice. Remove the yellow review notice once approved.
+      but it is not legal advice. It now needs a pass on the forms too: submissions are
+      processed by Azure Communication Services and land in Microsoft 365. Remove the
+      yellow review notice once approved.
 - [ ] **Confirm the LeadingAge Minnesota partnership.** The badge inherited from the old
       site was captioned "Best Places to Work Minnesota, 2026"; it is in fact the
       LeadingAge Minnesota *Business Partner* mark — a partner designation, not an award.
       The award claim is gone and the mark now sits in the footer worded as a partnership.
       Verify the partnership is current for 2026 and that LeadingAge's mark-usage terms
       allow display; if not, drop `.footer__partner` from `tools/partials/footer.html`.
-- [ ] **Pick a canonical host** (www or non-www) and make the other 301 to it. Both
-      `.htaccess` and `_redirects` assume **non-www**; flip them if you prefer www.
-- [ ] **Verify the redirects fire**: `/who/` → `/who-we-are/` and `/triage/` → `/nurse-triage/`,
-      both returning `301`.
-- [ ] **Verify `robots.txt` and every page's robots meta say `index`.** This is the fix for
-      audit finding #1 — check it in production, not just locally.
-- [ ] **Google Search Console**: add the property, submit `https://signiasolutions.com/sitemap.xml`,
-      then use *URL Inspection → Request Indexing* on the homepage and `/nurse-triage/`.
-      Because the site has been `noindex` up to now, Google has nothing cached — the first
-      crawl is effectively a new site launch.
-- [ ] **Bing Webmaster Tools**: same, and it feeds ChatGPT search results.
+- [ ] **Confirm rights to `care-team.webp`** and the other images marked
+      *rights unconfirmed* in `assets/img/CREDITS.md`. Several were inherited from the
+      WordPress site with no licence recorded, and two are AI-generated.
+- [ ] **Decommission WP Engine** — take a final backup and export, check the WordPress
+      admin for stored form submissions nobody has read, then cancel. DNS no longer
+      points there, but the install is still live at its `*.wpengine.com` hostname while
+      the plan is active.
+- [ ] **Bing Webmaster Tools**: same as Search Console, and it feeds ChatGPT search results.
 - [ ] **Google Business Profile**: claim/update it, and make the NAP match the footer exactly.
 - [ ] **Validate the structured data** at [validator.schema.org](https://validator.schema.org/)
       and Google's [Rich Results Test](https://search.google.com/test/rich-results).
 - [ ] **Run Lighthouse** on the deployed URL (mobile profile) and keep a screenshot as a baseline.
 - [ ] **Decide on analytics.** Nothing is installed. If you add Google Analytics, add a
       cookie notice and update `privacy/`; if you would rather not, Plausible or Fathom are
-      cookie-free and need no banner. Either way, add the domain to the `_headers` /
-      `.htaccess` CSP — the current policy is `default-src 'self'` and will block it.
+      cookie-free and need no banner. Either way, add the domain to the CSP in
+      `staticwebapp.config.json` — the current policy is `default-src 'self'` and will
+      block it silently.
 
 ---
 
