@@ -245,7 +245,8 @@ submit button while a request is in flight.
 
 | | |
 |---|---|
-| **URL** | https://polite-water-07a742710.7.azurestaticapps.net |
+| **Canonical URL** | **https://signiasolutions.com** — what every canonical tag, sitemap entry and schema `@id` declares |
+| Azure origin | `polite-water-07a742710.7.azurestaticapps.net` — permanent, see below |
 | Azure tenant | **viceshield.com** (Vice Shield) — sign in as `rob@viceshield.com` |
 | Subscription | `2668315a-cb9c-4cba-965d-f6888cbf76a9` ("Azure subscription 1") |
 | Resource group | `signia-triage-rg` (centralus) |
@@ -255,6 +256,55 @@ submit button while a request is in flight.
 Azure ignores `_redirects` and `.htaccess`, so all routing, headers and 404
 handling for this host live in **`staticwebapp.config.json`**. Edit that file if
 you change either of the other two.
+
+#### The custom domain — DNS records to add at GoDaddy
+
+DNS for `signiasolutions.com` is at **GoDaddy** (`ns07/ns08.domaincontrol.com`).
+The apex domain is already registered against the Static Web App and is sitting in
+`Validating` until the TXT record below exists.
+
+| Type | Host | Value | Why |
+|---|---|---|---|
+| `TXT` | `@` | `_nlqej4fc2ygsihjm2g2byn91had3b6q` | Proves domain ownership to Azure. Must exist **before** Azure will validate. |
+| `A` | `@` | `64.236.125.137` | Points the apex at the Static Web App. |
+| `CNAME` | `www` | `polite-water-07a742710.7.azurestaticapps.net` | The `www` subdomain. |
+
+Add the `TXT` first and let Azure validate, then add the `A`. The `www` CNAME must
+exist **before** running `az staticwebapp hostname set --hostname www.signiasolutions.com`
+— Azure checks for the record at the moment you add the hostname and rejects it
+outright if it is missing. Apex changes can take up to 72 hours to propagate,
+though GoDaddy is usually minutes.
+
+**Why an `A` record and not `ALIAS`.** Microsoft's own documentation names GoDaddy
+as a registrar that cannot point an apex at a hostname — no `ALIAS`, no `ANAME`, no
+`CNAME` flattening. The tradeoff, stated plainly in those docs: an `A` record
+"directs your traffic to a single regional host of your static web app", so the
+site loses Azure's global distribution. For a Minnesota senior-living audience
+served from Central US that is not worth solving; if it ever matters, moving DNS to
+Cloudflare (CNAME flattening) or Azure DNS (alias records) restores it with no code
+change, because the canonical host does not move.
+
+The `stableInboundIP` above is **not** visible through `az staticwebapp show` — that
+command uses an older API version that omits the field and returns `null`. Read it
+from ARM directly:
+
+```bash
+az rest --method get --url "https://management.azure.com/subscriptions/2668315a-cb9c-4cba-965d-f6888cbf76a9/resourceGroups/signia-triage-rg/providers/Microsoft.Web/staticSites/signia-triage?api-version=2023-01-01" \
+  --query "properties.stableInboundIP" -o tsv
+```
+
+#### The `azurestaticapps.net` hostname cannot be removed
+
+Azure assigns every Static Web App a default hostname and provides no way to delete
+it. A custom domain is added *alongside* it, never in place of it — so
+`polite-water-07a742710.7.azurestaticapps.net` will keep serving the site forever.
+
+That is fine, and it is already handled: every `<link rel="canonical">`, every
+`sitemap.xml` entry and every schema `@id` declares `https://signiasolutions.com`,
+so search engines consolidate there and the Azure hostname stays an unadvertised
+origin. Static Web Apps has no host-based routing, so there is no way to make the
+default hostname redirect — the canonical tags are the mechanism, and they are
+already in place.
 
 #### Deploying
 

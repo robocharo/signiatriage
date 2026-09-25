@@ -83,18 +83,57 @@ jobs:
 
       # Fail loudly if the site did not actually change. A green tick on a deploy
       # that silently shipped nothing is worse than a red one.
+      #
+      # Two hostnames, deliberately checked differently:
+      #
+      #   ORIGIN  the azurestaticapps.net hostname. Azure gives every Static Web
+      #           App one and provides no way to remove it, so it is always valid
+      #           and is the honest answer to "did the upload land". Failures here
+      #           are real and fail the job.
+      #
+      #   SITE    signiasolutions.com — the canonical host every <link rel=canonical>,
+      #           sitemap entry and schema @id already points at. Checked only once
+      #           DNS actually resolves, so this step does not go red during the
+      #           cutover window. The moment the A record is live it starts
+      #           enforcing, with no edit needed here.
       - name: Verify the deploy is live
         run: |
           sleep 15
-          URL=https://polite-water-07a742710.7.azurestaticapps.net
-          for path in / /nurse-triage/ /who-we-are/ /careers/ /contact/ /robots.txt /sitemap.xml; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$URL$path")
+          ORIGIN=https://polite-water-07a742710.7.azurestaticapps.net
+          SITE=https://signiasolutions.com
+          PATHS="/ /nurse-triage/ /who-we-are/ /careers/ /contact/ /robots.txt /sitemap.xml"
+
+          echo "Origin ($ORIGIN)"
+          for path in $PATHS; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$ORIGIN$path")
             printf '  %-18s %s\n' "$path" "$code"
-            [ "$code" = "200" ] || { echo "::error::$path returned $code"; exit 1; }
+            [ "$code" = "200" ] || { echo "::error::origin $path returned $code"; exit 1; }
           done
-          live=$(curl -s --max-time 30 "$URL/assets/css/site.css" | tr -d '\r' | sha256sum | cut -c1-16)
+
+          live=$(curl -s --max-time 30 "$ORIGIN/assets/css/site.css" | tr -d '\r' | sha256sum | cut -c1-16)
           repo=$(tr -d '\r' < _site/assets/css/site.css | sha256sum | cut -c1-16)
           echo "  live css $live"
           echo "  repo css $repo"
           [ "$live" = "$repo" ] || { echo "::error::Live CSS does not match what was just deployed."; exit 1; }
-          echo "Deploy verified."
+
+          echo
+          echo "Canonical host ($SITE)"
+          # Probe with curl alone — no dependency on `host` or `dig`, which are not
+          # guaranteed on a runner. A non-zero exit covers every cutover-in-flight
+          # state uniformly: DNS not resolving, connection refused, and TLS still
+          # being issued (which is what the old WP Engine host does today).
+          if ! curl -sS -o /dev/null --max-time 30 "$SITE/" 2>/tmp/curlerr; then
+            echo "::notice::signiasolutions.com is not serving this app yet ($(tr -d '\n' < /tmp/curlerr)) — skipping. This starts enforcing automatically once the DNS cutover lands."
+            exit 0
+          fi
+          root=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$SITE/")
+          if [ "$root" != "200" ]; then
+            echo "::notice::signiasolutions.com answered $root — DNS or certificate issuance is probably still in flight."
+            exit 0
+          fi
+          for path in $PATHS; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$SITE$path")
+            printf '  %-18s %s\n' "$path" "$code"
+            [ "$code" = "200" ] || { echo "::error::canonical $path returned $code"; exit 1; }
+          done
+          echo "Deploy verified on both hostnames."
