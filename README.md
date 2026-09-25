@@ -182,7 +182,109 @@ Built to WCAG 2.2 AA and verified, not assumed:
 
 ---
 
-## 6. Wiring up the forms
+## 6. The forms — how they actually work
+
+Both forms POST to this site's own API and email the submission to
+**hi@signiasolutions.com**. Nothing leaves the Signia Azure tenant.
+
+| Piece | What it is |
+|---|---|
+| `/api/contact`, `/api/careers` | Azure Static Web Apps **managed Functions** (`api/`), included in the Free plan |
+| Delivery | **Azure Communication Services** — `signia-comms` + `signia-email` in `signia-triage-rg` |
+| From | `Signia Solutions Website <DoNotReply@forms.signiasolutions.com>` |
+| To | `hi@signiasolutions.com` (`FORM_RECIPIENT` app setting) |
+| Reply-To | the person who submitted — hitting Reply in Outlook answers them, not a no-reply box |
+
+### Why not Formspree, Basin, Netlify Forms…
+
+Any hosted form service becomes a **data processor sitting in the submission path
+of a healthcare site**, with no BAA — exactly the dependency `privacy/` tells
+visitors we avoid. The Free plan's managed Functions allow a 30 MB request, which
+covers the 5 MB resume comfortably, so there was no reason to take that on.
+
+### DNS these depend on
+
+Four records on the **`forms`** subdomain, all verified. They are separate names
+from the apex, so they neither touch nor override the Microsoft 365 records at the
+root:
+
+| Type | Name | Value |
+|---|---|---|
+| `TXT` | `forms` | `ms-domain-verification=fad526f2-1842-4c4b-b9d4-8dde210cd98e` |
+| `TXT` | `forms` | `v=spf1 include:spf.protection.outlook.com -all` |
+| `CNAME` | `selector1-azurecomm-prod-net._domainkey.forms` | `selector1-azurecomm-prod-net._domainkey.azurecomm.net` |
+| `CNAME` | `selector2-azurecomm-prod-net._domainkey.forms` | `selector2-azurecomm-prod-net._domainkey.azurecomm.net` |
+
+Verification is **not automatic** — the records existing is not enough. Each type
+has to be kicked off explicitly, and the CLI parameter is `--domain-name`, not
+`--name`:
+
+```bash
+for t in Domain SPF DKIM DKIM2; do
+  az communication email domain initiate-verification \
+    --subscription 2668315a-cb9c-4cba-965d-f6888cbf76a9 \
+    --resource-group signia-triage-rg --email-service-name signia-email \
+    --domain-name forms.signiasolutions.com --verification-type $t
+done
+```
+
+Then link the verified domain to the sending resource — this fails with
+`DomainValidationError` until every type reads `Verified`:
+
+```bash
+az communication update --name signia-comms --resource-group signia-triage-rg \
+  --linked-domains "/subscriptions/.../emailServices/signia-email/domains/forms.signiasolutions.com"
+```
+
+### Spam filtering (`api/shared/spam.js`)
+
+Scored, not a tripwire. Eight signals each **add** to a total and only the total
+rejects: honeypot, submission speed, per-IP rate limit, link count, solicitation
+phrases, script mismatch, email validity, disposable domains.
+
+The threshold sits above what any single check can reach, deliberately. Rejecting
+a real administrator's inquiry costs far more than accepting a spam one, so a
+genuine visitor who trips one or two signals still gets through. Every decision is
+logged with its reasons, so a false positive can be traced.
+
+**A blocked submission gets the normal success message**, not an error. Telling a
+bot which check caught it just teaches whoever wrote it what to fix next — and if
+the filter ever does misfire, a real visitor at least isn't shown a failure.
+
+Two things the tests forced:
+
+- **Rate limiting is two-tier.** It originally only ever *contributed* 4 points
+  against a threshold of 6, so a bot posting innocuous text with a valid email and
+  plausible timing scored 4 and sailed through indefinitely — the suite caught it
+  at 0 of 8 blocked. Over the limit now contributes; past twice the limit rejects
+  outright. It is in-memory, so it is per-instance and resets on cold start: it
+  stops one script hammering one endpoint, not a distributed flood. Move it to
+  Table Storage if that ever matters; the function signature will not change.
+- **`form_started` is a hint, never a gate.** A bot can forge the timestamp
+  trivially. It contributes to the score and nothing more.
+
+### Uploads
+
+Resumes are checked by **magic bytes, not just the extension** — a browser reports
+whatever content type the OS guessed, so `.pdf` proves nothing. A missing or
+rejected resume does not sink an otherwise good application; the email says so and
+the submission still arrives.
+
+### Send failures answer 502 on purpose
+
+The browser's offline outbox treats 5xx as retryable. A transient ACS outage must
+not silently swallow a lead, so a failed send returns 502 with the phone number
+rather than a false success.
+
+### Optional: DMARC
+
+`DMARC` shows `NotStarted` and that is fine — it is not required to send. Adding a
+`_dmarc` TXT record would improve deliverability, but a DMARC policy at the apex
+governs **all** mail for the domain including Microsoft 365, and a careless
+`p=reject` will start bouncing legitimate staff email. If you add one, start at
+`p=none` and read the reports before tightening.
+
+## 7. Wiring up the forms (historical — now done)
 
 A static site has no server, so the two forms need an endpoint. Both are marked
 `action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"` and will refuse to submit until that is
@@ -206,7 +308,7 @@ submit button while a request is in flight.
 
 ---
 
-## 7. Before launch — checklist
+## 8. Before launch — checklist
 
 - [ ] **Replace the form endpoints** (§6). Submit a test message and confirm it arrives.
 - [ ] **Have counsel review `privacy/`.** It is an accurate draft of how the site behaves,
