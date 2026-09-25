@@ -1,0 +1,13 @@
+{
+  "name": "signia-forms-api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Form handlers for signiasolutions.com. Runs as Azure Static Web Apps managed Functions — same origin, same tenant, no third-party data processor.",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@azure/communication-email": "^1.0.0",
+    "parse-multipart-data": "^1.5.0"
+  }
+}

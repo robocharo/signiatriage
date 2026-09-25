@@ -61,6 +61,7 @@ jobs:
             --exclude '.github' \
             --exclude '_site' \
             --exclude 'tools' \
+            --exclude 'api' \
             --exclude 'README.md' \
             --exclude '.gitignore' \
             --exclude '_redirects' \
@@ -79,7 +80,14 @@ jobs:
           app_location: '_site'
           output_location: ''       # nothing to build on Azure's side
           skip_app_build: true
-          skip_api_build: true
+          # The form handlers. api_location is relative to the repo root, NOT to
+          # app_location — which is why `api` is excluded from the _site rsync
+          # above: shipping it as static content too would publish the handlers
+          # as downloadable source.
+          api_location: 'api'
+          # Oryx must run `npm install` here; the functions need
+          # @azure/communication-email and parse-multipart-data at runtime.
+          skip_api_build: false
 
       # Fail loudly if the site did not actually change. A green tick on a deploy
       # that silently shipped nothing is worse than a red one.

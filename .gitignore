@@ -2,3 +2,7 @@
 Thumbs.db
 *.log
 .vscode/
+node_modules/
+_site/
+api/node_modules/
+local.settings.json

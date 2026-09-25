@@ -98,14 +98,17 @@
             -->
             <form class="contact-form"
                   method="POST"
-                  action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"
+                  action="/api/contact"
                   data-ajax="true"
-                  data-netlify="true"
                   name="contact"
                   data-success="Thank you — your message is on its way. We reply to most inquiries within one business day."
                   novalidate>
 
               <input type="hidden" name="form-name" value="contact">
+              <!-- Stamped by site.js at page load. The server rejects a submission
+                   that arrives implausibly fast, which is one of the cheapest and
+                   most reliable bot signals there is. -->
+              <input type="hidden" name="form_started" value="">
               <p class="honeypot" aria-hidden="true">
                 <label>Do not fill this in <input name="company-website" tabindex="-1" autocomplete="off"></label>
               </p>

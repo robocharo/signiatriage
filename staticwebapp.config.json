@@ -22,6 +22,10 @@
   ],
 
   "routes": [
+    { "route": "/api/contact", "methods": ["POST"], "allowedRoles": ["anonymous"] },
+    { "route": "/api/careers", "methods": ["POST"], "allowedRoles": ["anonymous"] },
+    { "route": "/api/*", "statusCode": 404 },
+
     { "route": "/who/", "redirect": "/who-we-are/", "statusCode": 301 },
     { "route": "/triage/", "redirect": "/nurse-triage/", "statusCode": 301 },
     { "route": "/v42-home/", "redirect": "/", "statusCode": 301 },

@@ -32,7 +32,7 @@
 <link rel="manifest" href="/site.webmanifest">
 
 <link rel="stylesheet" href="/assets/css/site.css?v=cb8f8014">
-<script src="/assets/js/site.js?v=40a05d94" defer></script>
+<script src="/assets/js/site.js?v=15cd7881" defer></script>
 
 <script type="application/ld+json">
 {
@@ -339,15 +339,16 @@
             -->
             <form class="career-form"
                   method="POST"
-                  action="REPLACE_ME_WITH_YOUR_FORM_ENDPOINT"
+                  action="/api/careers"
                   data-ajax="true"
-                  data-netlify="true"
                   name="careers"
                   enctype="multipart/form-data"
                   data-success="Thank you — your application is in. We'll be in touch shortly."
                   novalidate>
 
               <input type="hidden" name="form-name" value="careers">
+              <!-- See the note on the contact form: submission-speed check. -->
+              <input type="hidden" name="form_started" value="">
               <p class="honeypot" aria-hidden="true">
                 <label>Do not fill this in <input name="company-website" tabindex="-1" autocomplete="off"></label>
               </p>
@@ -396,7 +397,7 @@
                 <label for="c-resume">Resume
                   <span class="hint">PDF, DOC or DOCX — 5&nbsp;MB max</span>
                 </label>
-                <input class="input" type="file" id="c-resume" name="resume" accept=".pdf,.doc,.docx,application/pdf">
+                <input class="input" type="file" id="c-resume" name="resume" accept=".pdf,.doc,.docx,.rtf,.txt">
               </div>
 
               <div class="field">

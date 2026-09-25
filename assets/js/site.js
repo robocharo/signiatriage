@@ -85,32 +85,29 @@
   /* ---------------------------------------------------------------
      Forms
      ---------------------------------------------------------------
-     Static site, so there is no server here. Two supported modes:
+     Both forms POST to this site's own API — Azure Static Web Apps managed
+     Functions at /api/contact and /api/careers — which mail the submission
+     to hi@signiasolutions.com via Azure Communication Services. Nothing
+     leaves the Signia tenant, so no third-party form service becomes a data
+     processor for a healthcare site.
 
-       1. Host on Netlify / Cloudflare Pages with Forms enabled — the
-          `data-netlify="true"` attribute on the <form> is enough and this
-          script simply lets the normal POST happen.
-       2. Point `action` at any HTTPS endpoint that accepts a POST and
-          returns 2xx (Formspree, Basin, Getform, a Zapier catch hook, or
-          your own handler). Add `data-ajax="true"` and the submission is
-          sent in the background with an inline success message.
+     Everything below is convenience only. The server independently validates
+     every field, scores the submission for spam, and sniffs uploaded files;
+     none of it trusts this script. In particular `form_started` is a hint the
+     server weighs, never a gate it obeys — a bot can forge it trivially.
 
-     Client-side validation here is a convenience only. Whatever endpoint
-     receives this data must validate and sanitise server-side, and must
-     never be used to collect PHI — see README.
+     Neither form may be used to collect PHI. See README.
   */
   Array.prototype.forEach.call(document.querySelectorAll('form[data-ajax="true"]'), function (form) {
     var status = form.querySelector('.form-status');
     var submit = form.querySelector('button[type="submit"]');
 
+    // Stamp when the form became fillable. A submission that arrives a few
+    // hundred milliseconds later was not typed by a person.
+    var started = form.querySelector('input[name="form_started"]');
+    if (started) { started.value = String(Date.now()); }
+
     form.addEventListener('submit', function (e) {
-      if (!form.action || form.action.indexOf('REPLACE_ME') !== -1) {
-        // Endpoint not configured yet — let the author know rather than
-        // silently pretending the message was delivered.
-        e.preventDefault();
-        show('err', 'This form is not connected to an endpoint yet. Set the form action in the HTML — see README.md.');
-        return;
-      }
       if (!form.checkValidity()) { return; } // let the browser show its messages
 
       e.preventDefault();
@@ -123,10 +120,23 @@
         headers: { Accept: 'application/json' }
       })
         .then(function (res) {
-          if (!res.ok) { throw new Error('Request failed: ' + res.status); }
-          form.reset();
-          show('ok', form.getAttribute('data-success') ||
-            'Thank you — your message is on its way. We reply to most inquiries within one business day.');
+          // Read the body either way: the API explains WHY it refused (file too
+          // large, wrong type, missing field), and that reason is far more
+          // useful to the visitor than a generic failure.
+          return res.json().catch(function () { return {}; }).then(function (data) {
+            return { ok: res.ok, status: res.status, data: data };
+          });
+        })
+        .then(function (r) {
+          if (r.ok && r.data.ok !== false) {
+            form.reset();
+            if (started) { started.value = String(Date.now()); } // allow a second send
+            show('ok', r.data.message || form.getAttribute('data-success') ||
+              'Thank you — your message is on its way. We reply to most inquiries within one business day.');
+          } else {
+            show('err', r.data.message ||
+              'Sorry, something went wrong sending that. Please call (763) 308-3282 and we will help right away.');
+          }
         })
         .catch(function () {
           show('err', 'Sorry, something went wrong sending that. Please call (763) 308-3282 and we will help right away.');
