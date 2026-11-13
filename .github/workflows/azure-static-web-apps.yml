@@ -109,16 +109,21 @@ jobs:
           sleep 15
           ORIGIN=https://polite-water-07a742710.7.azurestaticapps.net
           SITE=https://signiasolutions.com
-          PATHS="/ /nurse-triage/ /who-we-are/ /careers/ /contact/ /robots.txt /sitemap.xml"
+          PATHS="/ /nurse-triage/ /who-we-are/ /careers/ /contact/ /robots.txt /sitemap.xml /llms.txt"
 
+          # signiasolutions.com is set as the SWA *default domain* (Azure portal ->
+          # Custom domains -> Set default), so the origin and www now REDIRECT to
+          # the apex — that is the point: one host for search engines. A redirect
+          # from the origin is therefore a pass, and the content checks below
+          # follow it (-L) to prove what is actually being served.
           echo "Origin ($ORIGIN)"
           for path in $PATHS; do
             code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "$ORIGIN$path")
             printf '  %-18s %s\n' "$path" "$code"
-            [ "$code" = "200" ] || { echo "::error::origin $path returned $code"; exit 1; }
+            case "$code" in 200|301|302|307|308) ;; *) echo "::error::origin $path returned $code"; exit 1 ;; esac
           done
 
-          live=$(curl -s --max-time 30 "$ORIGIN/assets/css/site.css" | tr -d '\r' | sha256sum | cut -c1-16)
+          live=$(curl -sL --max-time 30 "$ORIGIN/assets/css/site.css" | tr -d '\r' | sha256sum | cut -c1-16)
           repo=$(tr -d '\r' < _site/assets/css/site.css | sha256sum | cut -c1-16)
           echo "  live css $live"
           echo "  repo css $repo"
@@ -145,3 +150,20 @@ jobs:
             [ "$code" = "200" ] || { echo "::error::canonical $path returned $code"; exit 1; }
           done
           echo "Deploy verified on both hostnames."
+
+      # Tell IndexNow engines (Bing — which also feeds ChatGPT search — Yandex,
+      # Seznam, Naver...) that these URLs exist / changed, instead of waiting for
+      # a crawl. Runs only after the deploy is verified live. Never fatal: a
+      # failed ping must not turn a good deploy red. 200 = accepted, 202 = key
+      # validation pending (normal on first use).
+      - name: Submit URLs to IndexNow
+        run: |
+          KEY=$(python -c "import re,pathlib;print(re.search(r'INDEXNOW_KEY = \"([0-9a-f]+)\"', pathlib.Path('tools/build.py').read_text()).group(1))")
+          code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 "https://signiasolutions.com/$KEY.txt")
+          if [ "$code" != "200" ]; then echo "::warning::IndexNow key file not live ($code) — skipping submission."; exit 0; fi
+          URLS=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<loc>\(.*\)<\/loc>/"\1"/' | paste -sd, -)
+          BODY="{\"host\":\"signiasolutions.com\",\"key\":\"$KEY\",\"keyLocation\":\"https://signiasolutions.com/$KEY.txt\",\"urlList\":[$URLS]}"
+          resp=$(curl -s -o /dev/null -w '%{http_code}' --max-time 30 -X POST https://api.indexnow.org/indexnow \
+                   -H 'Content-Type: application/json; charset=utf-8' -d "$BODY")
+          echo "IndexNow response: $resp"
+          case "$resp" in 200|202) ;; *) echo "::warning::IndexNow returned $resp" ;; esac

@@ -30,6 +30,13 @@ SITE_URL = "https://signiasolutions.com"
 SITE_NAME = "Signia Solutions"
 OG_IMAGE = f"{SITE_URL}/assets/img/og-default.png"
 
+# IndexNow (https://www.indexnow.org) — lets Bing, Yandex, Seznam, Naver etc. learn
+# about changed URLs immediately instead of waiting for a crawl. The key is PUBLIC
+# by design: search engines fetch /<key>.txt to confirm we own the host. The deploy
+# workflow submits the sitemap URLs to api.indexnow.org after every successful
+# deploy. Changing the key just means the next submission uses the new file.
+INDEXNOW_KEY = "582f00d27c24de85e1219bcb5cf2f31c"
+
 # --------------------------------------------------------------------------
 # Page manifest — one entry per URL.
 #   out      : path written, relative to the repo root
@@ -513,9 +520,13 @@ def build() -> int:
         written.append((page["out"], len(html)))
 
     write_sitemap()
+    write_llms_txt()
+    write_indexnow_key()
     for name, size in written:
         print(f"  built  {name:<32} {size:>7,} bytes")
     print(f"  built  {'sitemap.xml':<32}")
+    print(f"  built  {'llms.txt':<32}")
+    print(f"  built  {INDEXNOW_KEY + '.txt':<32}")
     print(f"\n{len(written)} pages written to {ROOT}")
     return 0
 
@@ -545,6 +556,49 @@ def write_sitemap() -> None:
         + "\n</urlset>\n"
     )
     (ROOT / "sitemap.xml").write_text(xml, encoding="utf-8")
+
+
+def write_llms_txt() -> None:
+    """/llms.txt (https://llmstxt.org) — a plain-Markdown brief for AI assistants
+    (ChatGPT, Perplexity, Claude, Copilot) so they describe Signia accurately.
+
+    Built ONLY from data that already drives the pages and schema — the page
+    manifest, ORGANIZATION/ADDRESS and FAQ_ITEMS — so it can never say anything
+    the site itself does not. Edit those sources, not this output."""
+    a = ADDRESS
+    lines = [
+        f"# {SITE_NAME}",
+        "",
+        f"> {ORGANIZATION['description']}",
+        "",
+        "## Contact",
+        "",
+        f"- Address: {a['streetAddress']}, {a['addressLocality']}, {a['addressRegion']} {a['postalCode']}",
+        f"- Phone: {ORGANIZATION['telephone']}",
+        f"- Email: {ORGANIZATION['email']}",
+        f"- Website: {SITE_URL}/",
+        "",
+        "## Pages",
+        "",
+    ]
+    for page in PAGES_MANIFEST:
+        if page.get("noindex"):
+            continue
+        url = f"{SITE_URL}/" if page["url"] == "/" else f"{SITE_URL}{page['url']}"
+        lines.append(f"- [{page['title']}]({url}): {page['description']}")
+    lines += ["", "## Frequently asked questions", ""]
+    for q, ans in FAQ_ITEMS:
+        lines += [f"### {q}", "", ans, ""]
+    (ROOT / "llms.txt").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def write_indexnow_key() -> None:
+    """The IndexNow ownership file: /<key>.txt whose only content is the key."""
+    for old in ROOT.glob("*.txt"):
+        if (old.name != f"{INDEXNOW_KEY}.txt" and len(old.stem) == 32
+                and all(c in "0123456789abcdef" for c in old.stem)):
+            old.unlink()  # a previous key's file, if the key was ever rotated
+    (ROOT / f"{INDEXNOW_KEY}.txt").write_text(INDEXNOW_KEY, encoding="utf-8")
 
 
 if __name__ == "__main__":
