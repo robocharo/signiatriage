@@ -1,7 +1,7 @@
 {
-  "name": "Signia Solutions — After-Hours RN Triage",
+  "name": "Signia Solutions — Daytime & After-Hours RN Triage",
   "short_name": "Signia",
-  "description": "After-hours RN triage for senior living communities, answered by experienced nurses.",
+  "description": "Daytime and after-hours RN triage for senior living communities and HCBS settings.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

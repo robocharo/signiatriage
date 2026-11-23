@@ -324,6 +324,23 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    5. Header / navigation
    -------------------------------------------------------------------------- */
+/* Announcement strip above the header. It scrolls away; the header stays sticky.
+   Green CTA surface with white text: 5.27:1. */
+.announce { background: var(--green-deep); color: #fff; font-size: var(--step--1); }
+.announce__inner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+  gap: .35rem .75rem; padding-block: .55rem; text-align: center;
+}
+.announce strong { color: #fff; }
+.announce__tag {
+  background: #fff; color: var(--green-deeper); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .06em; font-size: .72rem;
+  padding: .15rem .55rem; border-radius: 999px;
+}
+.announce__link { color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.announce__link:hover { color: #fff; text-decoration-thickness: 2px; }
+.announce__link:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: rgba(255,255,255,.9);
@@ -626,6 +643,94 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 .card:hover::before { width: 100%; }
 .card--flat::before { display: none; }
 
+/* Services: two large panels, each listing the settings it serves as chips. */
+.services {
+  display: grid; gap: clamp(1rem, 2.2vw, 1.75rem);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr));
+}
+.service {
+  display: flex; flex-direction: column; gap: 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--brand-action);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  box-shadow: var(--shadow-sm);
+}
+.service--day { border-top-color: var(--green); }
+.settings-row {
+  display: grid; gap: 1.25rem 2rem; justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), max-content));
+}
+.service p { margin: 0; }
+.service__head { display: flex; gap: 1rem; align-items: center; }
+.service__head .card__icon { margin: 0; flex: none; }
+.service__head h3 { font-size: var(--step-2); margin: 0; }
+.service__sub { color: var(--muted); font-size: var(--step--1); font-weight: 600; margin: .15rem 0 0; }
+.service__group h4 {
+  font-size: var(--step--1); text-transform: uppercase; letter-spacing: .06em;
+  color: var(--muted); margin: 0 0 .5rem;
+}
+.service .link-arrow { margin-top: auto; padding-top: .5rem; }
+.card__icon--green { background: #E2F5EE; color: var(--green); }
+.coverage-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.coverage-list li { margin: 0; padding-left: 1rem; border-left: 3px solid var(--brand-tint-2); }
+.pill {
+  display: inline-block; vertical-align: .1em;
+  font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+  padding: .12rem .5rem; border-radius: 999px;
+}
+.pill--new { background: #E2F5EE; color: var(--green-deeper); }
+.chips--center { justify-content: center; }
+
+/* Daytime spotlight on /nurse-triage/#coverage — the new service line, sold first. */
+.spotlight {
+  display: grid; gap: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(180deg, #F1FAF6 0%, #fff 100%);
+  border: 1px solid #CDEBDD; border-top: 5px solid var(--green);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+  box-shadow: var(--shadow);
+}
+@media (min-width: 900px) { .spotlight { grid-template-columns: 1.6fr 1fr; align-items: start; } }
+.spotlight__kicker {
+  display: flex; align-items: center; gap: .5rem; margin: 0 0 .5rem;
+  font-weight: 700; color: var(--green-deeper); font-size: var(--step--1);
+  text-transform: uppercase; letter-spacing: .06em;
+}
+.spotlight h3 { font-size: var(--step-3); margin-bottom: .75rem; }
+.spotlight h4 { font-size: var(--step-0); color: var(--ink); margin: 1.5rem 0 .6rem; }
+.spotlight__body .checklist svg { color: var(--green); }
+.spotlight__price {
+  background: #fff; border: 1px solid #CDEBDD; border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2rem); text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 900px) { .spotlight__price { position: sticky; top: 6rem; } }
+.spotlight__from { margin: 0; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; font-size: var(--step--1); }
+.spotlight__amount {
+  margin: .25rem 0 0; font-size: var(--step-4); font-weight: 800; line-height: 1.05;
+  color: var(--green-deeper); letter-spacing: -0.02em;
+}
+.spotlight__per { margin: .25rem 0 1rem; color: var(--ink); font-weight: 600; }
+.spotlight__amount--text { font-size: var(--step-2); line-height: 1.2; margin-bottom: 1rem; }
+/* After-hours variant: same layout, brand blue instead of green. */
+.spotlight--night {
+  background: linear-gradient(180deg, var(--brand-tint) 0%, #fff 100%);
+  border-color: var(--brand-tint-2); border-top-color: var(--brand-action);
+}
+.spotlight--night .spotlight__kicker { color: var(--brand-action); }
+.spotlight--night .spotlight__body .checklist svg { color: var(--brand-ink); }
+.spotlight--night .spotlight__price { border-color: var(--brand-tint-2); }
+.spotlight--night .spotlight__amount { color: var(--brand-action); }
+.spotlight__note { color: var(--body); font-size: var(--step--1); margin: 0 0 1.25rem; }
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.chips li {
+  margin: 0; padding: .4rem .8rem; border-radius: 999px;
+  background: var(--brand-tint); color: var(--ink); font-size: var(--step--1); font-weight: 600;
+  border: 1px solid var(--brand-tint-2);
+}
+
 .section--dark .card {
   background: rgba(255,255,255,.05);
   border-color: rgba(255,255,255,.12);
@@ -804,6 +909,20 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
   .split--wide-left { grid-template-columns: 1.2fr .8fr; }
   .split--wide-right { grid-template-columns: .8fr 1.2fr; }
   .split__media--first { order: -1; }
+  /* Intro column stays in view while the longer list beside it scrolls past,
+     so the space under the heading isn't left empty. */
+  .split--sticky { align-items: start; }
+  .split--sticky > :first-child { position: sticky; top: 6.5rem; }
+}
+/* "Not sure?" closes the 4-column grid as a wide card, so the last row is full.
+   Only when there really are 4 columns; narrower grids keep it a normal card. */
+@media (min-width: 1040px) {
+  .grid--4 > .card--wide {
+    grid-column: span 2;
+    display: grid; grid-template-columns: 1fr auto; gap: .25rem 1.5rem; align-items: center;
+  }
+  .grid--4 > .card--wide h3, .grid--4 > .card--wide p { grid-column: 1; }
+  .grid--4 > .card--wide .link-arrow { grid-column: 2; grid-row: 1 / span 2; white-space: nowrap; }
 }
 .media-frame {
   border-radius: var(--radius-lg); overflow: hidden;
@@ -928,42 +1047,72 @@ hr { border: 0; border-top: 1px solid var(--line); margin: 2.5rem 0; }
 /* --------------------------------------------------------------------------
    15. Footer
    -------------------------------------------------------------------------- */
-.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(2rem, 3.5vw, 2.75rem) 0; font-size: var(--step--1); }
+/* Compact footer: tighter padding and gaps, but body-size text and a larger partner mark. */
+.site-footer { background: var(--night); color: #E6F0FA; padding-block: clamp(1.25rem, 2.5vw, 1.75rem) 0; font-size: var(--step-0); }
 .site-footer h2, .site-footer h3 { color: #fff; }
-/* Three columns, not four: "Contact" and "Visit" were split across two columns
-   for one phone number, one address and a fax line nobody uses. */
-.footer__grid { display: grid; gap: 1.5rem 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); }
-.footer__col address { margin-top: .75rem; }
+/* Four columns on one row: brand | explore | contact | partner badge.
+   Tablet: brand and badge share the top row, links and contact the second.
+   Phone: everything stacks, with explore and contact side by side. */
+.footer__grid {
+  display: grid; gap: 1.25rem 2.5rem; align-items: start;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "brand brand" "explore contact" "partner partner";
+}
+@media (min-width: 700px) {
+  .footer__grid {
+    grid-template-columns: 1.3fr 1fr;
+    grid-template-areas: "brand partner" "explore contact";
+  }
+}
+@media (min-width: 1040px) {
+  /* Each column only as wide as its content, with the leftover space shared
+     equally between them, so nothing bunches up on one side. */
+  .footer__grid {
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+    column-gap: 3rem;
+    grid-template-areas: "brand explore contact partner";
+  }
+}
+.footer__brand   { grid-area: brand; }
+.footer__grid > nav { grid-area: explore; }
+.footer__grid > .footer__col:not(nav) { grid-area: contact; }
+.footer__partner { grid-area: partner; }
+
 .footer__brand .brand__name { color: #fff; }
 .footer__brand .brand__tag { color: #E0F0FF; }
 /* The header mark is the logo blue on white, as it should be. Here the ground
    is itself blue, and --brand on --night is 2.67:1 — under the 3:1 that
    WCAG 1.4.11 asks of a meaningful graphic. Same hue, lifted to clear it. */
 .footer__brand .brand__mark { color: #D8ECFF; }
-.footer__brand p { margin-top: .7rem; max-width: 34ch; color: #E6F0FA; }
-.footer__col h3 { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: #fff; margin-bottom: .65rem; }
+.footer__brand p { margin: .6rem 0 0; max-width: 36ch; color: #E6F0FA; }
+.footer__col h3 { font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; color: #fff; margin-bottom: .85rem; }
 .footer__col ul { list-style: none; padding: 0; margin: 0; }
-.footer__col li { margin-bottom: .4rem; }
+.footer__col li { margin-bottom: .6rem; line-height: 1.4; }
+/* Five short links read better as two tight columns than one tall one. */
+.footer__links { display: grid; grid-template-columns: repeat(2, max-content); gap: .6rem 3rem; }
+.footer__links li { margin: 0; }
+@media (max-width: 420px) { .footer__links { grid-template-columns: 1fr; } }
 .footer__col a { color: #FFFFFF; text-decoration: none; }
 .footer__col a:hover { color: #fff; text-decoration: underline; }
-.footer__col address { font-style: normal; color: #FFFFFF; line-height: 1.7; }
+.footer__col address { font-style: normal; color: #FFFFFF; line-height: 1.6; margin-top: .85rem; }
 /* Partnership mark. The artwork is transparent PNG-derived and its darker
    lettering would disappear into the blue footer, so it sits on a white chip
-   rather than being recoloured — a partner's mark is theirs, not ours to tint. */
-.footer__partner {
-  display: flex; align-items: center; gap: .9rem;
-  margin-right: auto;
-}
+   rather than being recoloured — a partner's mark is theirs, not ours to tint.
+   Caption sits under the chip, so it can never push past the screen edge. */
+.footer__partner { display: flex; flex-direction: column; align-items: flex-start; gap: .5rem; }
+@media (min-width: 700px) { .footer__partner { align-items: flex-end; text-align: right; } }
 .footer__partner img {
-  width: 168px; height: auto; flex: none;
-  background: #fff; border-radius: 10px; padding: .55rem .75rem;
+  width: 240px; max-width: 100%; height: auto;
+  background: #fff; border-radius: 12px; padding: .5rem .8rem;
 }
-.footer__partner p { margin: 0; color: #E6F0FA; font-size: var(--step--1); max-width: 22ch; }
+.footer__partner p { margin: 0; color: #E6F0FA; font-size: var(--step--1); font-weight: 600; }
 
 .footer__bottom {
-  margin-top: 1.75rem; padding-block: 1.15rem;
-  border-top: 1px solid rgba(255,255,255,.1);
-  display: flex; flex-wrap: wrap; gap: 1.25rem 2rem; align-items: center;
+  margin-top: 1.25rem; padding-block: .75rem;
+  border-top: 1px solid rgba(255,255,255,.18);
+  display: flex; flex-wrap: wrap; gap: .5rem 2rem; align-items: center; justify-content: space-between;
+  font-size: var(--step--1);
 }
 .footer__bottom p { margin: 0; }
 .footer__copy { color: #E6F0FA; }

@@ -52,10 +52,10 @@ PAGES_MANIFEST = [
         "out": "index.html",
         "url": "/",
         "nav": "",
-        "title": "After-Hours RN Triage for Senior Living | Signia Solutions",
-        "description": "Experienced RNs answer your community's after-hours calls — assessing urgency, guiding staff and documenting every call. Flat-fee, census-aligned pricing.",
-        "og_title": "After-Hours RN Triage for Senior Living | Signia Solutions",
-        "og_description": "Calm, clinically sound after-hours RN triage for senior living communities. Experienced RNs, every call documented, flat-fee pricing.",
+        "title": "Daytime & After-Hours RN Triage for Senior Living and HCBS | Signia",
+        "description": "Experienced RNs answer your staff's calls during the day and after hours, for senior living and HCBS settings. Real-time documentation, state-compliant.",
+        "og_title": "Daytime & After-Hours RN Triage | Signia Solutions",
+        "og_description": "Experienced RNs answer your staff's calls, day and night, with clear directions and real-time documentation. Now offering daytime triage.",
         "priority": "1.0",
         "changefreq": "monthly",
     },
@@ -64,10 +64,10 @@ PAGES_MANIFEST = [
         "out": "nurse-triage/index.html",
         "url": "/nurse-triage/",
         "nav": "/nurse-triage/",
-        "title": "Nurse Triage for Assisted Living & Memory Care | Signia",
-        "description": "How after-hours RN triage works: six reasons it matters, our five-step workflow, and the impact on resident safety, ER transfers and staff confidence.",
-        "og_title": "After-Hours Nurse Triage for Senior Living Communities",
-        "og_description": "Not a call center — clinical partnership. See the five-step workflow our RNs follow on every after-hours call.",
+        "title": "Daytime & After-Hours RN Triage | Signia Solutions",
+        "description": "RN triage for assisted living, memory care, group homes and specialized living, now during the day as well as nights, weekends and holidays.",
+        "og_title": "Daytime & After-Hours Nurse Triage | Signia Solutions",
+        "og_description": "Not a call center — clinical partnership. See the five-step workflow our RNs follow on every call, day or night.",
         "priority": "0.9",
         "changefreq": "monthly",
     },
@@ -76,10 +76,10 @@ PAGES_MANIFEST = [
         "out": "who-we-are/index.html",
         "url": "/who-we-are/",
         "nav": "/who-we-are/",
-        "title": "Who We Are | Signia Solutions After-Hours RN Triage",
-        "description": "Signia Solutions was built to close the after-hours gap in senior living. Meet our values, the communities we serve and how we partner with your team.",
+        "title": "Who We Are | Signia Solutions RN Triage",
+        "description": "Signia Solutions closes the clinical support gap in senior living and HCBS settings. Meet our values, who we serve and how we partner with you.",
         "og_title": "Who We Are | Signia Solutions",
-        "og_description": "Experienced RNs closing the after-hours gap for senior living communities. Every call. Every shift. Every night.",
+        "og_description": "Experienced RNs closing the clinical support gap, day and after hours. Every call. Every shift. Day and night.",
         "priority": "0.8",
         "changefreq": "yearly",
     },
@@ -100,8 +100,8 @@ PAGES_MANIFEST = [
         "out": "contact/index.html",
         "url": "/contact/",
         "nav": "/contact/",
-        "title": "Contact Signia Solutions | After-Hours RN Triage",
-        "description": "Talk to our clinical and operations team about after-hours triage for your community. Call (763) 308-3282 — most inquiries answered within one business day.",
+        "title": "Contact Signia Solutions | Daytime & After-Hours RN Triage",
+        "description": "Talk to our team about daytime or after-hours RN triage for your community or program. Call (763) 308-3282 — most inquiries answered within one business day.",
         "og_title": "Contact Signia Solutions",
         "og_description": "We're here when your community needs us. Call (763) 308-3282 or send us a message.",
         "priority": "0.8",
@@ -159,7 +159,7 @@ HEAD_TEMPLATE = """<!doctype html>
 <meta property="og:title" content="{og_title}">
 <meta property="og:description" content="{og_description}">
 <meta property="og:image" content="{og_image}">
-<meta property="og:image:alt" content="Signia Solutions — after-hours RN triage for senior living communities">
+<meta property="og:image:alt" content="Signia Solutions — daytime and after-hours RN triage for senior living and HCBS">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{og_title}">
 <meta name="twitter:description" content="{og_description}">
@@ -208,18 +208,20 @@ ORGANIZATION = {
         "width": 512,
         "height": 512,
     },
-    "description": "Signia Solutions provides RN-led after-hours triage for senior living communities, with structured clinical guidance and documentation on every call.",
+    "description": "Signia Solutions provides RN-led triage, during the day and after hours, for senior living communities and customized HCBS settings, with real-time documentation on every call.",
     "telephone": "+1-763-308-3282",
     "faxNumber": "+1-612-395-5381",
     "email": "hi@signiasolutions.com",
     "address": ADDRESS,
     "areaServed": {"@type": "Country", "name": "United States"},
     "knowsAbout": [
-        "After-hours nurse triage",
-        "Assisted living clinical support",
-        "Memory care",
-        "Senior living operations",
         "Registered nurse telephone triage",
+        "Daytime nurse triage",
+        "After-hours nurse triage",
+        "Home and community-based services (HCBS)",
+        "Group homes and specialized living",
+        "Assisted living and memory care",
+        "Independent living with clinical oversight",
     ],
 }
 
@@ -243,7 +245,7 @@ LOCAL_BUSINESS = {
             ],
             "opens": "00:00",
             "closes": "23:59",
-            "description": "After-hours clinical triage line available to partner communities every night, weekend and holiday.",
+            "description": "RN triage line available to partner communities during the day and after hours, including nights, weekends and holidays.",
         }
     ],
 }
@@ -260,33 +262,37 @@ WEBSITE = {
 SERVICE = {
     "@type": "Service",
     "@id": f"{SITE_URL}/nurse-triage/#service",
-    "name": "After-Hours RN Nurse Triage for Senior Living Communities",
-    "serviceType": "After-hours registered nurse telephone triage",
+    "name": "Daytime and After-Hours RN Triage",
+    "serviceType": "Registered nurse telephone triage",
     "provider": {"@id": f"{SITE_URL}/#organization"},
     "areaServed": {"@type": "Country", "name": "United States"},
     "audience": {
         "@type": "Audience",
-        "audienceType": "Assisted living, memory care and independent living operators",
+        "audienceType": (
+            "Independent living, assisted living and memory care operators, and customized "
+            "HCBS providers including group homes and specialized living"
+        ),
     },
     "url": f"{SITE_URL}/nurse-triage/",
     "description": (
-        "RN-led triage for every after-hours call, with evidence-based guidance for staff, "
-        "documentation and leadership notifications, custom escalation pathways, policies and "
-        "procedures, quality "
-        "reporting and predictable census-aligned flat-fee pricing."
+        "RN-led triage during the day and after hours, with clear directions for staff, "
+        "real-time documentation and leadership notifications, custom escalation pathways, "
+        "policies and procedures, and quality reporting. After-hours coverage is a flat "
+        "monthly fee aligned to census; daytime coverage is billed only for the days it is used."
     ),
     "hasOfferCatalog": {
         "@type": "OfferCatalog",
-        "name": "After-hours clinical support",
+        "name": "Daytime and after-hours RN triage",
         "itemListElement": [
             {"@type": "Offer", "itemOffered": {"@type": "Service", "name": n}}
             for n in [
-                "RN-led triage for every after-hours call",
+                "Daytime RN triage",
+                "After-hours RN triage: nights, weekends and holidays",
                 "Clear, evidence-based guidance for staff",
                 "Documentation and leadership notifications",
                 "Custom escalation pathways, policies and procedures",
                 "Quality reporting and analytics",
-                "Predictable, census-aligned flat fee pricing",
+                "Flat monthly after-hours pricing and pay-as-you-go daytime coverage",
             ]
         ],
     },
@@ -296,12 +302,20 @@ SERVICE = {
 # what an AI answer engine will quote, so each one stands alone without context.
 FAQ_ITEMS = [
     (
-        "What is after-hours nurse triage for senior living?",
-        "After-hours nurse triage gives your caregivers a registered nurse to call when the "
-        "building quiets and on-site clinical leadership has gone home. The RN assesses the "
-        "resident's symptoms, determines urgency, guides staff through a structured evaluation, "
-        "recommends a safe next action and documents the call for leadership. It is clinical "
-        "decision support, not an answering service that takes a message.",
+        "What is RN triage?",
+        "RN triage gives your staff a registered nurse to call whenever a resident's or client's condition "
+        "changes and no nurse is on site. The RN assesses the person's symptoms, determines "
+        "urgency, gives staff clear step-by-step directions, recommends a safe next action and "
+        "documents the call in real time for leadership. It is clinical decision support, not "
+        "an answering service that takes a message.",
+    ),
+    (
+        "Do you offer daytime triage or only after hours?",
+        "Both. Signia Solutions now offers daytime RN triage, for when your nurse is off site, "
+        "in meetings or trainings, covering several buildings or busy with another resident or client, "
+        "alongside after-hours triage for nights, weekends and holidays. Daytime coverage can "
+        "be switched on and off as your facility needs it, including intermittently, and "
+        "costs a fraction of an RN's hourly wage.",
     ),
     (
         "How is Signia Solutions different from an answering service or call center?",
@@ -309,26 +323,35 @@ FAQ_ITEMS = [
         "by an experienced registered nurse who assesses the situation, applies evidence-based "
         "clinical guidance and your community's own policies, procedures and escalation pathways, "
         "and gives "
-        "your caregiver a specific next step. Every call is documented and sent to leadership.",
+        "your staff a specific next step. Every call is documented and sent to leadership.",
     ),
     (
         "Does nurse triage reduce unnecessary ER transfers?",
-        "That is the intent. Many after-hours transfers happen because staff feel uncertain or "
-        "families feel anxious rather than because the resident needs an emergency department. "
+        "That is the intent. Many transfers happen because staff feel uncertain or "
+        "families feel anxious rather than because the person needs an emergency department. "
         "An on-call RN helps staff distinguish true emergencies from concerns that can be safely "
-        "monitored on site, which reduces stress, cost and hospital exposure for the resident.",
+        "monitored on site, which reduces stress, cost and hospital exposure for residents and clients.",
     ),
     (
-        "Which communities does Signia Solutions serve?",
-        "Assisted living, memory care, independent living with clinical oversight, multi-building "
-        "campuses, and regional or enterprise operators. The model works for a single community "
-        "as well as an operator running many buildings across markets.",
+        "Which settings does Signia Solutions serve?",
+        "Senior living communities, including independent living with clinical oversight, "
+        "assisted living and memory care, and customized HCBS settings, including group homes "
+        "and specialized living. The model works for a single home or community as well as an "
+        "operator running many buildings across markets.",
+    ),
+    (
+        "What services does Signia Solutions offer?",
+        "RN triage, during the day and after hours. Experienced registered nurses answer your "
+        "staff's calls, give clear directions and document every call in real time, in line "
+        "with state regulations. You can choose daytime coverage, after-hours coverage "
+        "(nights, weekends and holidays), or both.",
     ),
     (
         "How does Signia Solutions pricing work?",
-        "Pricing is a flat monthly fee aligned to your census, built from RN wage "
+        "After-hours triage is a flat monthly fee aligned to your census, built from RN wage "
         "economics. That gives you a predictable monthly cost rather than per-call billing that "
-        "spikes in a hard month.",
+        "spikes in a hard month. Daytime triage costs a fraction of an RN's hourly wage, and "
+        "you only pay for the days you switch it on. Contact us for a quote for your community.",
     ),
     (
         "Do your nurses follow our escalation policies?",
